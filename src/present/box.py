@@ -11,6 +11,7 @@ a nie 168.
 from __future__ import annotations
 
 import re
+import secrets
 import string
 import xml.etree.ElementTree as ET
 
@@ -30,14 +31,18 @@ def valid_code(code: str) -> str:
 
 
 def random_code(rng=None) -> str:
-    """Losowy kod — taki, żeby nie układał się w słowo ani w ciąg."""
-    import secrets
+    """Losowy kod z samych cyfr.
 
+    Tylko cyfry, bo adres na GitHub Pages jest wrażliwy na wielkość liter: `/286D`
+    daje 404, gdy strona stoi pod `/286d`, a dwóch repozytoriów różniących się tylko
+    wielkością litery nie da się mieć (nazwy repo są niewrażliwe na wielkość).
+    Bez liter problem znika: kod wpisany z Caps Lockiem i tak trafi.
+    """
     source = rng or secrets
+    plain = {"1248", "8421", "1234", "4321", "1111", "2222", "0000", "9999"}
     while True:
-        code = "".join(source.choice(HEX_DIGITS) for _ in range(4))
-        nice = {"1248", "8421", "c0de", "dead", "beef", "1234", "abcd", "cafe", "babe", "fade"}
-        if code not in nice:
+        code = "".join(source.choice("0123456789") for _ in range(4))
+        if code not in plain and len(set(code)) > 2:
             return code
 
 
