@@ -34,20 +34,29 @@ h1 {
 
 .card-lead { margin: 1rem 0 0; line-height: 1.6; color: #2f3437; }
 
-.domain {
-  margin: 1.6rem 0 0;
+/* Zapis liczbowy: bez prozy, same liczby — ma się czytać jak szyfr, nie jak zdanie. */
+.strip {
+  margin: 2.2rem 0 0.9rem;
+  padding: 1.4rem 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
   font-family: var(--mono);
-  font-size: 13pt;
-  letter-spacing: 0.02em;
+  font-size: 15pt;
+  line-height: 2.1;
+  letter-spacing: 0.06em;
+  white-space: pre;
 }
-.domain .slash { color: var(--muted); }
-.domain .tail { letter-spacing: 0.16em; font-weight: 600; }
 
-.figure-box { margin-top: 1.4rem; }
-.figure-box svg { display: block; max-width: 100%; height: auto; }
-
-.key { margin-top: 1.6rem; }
-.key svg { display: block; max-width: 100%; height: auto; }
+.legend {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.5rem 0.9rem;
+  margin-top: 1.6rem;
+  font-family: var(--mono);
+  font-size: 9.5pt;
+}
+.legend span { display: flex; gap: 0.45rem; }
+.legend b { font-weight: 500; color: var(--muted); min-width: 1.2rem; text-align: right; }
 
 /* Mała podpowiedź u góry: mówi, że to kod, ale nie zdradza adresu. */
 .top-hint {
@@ -82,46 +91,30 @@ h1 {
   <p class="eyebrow">{{ page.title }}</p>
   <h1>{{ gift.headline }}</h1>
 
-  <p class="domain">{{ site_owner }}<span class="slash">/</span></p>
-
-  <div class="figure-box">{{ box_svg | safe }}</div>
+  <pre class="strip">{% for row in token_rows %}{% for token in row %}{{ "%2s" | format(token) }}{% if not loop.last %} {% endif %}{% endfor %}
+{% endfor %}</pre>
   <p class="hint">{{ card.hint }}</p>
 
   <div class="pad"></div>
-  <p class="eyebrow">Wpisz w przeglądarkę · bez „https://” i bez spacji</p>
+  <p class="eyebrow">Kropka i ukośnik zostają sobą · wszystko małymi literami</p>
 </section>
 
 <section class="sheet">
-  <p class="eyebrow">Klucz</p>
-  <h1>Jak to przeczytać</h1>
-
-  <p>
-    Nad kolumnami stoją wagi: <code>1</code> <code>2</code> <code>4</code> <code>8</code>
-    <code>16</code>. W każdym rzędzie zsumuj wagi kropek, które są zamalowane — suma to
-    numer litery w alfabecie. Cztery rzędy, czytane z góry na dół, to cztery litery kodu.
-  </p>
-
-  <div class="key">{{ key_svg | safe }}</div>
-
-  <div class="pad"></div>
-  <p class="eyebrow">Domena przed ukośnikiem, kod z siatki po ukośniku · wszystko małymi literami</p>
-</section>
-
-<section class="sheet">
-  <p class="eyebrow">Tablica znaków</p>
-  <h1>Hex → znak</h1>
+  <p class="eyebrow">Legenda</p>
+  <h1>Numer litery</h1>
 
   <p class="card-lead">
-    Gdyby trzeba było zamienić parę cyfr na literę: każda para to jeden znak.
-    <code>6B</code> to <code>k</code>, <code>2E</code> to kropka, <code>2F</code> to ukośnik.
+    Każda liczba to litera alfabetu, licząc od jedynki: <code>1 = a</code>,
+    <code>2 = b</code>, <code>3 = c</code> — i tak do <code>26 = z</code>.
+    Kropka i ukośnik stoją w zapisie bez zmian.
   </p>
 
-  <div class="key-grid">
-    {% for h, ch in ascii_table %}<span><b>{{ h }}</b>{{ ch }}</span>{% endfor %}
+  <div class="legend">
+    {% for value, letter in legend %}<span><b>{{ value }}</b>{{ letter }}</span>{% endfor %}
   </div>
 
   <div class="pad"></div>
-  <p class="eyebrow">Spacja oznaczona jako ␣ — w adresie jej nie ma</p>
+  <p class="eyebrow">Adres wpisujesz małymi literami, bez „https://”</p>
 </section>
 </body>
 </html>

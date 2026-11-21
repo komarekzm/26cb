@@ -18,8 +18,7 @@ from pathlib import Path
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from jinja2 import Environment, FileSystemLoader, StrictUndefined, select_autoescape
 
-from present import box as codebox
-from present import codec, config, puzzle as puzzle_mod
+from present import cipher, codec, config, puzzle as puzzle_mod
 
 ROOT = config.ROOT
 TEMPLATES = ROOT / "templates"
@@ -101,7 +100,7 @@ def main() -> None:
     cfg = config.load()
     site = config.site()
     coupon = read_coupon()
-    code = codebox.valid_code(site.address.rsplit("/", 1)[-1])
+    tokens = cipher.encode(site.address)
     rotate = "--rotate" in sys.argv
 
     if not cfg["page"]["test_mode"] and coupon.upper().startswith("TEST"):
@@ -140,11 +139,8 @@ def main() -> None:
         "puzzle": puzzle,
         "riddle": cfg["puzzle"]["riddle"],
         "address": site.address,
-        "code": code,
-        "site_owner": site.address.rsplit("/", 1)[0],
-        "box_svg": codebox.render(code),
-        "ascii_table": codec.ascii_table(),
-        "key_svg": codebox.render_key(),
+        "token_rows": cipher.rows(tokens),
+        "legend": list(enumerate(cipher.LETTERS, start=1)),
         "box": box,
     }
 
@@ -167,9 +163,9 @@ def main() -> None:
 
     print(f"kupon        : {coupon} (tylko pod monitorem i w build/qr.png)")
     print(f"adres        : {site.address}")
-    print(f"kod z siatki : {code} (4 × 5, wagi 1 2 4 8 16)")
-    for row, value in enumerate(codebox.digits(code), start=1):
-        print(f"  rząd {row}      : {value:2} → {codebox.LETTERS[value - 1]}")
+    print(f"zapis na kartce: {len(tokens)} znaków, numery liter")
+    for row in cipher.rows(tokens):
+        print("                 " + " ".join(f"{token:>2}" for token in row))
     print(f"notatki      : {len(puzzle.clues)}")
     print(f"z inicjałów  : {puzzle.built_word}  ← to jest hasło")
     print(f"z banku      : {puzzle.bank_word}  ← tyle daje czytanie banku bez dopasowania")

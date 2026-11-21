@@ -15,15 +15,20 @@ from pathlib import Path
 
 import pytest
 
-from present import box, config
+from present import box
 
 ROOT = Path(__file__).resolve().parent.parent
 NS = "{http://www.w3.org/2000/svg}"
 
 
+# Siatka 4 × 5 nie jest już na kartce (zastąpił ją zapis liczbowy), ale zostaje
+# w projekcie jako alternatywa — testy nie mogą więc zależeć od aktualnego adresu.
+TEST_CODE = "hvqm"
+
+
 @pytest.fixture(scope="module")
 def code() -> str:
-    return box.valid_code(config.site().address.rsplit("/", 1)[-1])
+    return box.valid_code(TEST_CODE)
 
 
 @pytest.mark.parametrize("letter", list(box.LETTERS))
