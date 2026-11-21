@@ -15,16 +15,19 @@ import xml.etree.ElementTree as ET
 
 import pytest
 
-from present import codec, config, figure
+from present import codec, figure
 
 NS = "{http://www.w3.org/2000/svg}"
 CARD_CONTENT_MM = 210 - 2 * 22  # A4 minus marginesy kartki w templates/karta.html.j2
 CARD_HEIGHT_MM = 185  # tyle wolnego miejsca zostaje pod nagłówkiem kartki (max-height w base.css)
 
 
+TEST_ADDRESS = "komarekzm.github.io/p"  # 21 znaków → 42 cyfry → dwa rzędy po 21
+
+
 @pytest.fixture(scope="module")
 def address() -> str:
-    return codec.to_hex(config.site().address)
+    return codec.to_hex(TEST_ADDRESS)
 
 
 @pytest.fixture(scope="module")

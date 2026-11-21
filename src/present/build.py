@@ -18,7 +18,8 @@ from pathlib import Path
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from jinja2 import Environment, FileSystemLoader, StrictUndefined, select_autoescape
 
-from present import codec, config, figure, puzzle as puzzle_mod
+from present import box as codebox
+from present import codec, config, puzzle as puzzle_mod
 
 ROOT = config.ROOT
 TEMPLATES = ROOT / "templates"
@@ -99,10 +100,11 @@ def read_coupon() -> str:
 def main() -> None:
     cfg = config.load()
     site = config.site()
-    code = read_coupon()
+    coupon = read_coupon()
+    code = codebox.valid_code(site.address.rsplit("/", 1)[-1])
     rotate = "--rotate" in sys.argv
 
-    if not cfg["page"]["test_mode"] and code.upper().startswith("TEST"):
+    if not cfg["page"]["test_mode"] and coupon.upper().startswith("TEST"):
         raise SystemExit(
             "page.test_mode = false, ale kupon.txt wciąż ma kod testowy. "
             "Wklej prawdziwy kod albo włącz test_mode."
@@ -112,8 +114,8 @@ def main() -> None:
     answer = puzzle.answer
 
     # QR generujemy mimo wszystko: to on idzie na wydruk pod monitor.
-    qr_file = qr_png(code)
-    verify_qr(qr_file, code)
+    qr_file = qr_png(coupon)
+    verify_qr(qr_file, coupon)
 
     payload = {"text": cfg["voucher"]["location"]}
     box = seal(payload, answer, rotate=rotate)
@@ -130,7 +132,6 @@ def main() -> None:
         lstrip_blocks=True,
     )
 
-    first_hex = codec.to_hex(site.address)[:2]
     common = {
         "page": cfg["page"],
         "gift": {**cfg["gift"], "lead": cfg["gift"]["lead"].format(name=cfg["page"]["name"])},
@@ -139,12 +140,10 @@ def main() -> None:
         "puzzle": puzzle,
         "riddle": cfg["puzzle"]["riddle"],
         "address": site.address,
-        "hex_rows": codec.hex_rows(site.address),
-        "ascii_table": codec.ascii_table(),
-        "figure_svg": figure.svg(codec.to_hex(site.address)),
-        "sample_hex": first_hex,
-        "sample_dec": int(first_hex, 16),
-        "sample_char": codec.from_hex(first_hex),
+        "code": code,
+        "site_owner": site.address.rsplit("/", 1)[0],
+        "box_svg": codebox.render(code),
+        "key_svg": codebox.render_key(),
         "box": box,
     }
 
@@ -153,7 +152,7 @@ def main() -> None:
     card = env.get_template("karta.html.j2").render(**common)
 
     # Bramka wyciekowa: ani kod kuponu, ani hasło nie mogą leżeć w opublikowanym HTML-u.
-    for secret, label in ((code, "kod kuponu"), (answer, "hasło")):
+    for secret, label in ((coupon, "kod kuponu"), (answer, "hasło")):
         if secret.lower() in index.lower():
             raise SystemExit(f"{label} trafił jawnym tekstem do strony — przerywam")
 
@@ -165,8 +164,9 @@ def main() -> None:
     (BUILD / "karta-A4.html").write_text(card, encoding="utf-8")
     ANSWER_FILE.write_text(answer + "\n", encoding="utf-8")  # wyłącznie lokalnie
 
-    print(f"kupon        : {code} (tylko pod monitorem i w build/qr.png)")
-    print(f"adres        : {site.address} → hex na kartce")
+    print(f"kupon        : {coupon} (tylko pod monitorem i w build/qr.png)")
+    print(f"adres        : {site.address}")
+    print(f"kod z siatki : {code} (4 × 4, wagi 1 2 4 8)")
     print(f"notatki      : {len(puzzle.clues)}")
     print(f"z inicjałów  : {puzzle.built_word}  ← to jest hasło")
     print(f"z banku      : {puzzle.bank_word}  ← tyle daje czytanie banku bez dopasowania")

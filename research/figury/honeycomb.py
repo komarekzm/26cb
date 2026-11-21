@@ -5,6 +5,10 @@ Start jest na brzegu plastra, meta w środku. Ścieżka to spirala: wchodzi
 o jedno pole do środka po każdym okrążeniu, więc kolejne paciorki leżą na
 jednej, nieprzecinającej się linii.
 
+To czytelny wariant opisanego pomysłu: cyfra nadal liczy pola do przejścia,
+ale kierunek narzuca spirala. Dosłowne 42 odcinki proste o długościach 1–16
+nie mieszczą się czytelnie w 150 mm (uzasadnienie w README).
+
     cyfra = liczba pól od jednego paciorka do następnego
 
 Cyfra 0 daje dwa paciorki w tym samym polu (podwójny pierścień).

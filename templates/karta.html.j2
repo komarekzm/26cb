@@ -34,7 +34,34 @@ h1 {
 
 .card-lead { margin: 1rem 0 0; line-height: 1.6; color: #2f3437; }
 
-.hex { font-size: 13pt; }
+.domain {
+  margin: 1.6rem 0 0;
+  font-family: var(--mono);
+  font-size: 13pt;
+  letter-spacing: 0.02em;
+}
+.domain .slash { color: var(--muted); }
+.domain .tail { letter-spacing: 0.16em; font-weight: 600; }
+
+.figure-box { margin-top: 1.4rem; }
+.figure-box svg { display: block; max-width: 100%; height: auto; }
+
+.key { margin-top: 1.6rem; }
+.key svg { display: block; max-width: 100%; height: auto; }
+
+/* Mała podpowiedź u góry: mówi, że to kod, ale nie zdradza adresu. */
+.top-hint {
+  margin: 1rem 0 0;
+  padding: 0.55rem 0.85rem;
+  border-left: 2px solid var(--ink);
+  background: #fbfaf7;
+  font-family: var(--mono);
+  font-size: 8.5pt;
+  line-height: 1.5;
+  letter-spacing: 0.05em;
+  color: #2f3437;
+}
+.top-hint b { font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
 
 .pad { flex: 1; min-height: 0.8rem; }
 
@@ -54,14 +81,10 @@ h1 {
 <section class="sheet">
   <p class="eyebrow">{{ page.title }}</p>
   <h1>{{ gift.headline }}</h1>
-  <p class="card-lead">
-    Adres, pod którym czeka zagadka, jest zapisany w hex. Zagadka jest tam, kupon jest
-    za zagadką — nic więcej nie dostaniesz na papierze.
-  </p>
 
-  <p class="hexlabel">Adres zapisany w hex</p>
-  <pre class="hex">{% for row in hex_rows %}{{ row }}
-{% endfor %}</pre>
+  <p class="domain">{{ site_owner }}<span class="slash">/</span></p>
+
+  <div class="figure-box">{{ box_svg | safe }}</div>
   <p class="hint">{{ card.hint }}</p>
 
   <div class="pad"></div>
@@ -73,36 +96,14 @@ h1 {
   <h1>Jak to przeczytać</h1>
 
   <p>
-    Każde dwa znaki to jedna litera. <code>{{ sample_hex }}</code> to liczba
-    {{ sample_dec }}, czyli <code>{{ sample_char }}</code> — spacje między parami
-    są tylko dla oka.
+    Nad kolumnami stoją wagi: <code>1</code> <code>2</code> <code>4</code> <code>8</code>.
+    W każdym rzędzie zsumuj wagi kropek, które są zamalowane — suma to jedna cyfra kodu.
+    Cztery rzędy, czytane z góry na dół, dają cztery znaki.
   </p>
-  <p>
-    Osiem bitów to również jedna litera — ten sam kod, tylko zapisany dłużej.
-    Jeśli wolisz tę drogę, poproś o wersję binarną.
-  </p>
-
-  <div class="key-grid">
-    {% for h, ch in ascii_table %}<span><b>{{ h }}</b>{{ ch }}</span>{% endfor %}
-  </div>
+  <div class="key">{{ key_svg | safe }}</div>
 
   <div class="pad"></div>
-  <p class="eyebrow">Dalej: przeglądarka i zagadka. Kupon dopiero po niej</p>
-</section>
-
-<section class="sheet">
-  <p class="eyebrow">Figura</p>
-  <h1>Ten sam adres, w dwóch wymiarach</h1>
-  <p class="card-lead">
-    Czterdzieści dwa znaki hex to czterdzieści dwie kolumny. Wysokość kolumny w kratkach
-    to jedna cyfra — licz od dołu, czytaj od lewej. Kropka na szczycie kolumny jest tam
-    po to, żeby nie było wątpliwości, którą kratkę traktować jako ostatnią.
-  </p>
-
-  {{ figure_svg | safe }}
-
-  <div class="pad"></div>
-  <p class="eyebrow">Ta sama informacja co ciąg na pierwszej stronie</p>
+  <p class="eyebrow">Domena przed ukośnikiem, kod z siatki po ukośniku</p>
 </section>
 </body>
 </html>
