@@ -20,15 +20,17 @@ def test_numbers_start_at_one() -> None:
     assert cipher.letter(26) == "z"
 
 
-def test_notation_switches_to_letters_at_ten() -> None:
-    """Jak w hexie: 10 zapisujemy jako A, 11 jako B — ale to nadal numer litery."""
+def test_numbers_are_written_in_hex() -> None:
+    """Numer litery w hexie: 10 = A, 15 = F, 16 = 10, 26 = 1A."""
     assert cipher.symbol(9) == "9"
     assert cipher.symbol(10) == "A"
-    assert cipher.symbol(11) == "B"
-    assert cipher.symbol(26) == "Q"
+    assert cipher.symbol(15) == "F"
+    assert cipher.symbol(16) == "10"
+    assert cipher.symbol(17) == "11"
+    assert cipher.symbol(26) == "1A"
     assert cipher.value_of("A") == 10
-    assert cipher.value_of("Q") == 26
-    assert cipher.symbol(11) == "B" and cipher.decode(["B"] * 2) == "kk"
+    assert cipher.value_of("1A") == 26
+    assert cipher.decode(["B"] * 2) == "kk"  # B = 11 = k
 
 
 def test_whole_address_round_trips() -> None:
@@ -43,10 +45,10 @@ def test_punctuation_is_left_alone() -> None:
     assert cipher.decode(tokens) == "ab.c/d"
 
 
-def test_every_token_is_a_single_character() -> None:
-    """Jeden znak adresu to jeden znak zapisu — dwucyfrowe liczby mylą się przy przepisywaniu."""
+def test_tokens_stay_within_hex_digits() -> None:
+    """Żadnych liter spoza A–F: po F liczenie idzie dalej jako 10, 11, … 1A."""
     for token in cipher.encode(config.site().address):
-        assert len(token) == 1, token
+        assert token in ". /".split() or __import__("re").fullmatch(r"[0-9A-F]{1,2}", token), token
 
 
 def test_unknown_sign_is_rejected() -> None:

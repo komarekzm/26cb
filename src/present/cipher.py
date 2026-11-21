@@ -8,11 +8,10 @@ Dla `komarekzm.github.io/p` daje to 21 znaków:
 
     11 15 13 1 18 5 11 26 13 . 7 9 20 8 21 2 . 9 15 / 16
 
-Zapis wartości idzie jak w hexie: 1–9 to cyfry, a od dziesiątki wchodzą litery
-(10 = A, 11 = B, … 26 = Q). Dzięki temu jeden znak adresu to jeden znak zapisu —
-bez dwucyfrowych liczb, które mylą się przy przepisywaniu.
+Numer litery zapisujemy w hexie: 1–9 to cyfry, 10 = A, 11 = B, 12 = C, 13 = D,
+14 = E, 15 = F, a potem liczenie idzie dalej — 16 = 10, 17 = 11, … 26 = 1A.
 
-    B F D 1 I 5 B Q D . 7 9 K 8 L 2 . 9 F / G
+    B F D 1 12 5 B 1A D . 7 9 14 8 15 2 . 9 F / 10
 """
 
 from __future__ import annotations
@@ -40,21 +39,20 @@ def letter(value: int) -> str:
 
 
 def symbol(value: int) -> str:
-    """Numer litery → znak zapisu: 1–9 cyfra, 10–26 wielka litera (10 = A)."""
+    """Numer litery → zapis szesnastkowy: 1–9 cyfra, 10 = A … 15 = F, 16 = 10, 26 = 1A."""
     if not 1 <= value <= len(LETTERS):
         raise ValueError(f"numer {value} nie jest literą alfabetu (1–26)")
-    if value <= 9:
-        return str(value)
-    return chr(ord("A") + value - 10)
+    return f"{value:X}"
 
 
 def value_of(token: str) -> int:
-    """Znak zapisu → numer litery."""
-    if len(token) == 1 and token.isdigit() and token != "0":
-        return int(token)
-    if len(token) == 1 and "A" <= token <= "Q":
-        return 10 + ord(token) - ord("A")
-    raise ValueError(f"nieznany znak zapisu: {token!r}")
+    """Zapis szesnastkowy → numer litery."""
+    if not re.fullmatch(r"[0-9A-F]{1,2}", token):
+        raise ValueError(f"nieznany znak zapisu: {token!r}")
+    value = int(token, 16)
+    if not 1 <= value <= len(LETTERS):
+        raise ValueError(f"zapis {token!r} leży poza alfabetem (1–26)")
+    return value
 
 
 def encode(address: str) -> list[str]:
@@ -94,5 +92,5 @@ if __name__ == "__main__":
     print(f"znaków : {len(tokens)}")
     for row in rows(tokens):
         print("        " + " ".join(f"{token:>2}" for token in row))
-    print("legenda: " + "  ".join(f"{symbol(v)}={cipher_letter}" for v, cipher_letter in enumerate(LETTERS, start=1) if v in (1, 5, 9, 10, 11, 15, 20, 26)))
+    print("legenda: " + "  ".join(f"{symbol(v)}={ch}" for v, ch in enumerate(LETTERS, start=1)))
     print(f"odczyt : {decode(tokens)}  (zgodny: {decode(tokens) == address})")
