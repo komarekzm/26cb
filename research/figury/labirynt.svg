@@ -444,9 +444,9 @@
 <polygon class="gate" points="36.00,64.85 37.15,66.00 36.00,67.15 34.85,66.00" fill="black" stroke="black" stroke-width="0.35"/>
 <polygon class="gate" points="114.00,76.85 115.15,78.00 114.00,79.15 112.85,78.00" fill="black" stroke="black" stroke-width="0.35"/>
 <polygon class="gate" points="78.00,82.85 79.15,84.00 78.00,85.15 76.85,84.00" fill="black" stroke="black" stroke-width="0.35"/>
-<polygon class="gate" points="78.00,82.10 79.90,84.00 78.00,85.90 76.10,84.00" fill="white" stroke="black" stroke-width="0.38"/>
+<polygon class="gate" points="78.00,82.10 79.90,84.00 78.00,85.90 76.10,84.00" fill="none" stroke="black" stroke-width="0.38"/>
 </g>
 <g id="entrance"><line x1="6.00" y1="24.00" x2="6.00" y2="31.80" stroke="black" stroke-width="0.9"/><polygon points="3.80,29.80 8.20,29.80 6.00,32.60" fill="black"/><text x="6.00" y="22.00" font-family="sans-serif" font-size="2.8" text-anchor="middle" fill="black">start</text></g>
 <g id="goal"><rect class="goal" x="75.80" y="81.80" width="4.40" height="4.40" fill="none" stroke="black" stroke-width="0.8"/><text x="78.00" y="91.20" font-family="sans-serif" font-size="2.6" text-anchor="middle" fill="black">meta</text></g>
-<text x="75" y="146" font-family="sans-serif" font-size="3.2" text-anchor="middle" fill="black">B · LABIRYNT — cyfra = ile pól między bramkami (drugie pole włącznie)</text>
+<text x="75" y="146" font-family="sans-serif" font-size="3.2" text-anchor="middle" fill="black">B · LABIRYNT — cyfra = ile pól od bramki do bramki; 0 = podwójny romb</text>
 </svg>

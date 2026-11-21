@@ -167,9 +167,9 @@ def main() -> None:
 
     print(f"kupon        : {code} (tylko pod monitorem i w build/qr.png)")
     print(f"adres        : {site.address} → hex na kartce")
-    print(f"kwity        : {len(puzzle.receipts)}")
-    print(f"po cenie/dram: {puzzle.built_word}  ← to jest hasło")
-    print(f"po sumie     : {puzzle.trap_word}  ← pułapka dla nieuważnych")
+    print(f"notatki      : {len(puzzle.clues)}")
+    print(f"z inicjałów  : {puzzle.built_word}  ← to jest hasło")
+    print(f"z banku      : {puzzle.bank_word}  ← tyle daje czytanie banku bez dopasowania")
     print(f"hasło        : {answer} (zapisane też w {ANSWER_FILE.relative_to(ROOT)})")
     print(f"strona       : {DOCS / 'index.html'}")
     print(f"kartka       : {BUILD / 'karta-A4.html'}")

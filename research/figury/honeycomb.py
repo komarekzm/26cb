@@ -114,13 +114,6 @@ def render(hex_str: str) -> str:
         f'stroke-width="0.75" stroke-linejoin="round" stroke-linecap="round"/>'
     )
 
-    # meta: środek plastra (rysowana pod paciorkami, żeby nie zasłaniała bramki)
-    ex, ey = _xy(path[-1])
-    parts.append(
-        f'<g id="goal"><circle cx="{ex:.2f}" cy="{ey:.2f}" r="1.8" fill="white"/>'
-        f'<circle cx="{ex:.2f}" cy="{ey:.2f}" r="0.8" fill="black"/></g>'
-    )
-
     # paciorki: jeden na każdą granicę cyfry
     gates = _gate_indices(hex_str)
     seen: dict[int, int] = {}
@@ -130,11 +123,19 @@ def render(hex_str: str) -> str:
         seen[index] = count + 1
         x, y = _xy(path[index])
         radius = 1.55 + 0.65 * count
+        fill = "white" if count == 0 else "none"
         parts.append(
             f'<circle class="bead" cx="{x:.2f}" cy="{y:.2f}" r="{radius:.2f}" '
-            f'fill="white" stroke="black" stroke-width="0.38"/>'
+            f'fill="{fill}" stroke="black" stroke-width="0.38"/>'
         )
     parts.append("</g>")
+
+    # meta: czarny punkt w dziurce ostatniego paciorka
+    ex, ey = _xy(path[-1])
+    parts.append(
+        f'<g id="goal"><circle cx="{ex:.2f}" cy="{ey:.2f}" r="0.75" fill="black"/></g>'
+    )
+
 
     # start: strzałka wchodząca w plaster od zewnątrz
     sx, sy = _xy(path[0])
@@ -157,7 +158,7 @@ def render(hex_str: str) -> str:
     parts.append(
         '<text x="75" y="146" font-family="sans-serif" font-size="3.2" '
         'text-anchor="middle" fill="black">'
-        'A · PLASTER MIODU — cyfra = ile pól od paciorka do paciorka</text>'
+        'A · PLASTER MIODU — cyfra = ile pól od paciorka do paciorka; 0 = dwa pierścienie</text>'
     )
     parts.append("</svg>")
     return "\n".join(parts)

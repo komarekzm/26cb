@@ -28,97 +28,56 @@ location = "Słowo zna już całą drogę. Leży tam, gdzie kurz nie dochodzi �
 # według CENY ZA JEDEN DRAM. Sortowanie po cenie łącznej daje inny ciąg — to pułapka.
 # Build sprawdza, że wychodzi dokładnie `word` i że pułapka faktycznie działa.
 
+# ── Zagadka ───────────────────────────────────────────────────────────────────
+# Bez liczenia: opisy zaklęć bez nazw + bank zaklęć. Rozpoznajesz zaklęcie po skutku,
+# bierzesz jego pierwszą literę; litery w kolejności notatek dają słowo.
+# Build sprawdza, że wychodzi dokładnie `word` i że bank zaklęć nie zdradza hasła.
+
 [puzzle]
 word = "ALOHOMORA"
 riddle = [
-  "Nie licz, ile za flakon cały —",
-  "duży flakon kłamie, choć drogo wygląda.",
-  "Licz, ile płacisz za jednego drama,",
-  "i ustaw flakony od najtańszego.",
-  "Pieczęcie czytane w tej kolejności",
-  "złożą słowo — a słowo otworzy drogę.",
+  "Zaklęcia zapisano bez nazw —",
+  "zostały po nich tylko skutki.",
+  "Rozpoznaj każde i weź pierwszą literę.",
+  "Litery w kolejności notatek",
+  "złożą słowo, które otwiera.",
 ]
 
-[[puzzle.receipts]]
-name = "Amortencja"
-flavour = "Pachnie jak to, czego nie mówi się na głos."
-letter = "A"
-galleons = 2
-sickles = 8
-knuts = 14
-drams = 14
+[[puzzle.clues]]
+spell = "Accio"
+text = "Przywołuje przedmiot, którego nie chce Ci się szukać."
 
-[[puzzle.receipts]]
-name = "Eliksir Pobudzający"
-flavour = "Po nim myśli się szybciej, niż się mówi."
-letter = "O"
-galleons = 1
-sickles = 16
-knuts = 15
-drams = 27
+[[puzzle.clues]]
+spell = "Lumos"
+text = "Zapala światełko na końcu różdżki."
 
-[[puzzle.receipts]]
-name = "Eliksir Rozdymający"
-flavour = "Dwie krople i sufit jest za blisko."
-letter = "R"
-galleons = 4
-sickles = 13
-knuts = 7
-drams = 31
+[[puzzle.clues]]
+spell = "Oppugno"
+text = "Każe przedmiotom rzucić się na tego, kogo wskazałaś."
 
-[[puzzle.receipts]]
-name = "Eliksir Słodkiego Snu"
-flavour = "Ciepły jak koc, cichy jak aksamit."
-letter = "O"
-galleons = 2
-sickles = 1
-knuts = 5
-drams = 15
+[[puzzle.clues]]
+spell = "Homenum Revelio"
+text = "Mówi Ci, czy w pomieszczeniu ktoś się ukrywa."
 
-[[puzzle.receipts]]
-name = "Eliksir Wielosokowy"
-flavour = "Nie pytaj, kto go wypił."
-letter = "O"
-galleons = 6
-sickles = 5
-knuts = 17
-drams = 60
+[[puzzle.clues]]
+spell = "Obliviate"
+text = "Zabiera wspomnienie, którego ktoś wolałby nie mieć."
 
-[[puzzle.receipts]]
-name = "Eliksir Zapomnienia"
-flavour = "Sprzedaje się z gwarancją ulgi."
-letter = "A"
-galleons = 1
-sickles = 12
-knuts = 19
-drams = 43
+[[puzzle.clues]]
+spell = "Muffliato"
+text = "Wypełnia uszy pobliskich szumem, żeby nie usłyszeli rozmowy."
 
-[[puzzle.receipts]]
-name = "Felix Felicis"
-flavour = "Złoty, gęsty i kapryśny."
-letter = "L"
-galleons = 1
-sickles = 3
-knuts = 8
-drams = 21
+[[puzzle.clues]]
+spell = "Orchideous"
+text = "Wywołuje bukiet kwiatów, choć nie dotyka ziemi."
 
-[[puzzle.receipts]]
-name = "Veritaserum"
-flavour = "Bez zapachu — i to jest jego zaletą."
-letter = "H"
-galleons = 2
-sickles = 14
-knuts = 16
-drams = 32
+[[puzzle.clues]]
+spell = "Reducto"
+text = "Rozbija przeszkodę na kawałki."
 
-[[puzzle.receipts]]
-name = "Wywar Żywej Śmierci"
-flavour = "Trzymaj w ciemnej szafce, pod kluczem."
-letter = "M"
-galleons = 5
-sickles = 14
-knuts = 9
-drams = 48
+[[puzzle.clues]]
+spell = "Aguamenti"
+text = "Z różdżki tryska strumień wody."
 
 [card]
 # Wskazówka na kartce — Twoje słowa, nie kod.

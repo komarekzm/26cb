@@ -185,6 +185,49 @@ h1 {
 }
 .puzzle .step:first-of-type { margin-top: 0.4rem; }
 
+.clues {
+  margin: 0.6rem 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: clue;
+}
+.clues li {
+  display: flex;
+  gap: 0.7rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--line);
+  line-height: 1.55;
+}
+.clues li:last-child { border-bottom: 0; }
+.clues .num {
+  flex: none;
+  width: 1.1rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-align: right;
+  padding-top: 0.15rem;
+}
+.clues .clue { font-size: 0.95rem; color: #2f3437; }
+
+.bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.7rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.bank li {
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bone);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+}
+
 table.receipts {
   width: 100%;
   margin-top: 0.4rem;
@@ -379,86 +422,34 @@ button:active { transform: scale(0.98); }
   </header>
 
   <section class="puzzle rise" style="--i:2">
-    <h2 class="step"><span>I</span> Karta z księgi eliksirów</h2>
-    <table class="receipts">
-      <thead>
-        <tr><th>pieczęć</th><th>eliksir</th><th>dramy</th><th>cena</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="stamp">A</td>
-          <th><span class="potion">Amortencja</span><span class="flavour">Pachnie jak to, czego nie mówi się na głos.</span></th>
-          <td>14</td>
-          <td>2g 8s 14k</td>
-        </tr>
-        <tr>
-          <td class="stamp">O</td>
-          <th><span class="potion">Eliksir Pobudzający</span><span class="flavour">Po nim myśli się szybciej, niż się mówi.</span></th>
-          <td>27</td>
-          <td>1g 16s 15k</td>
-        </tr>
-        <tr>
-          <td class="stamp">R</td>
-          <th><span class="potion">Eliksir Rozdymający</span><span class="flavour">Dwie krople i sufit jest za blisko.</span></th>
-          <td>31</td>
-          <td>4g 13s 7k</td>
-        </tr>
-        <tr>
-          <td class="stamp">O</td>
-          <th><span class="potion">Eliksir Słodkiego Snu</span><span class="flavour">Ciepły jak koc, cichy jak aksamit.</span></th>
-          <td>15</td>
-          <td>2g 1s 5k</td>
-        </tr>
-        <tr>
-          <td class="stamp">O</td>
-          <th><span class="potion">Eliksir Wielosokowy</span><span class="flavour">Nie pytaj, kto go wypił.</span></th>
-          <td>60</td>
-          <td>6g 5s 17k</td>
-        </tr>
-        <tr>
-          <td class="stamp">A</td>
-          <th><span class="potion">Eliksir Zapomnienia</span><span class="flavour">Sprzedaje się z gwarancją ulgi.</span></th>
-          <td>43</td>
-          <td>1g 12s 19k</td>
-        </tr>
-        <tr>
-          <td class="stamp">L</td>
-          <th><span class="potion">Felix Felicis</span><span class="flavour">Złoty, gęsty i kapryśny.</span></th>
-          <td>21</td>
-          <td>1g 3s 8k</td>
-        </tr>
-        <tr>
-          <td class="stamp">H</td>
-          <th><span class="potion">Veritaserum</span><span class="flavour">Bez zapachu — i to jest jego zaletą.</span></th>
-          <td>32</td>
-          <td>2g 14s 16k</td>
-        </tr>
-        <tr>
-          <td class="stamp">M</td>
-          <th><span class="potion">Wywar Żywej Śmierci</span><span class="flavour">Trzymaj w ciemnej szafce, pod kluczem.</span></th>
-          <td>48</td>
-          <td>5g 14s 9k</td>
-        </tr>
-      </tbody>
-    </table>
+    <h2 class="step"><span>I</span> Notatki bez nazw</h2>
+    <ol class="clues">
+      <li><span class="num">1</span><span class="clue">Przywołuje przedmiot, którego nie chce Ci się szukać.</span></li>
+      <li><span class="num">2</span><span class="clue">Zapala światełko na końcu różdżki.</span></li>
+      <li><span class="num">3</span><span class="clue">Każe przedmiotom rzucić się na tego, kogo wskazałaś.</span></li>
+      <li><span class="num">4</span><span class="clue">Mówi Ci, czy w pomieszczeniu ktoś się ukrywa.</span></li>
+      <li><span class="num">5</span><span class="clue">Zabiera wspomnienie, którego ktoś wolałby nie mieć.</span></li>
+      <li><span class="num">6</span><span class="clue">Wypełnia uszy pobliskich szumem, żeby nie usłyszeli rozmowy.</span></li>
+      <li><span class="num">7</span><span class="clue">Wywołuje bukiet kwiatów, choć nie dotyka ziemi.</span></li>
+      <li><span class="num">8</span><span class="clue">Rozbija przeszkodę na kawałki.</span></li>
+      <li><span class="num">9</span><span class="clue">Z różdżki tryska strumień wody.</span></li>
+    </ol>
 
     <h2 class="step"><span>II</span> Co mówi mistrz eliksirów</h2>
     <div class="riddle">
-<span>Nie licz, ile za flakon cały —</span>
-<span>duży flakon kłamie, choć drogo wygląda.</span>
-<span>Licz, ile płacisz za jednego drama,</span>
-<span>i ustaw flakony od najtańszego.</span>
-<span>Pieczęcie czytane w tej kolejności</span>
-<span>złożą słowo — a słowo otworzy drogę.</span>
+<span>Zaklęcia zapisano bez nazw —</span>
+<span>zostały po nich tylko skutki.</span>
+<span>Rozpoznaj każde i weź pierwszą literę.</span>
+<span>Litery w kolejności notatek</span>
+<span>złożą słowo, które otwiera.</span>
     </div>
-    <p class="gloss">
-      Dram to miara objętości. Galeon to 17 sykli, sykiel to 29 knutów — tyle wiedzy
-      wystarczy, żeby zejść z ceny flakonu do ceny jednej miary.
-    </p>
 
-    <h2 class="step"><span>III</span> Pieczęcie</h2>
+    <h2 class="step"><span>III</span> Zaklęcia do wyboru</h2>
+    <ul class="bank">
+<li>Accio</li><li>Aguamenti</li><li>Homenum Revelio</li><li>Lumos</li><li>Muffliato</li><li>Obliviate</li><li>Oppugno</li><li>Orchideous</li><li>Reducto</li>    </ul>
+
     <form id="unlock" autocomplete="off" novalidate>
-      <label for="answer">Słowo z pieczęci</label>
+      <label for="answer">Słowo z pierwszych liter</label>
       <div class="row">
         <input id="answer" name="answer" type="text" placeholder="9 liter"
                spellcheck="false" autocapitalize="off" required>

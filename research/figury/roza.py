@@ -17,8 +17,8 @@ import xml.etree.ElementTree as ET
 
 HEX = "6B6F6D6172656B7A6D2E6769746875622E696F2F70"
 
-CX, CY = 75.0, 72.0
-RSTEP = 4.0
+CX, CY = 75.0, 75.0
+RSTEP = 3.8
 N = 42
 SPOKE_ANGLES = [2.0 * math.pi * k / N for k in range(N)]
 
@@ -66,14 +66,14 @@ def render(hex_str: str) -> str:
         )
     parts.append("</g>")
 
-    # podział na sześć sektorów po siedem promieni
-    parts.append('<g id="sectors" stroke="black" stroke-width="0.26">')
-    for k in range(0, N, 7):
+    # sześć sektorów po siedem promieni: tylko krótkie znaczniki na obrzeżu
+    parts.append('<g id="sectors" stroke="black" stroke-width="0.38">')
+    for k in range(7, N, 7):
         angle = -math.pi / 2.0 + SPOKE_ANGLES[k]
-        x1 = CX + 2.2 * math.cos(angle)
-        y1 = CY + 2.2 * math.sin(angle)
-        x2 = CX + (16 * RSTEP + 3.4) * math.cos(angle)
-        y2 = CY + (16 * RSTEP + 3.4) * math.sin(angle)
+        x1 = CX + (16 * RSTEP + 0.4) * math.cos(angle)
+        y1 = CY + (16 * RSTEP + 0.4) * math.sin(angle)
+        x2 = CX + (16 * RSTEP + 3.2) * math.cos(angle)
+        y2 = CY + (16 * RSTEP + 3.2) * math.sin(angle)
         parts.append(f'<line x1="{x1:.2f}" y1="{y1:.2f}" x2="{x2:.2f}" y2="{y2:.2f}"/>')
     parts.append("</g>")
 
@@ -90,30 +90,33 @@ def render(hex_str: str) -> str:
     parts.append("</g>")
 
     # znak startu i kierunek
-    top_x, top_y = CX, CY - 16 * RSTEP - 8.5
+    top_x = CX
+    top_y = CY - (16 * RSTEP + 6.2)
     parts.append(
-        f'<g id="start"><polygon points="{top_x - 2.2:.2f},{top_y - 3.0:.2f} '
-        f'{top_x + 2.2:.2f},{top_y - 3.0:.2f} {top_x:.2f},{top_y + 0.6:.2f}" '
+        f'<g id="start"><polygon points="{top_x - 2.1:.2f},{top_y - 2.8:.2f} '
+        f'{top_x + 2.1:.2f},{top_y - 2.8:.2f} {top_x:.2f},{top_y + 0.4:.2f}" '
         f'fill="black"/>'
-        f'<text x="{top_x:.2f}" y="{top_y - 5.2:.2f}" font-family="sans-serif" '
-        f'font-size="2.6" text-anchor="middle" fill="black">start</text></g>'
+        f'<text x="{top_x:.2f}" y="{top_y - 4.6:.2f}" font-family="sans-serif" '
+        f'font-size="2.5" text-anchor="middle" fill="black">start</text></g>'
     )
 
     # strzałka kierunku zgodnego z ruchem wskazówek zegara
-    r_arrow = 16 * RSTEP + 6.0
-    a1, a2 = math.radians(-64), math.radians(-28)
+    r_arrow = 16 * RSTEP + 3.4
+    a1, a2 = math.radians(-68), math.radians(-44)
     p1 = (CX + r_arrow * math.cos(a1), CY + r_arrow * math.sin(a1))
     p2 = (CX + r_arrow * math.cos(a2), CY + r_arrow * math.sin(a2))
     parts.append(
         f'<path d="M {p1[0]:.2f} {p1[1]:.2f} A {r_arrow:.2f} {r_arrow:.2f} 0 0 1 '
-        f'{p2[0]:.2f} {p2[1]:.2f}" fill="none" stroke="black" stroke-width="0.45"/>'
+        f'{p2[0]:.2f} {p2[1]:.2f}" fill="none" stroke="black" stroke-width="0.38"/>'
     )
-    tip = (CX + r_arrow * math.cos(a2 + 0.10), CY + r_arrow * math.sin(a2 + 0.10))
+    tangent = (-math.sin(a2), math.cos(a2))
+    radial = (math.cos(a2), math.sin(a2))
+    tip = (p2[0] + tangent[0] * 2.5, p2[1] + tangent[1] * 2.5)
+    base1 = (p2[0] + radial[0] * 1.45, p2[1] + radial[1] * 1.45)
+    base2 = (p2[0] - radial[0] * 1.45, p2[1] - radial[1] * 1.45)
     parts.append(
-        f'<polygon points="{tip[0]:.2f},{tip[1]:.2f} '
-        f'{tip[0] - 3.0 * math.cos(a2 - 0.35):.2f},{tip[1] - 3.0 * math.sin(a2 - 0.35):.2f} '
-        f'{tip[0] - 3.0 * math.cos(a2 + 0.35):.2f},{tip[1] - 3.0 * math.sin(a2 + 0.35):.2f}" '
-        f'fill="black"/>'
+        f'<polygon points="{tip[0]:.2f},{tip[1]:.2f} {base1[0]:.2f},{base1[1]:.2f} '
+        f'{base2[0]:.2f},{base2[1]:.2f}" fill="black"/>'
     )
 
     parts.append(

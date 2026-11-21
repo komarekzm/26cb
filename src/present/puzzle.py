@@ -1,66 +1,47 @@
-"""Zagadka ze strony: kwity z apteki eliksirów, z których powstaje hasło.
+"""Zagadka ze strony: opisy zaklęć bez nazw, z których powstaje słowo.
 
-Reguła: każdy kwit podaje cenę w galeonach, syklach i knutach oraz objętość w dramach.
-Trzeba policzyć cenę ZA JEDEN DRAM, ustawić kwity rosnąco i odczytać litery. Kolejność
-po cenie łącznej daje inny, błędny ciąg — i to jest cała pułapka zadania.
+Reguła: każda notatka opisuje skutek zaklęcia, ale nie podaje jego nazwy. Trzeba
+rozpoznać zaklęcie w banku nazw i wziąć jego pierwszą literę. Litery w kolejności
+notatek dają słowo — akrostych. Zero liczenia: cała praca to wiedza i skojarzenie.
 
-Wszystko, co build wie o zagadce, pochodzi z config.toml. Jeśli liczby przestaną dawać
-słowo albo pułapka przestanie działać, build odmawia publikacji.
+Bank zaklęć jest podany alfabetycznie, więc litery czytane z banku nie układają hasła —
+trzeba dopasować opisy do nazw, żeby trafić w kolejność.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
 
-GALLEON_IN_SICKLES = 17  # kanon: 17 sykli w galeonie
-SICKLE_IN_KNUTS = 29  # kanon: 29 knutów w syklu
-KNUTS_IN_GALLEON = GALLEON_IN_SICKLES * SICKLE_IN_KNUTS  # 493
-
 
 @dataclass(frozen=True)
-class Receipt:
-    name: str
-    letter: str
-    flavour: str
-    galleons: int
-    sickles: int
-    knuts: int
-    drams: int
+class Clue:
+    spell: str
+    text: str
 
     @property
-    def total_knuts(self) -> int:
-        return (
-            self.galleons * KNUTS_IN_GALLEON
-            + self.sickles * SICKLE_IN_KNUTS
-            + self.knuts
-        )
-
-    @property
-    def knuts_per_dram(self) -> float:
-        return self.total_knuts / self.drams
+    def letter(self) -> str:
+        return self.spell[0].upper()
 
 
 @dataclass(frozen=True)
 class Puzzle:
     word: str
-    receipts: list[Receipt]
-
-    @property
-    def by_unit_price(self) -> list[Receipt]:
-        return sorted(self.receipts, key=lambda receipt: receipt.knuts_per_dram)
-
-    @property
-    def by_total_price(self) -> list[Receipt]:
-        return sorted(self.receipts, key=lambda receipt: receipt.total_knuts)
+    clues: list[Clue]
 
     @property
     def built_word(self) -> str:
-        return "".join(receipt.letter for receipt in self.by_unit_price)
+        """Co wychodzi z notatek czytanych po kolei."""
+        return "".join(clue.letter for clue in self.clues)
 
     @property
-    def trap_word(self) -> str:
-        """Co wychodzi, gdy ktoś sortuje po cenie łącznej zamiast za dram."""
-        return "".join(receipt.letter for receipt in self.by_total_price)
+    def bank(self) -> list[str]:
+        """Bank nazw do wyboru — alfabetycznie, żeby nie sugerował kolejności."""
+        return sorted((clue.spell for clue in self.clues), key=str.casefold)
+
+    @property
+    def bank_word(self) -> str:
+        """Co wychodzi, gdy ktoś czyta inicjały wprost z banku, bez dopasowania."""
+        return "".join(name[0].upper() for name in self.bank)
 
     @property
     def answer(self) -> str:
@@ -69,40 +50,31 @@ class Puzzle:
 
 def load(cfg: dict) -> Puzzle:
     section = cfg["puzzle"]
-    receipts = [
-        Receipt(
-            name=row["name"],
-            letter=row["letter"],
-            flavour=row.get("flavour", ""),
-            galleons=row["galleons"],
-            sickles=row["sickles"],
-            knuts=row["knuts"],
-            drams=row["drams"],
-        )
-        for row in section["receipts"]
-    ]
-    puzzle = Puzzle(word=section["word"], receipts=receipts)
+    clues = [Clue(spell=row["spell"], text=row["text"]) for row in section["clues"]]
+    puzzle = Puzzle(word=section["word"], clues=clues)
 
-    if len(receipts) != len(puzzle.word):
+    if len(clues) != len(puzzle.word):
         raise SystemExit(
-            f"kwitów jest {len(receipts)}, a słowo ma {len(puzzle.word)} liter — "
-            "zagadka nie ułoży się w całość"
+            f"notatek jest {len(clues)}, a słowo ma {len(puzzle.word)} liter — "
+            "akrostych się nie złoży"
         )
     if puzzle.built_word != puzzle.word:
         raise SystemExit(
-            f"sortowanie po cenie za dram daje {puzzle.built_word!r}, a nie {puzzle.word!r}. "
-            "Popraw litery albo kwoty."
+            f"pierwsze litery zaklęć dają {puzzle.built_word!r}, a nie {puzzle.word!r}. "
+            "Popraw kolejność notatek albo dobór zaklęć."
         )
-    if puzzle.trap_word == puzzle.word:
+    if len({clue.spell.casefold() for clue in clues}) != len(clues):
+        raise SystemExit("któreś zaklęcie występuje dwa razy — bank przestaje być jednoznaczny")
+    if len({clue.text.casefold() for clue in clues}) != len(clues):
+        raise SystemExit("dwie notatki mają ten sam tekst — nie da się ich rozróżnić")
+    if puzzle.bank_word in (puzzle.word, puzzle.word[::-1]):
         raise SystemExit(
-            "sortowanie po cenie łącznej daje to samo słowo — pułapka nie działa, "
-            "a wtedy zadanie rozwiązuje się bez liczenia ceny za dram"
+            "bank zaklęć zdradza hasło: czytany po kolei daje to samo słowo. "
+            "Zmień zestaw zaklęć."
         )
-    if any(receipt.drams <= 0 for receipt in receipts):
-        raise SystemExit("każdy kwit musi mieć dodatnią objętość w dramach")
-    if any(receipt.knuts_per_dram != int(receipt.knuts_per_dram) for receipt in receipts):
-        raise SystemExit(
-            "cena za dram wychodzi ułamkowa — hasło ma być do policzenia w głowie, "
-            "bez kalkulatora i zaokrągleń"
-        )
+    for clue in clues:
+        if not clue.spell[:1].isalpha():
+            raise SystemExit(f"zaklęcie {clue.spell!r} nie zaczyna się od litery")
+        if not clue.text.strip():
+            raise SystemExit(f"notatka do {clue.spell!r} jest pusta")
     return puzzle

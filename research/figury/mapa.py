@@ -21,7 +21,7 @@ import xml.etree.ElementTree as ET
 HEX = "6B6F6D6172656B7A6D2E6769746875622E696F2F70"
 
 STEP = 6.0
-OX, OY = 10.0, 45.0
+OX, OY = 10.0, 38.0
 SQRT3 = math.sqrt(3.0)
 
 

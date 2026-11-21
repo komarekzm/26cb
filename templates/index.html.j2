@@ -41,6 +41,49 @@ h1 {
 }
 .puzzle .step:first-of-type { margin-top: 0.4rem; }
 
+.clues {
+  margin: 0.6rem 0 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: clue;
+}
+.clues li {
+  display: flex;
+  gap: 0.7rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--line);
+  line-height: 1.55;
+}
+.clues li:last-child { border-bottom: 0; }
+.clues .num {
+  flex: none;
+  width: 1.1rem;
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-align: right;
+  padding-top: 0.15rem;
+}
+.clues .clue { font-size: 0.95rem; color: #2f3437; }
+
+.bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin: 0.7rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+.bank li {
+  padding: 0.3rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bone);
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.02em;
+}
+
 table.receipts {
   width: 100%;
   margin-top: 0.4rem;
@@ -235,36 +278,26 @@ button:active { transform: scale(0.98); }
   </header>
 
   <section class="puzzle rise" style="--i:2">
-    <h2 class="step"><span>I</span> Karta z księgi eliksirów</h2>
-    <table class="receipts">
-      <thead>
-        <tr><th>pieczęć</th><th>eliksir</th><th>dramy</th><th>cena</th></tr>
-      </thead>
-      <tbody>
-        {% for receipt in puzzle.receipts %}
-        <tr>
-          <td class="stamp">{{ receipt.letter }}</td>
-          <th><span class="potion">{{ receipt.name }}</span><span class="flavour">{{ receipt.flavour }}</span></th>
-          <td>{{ receipt.drams }}</td>
-          <td>{{ receipt.galleons }}g {{ receipt.sickles }}s {{ receipt.knuts }}k</td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    <h2 class="step"><span>I</span> Notatki bez nazw</h2>
+    <ol class="clues">
+      {% for clue in puzzle.clues %}
+      <li><span class="num">{{ loop.index }}</span><span class="clue">{{ clue.text }}</span></li>
+      {% endfor %}
+    </ol>
 
     <h2 class="step"><span>II</span> Co mówi mistrz eliksirów</h2>
     <div class="riddle">
       {% for line in riddle %}<span>{{ line }}</span>
       {% endfor %}
     </div>
-    <p class="gloss">
-      Dram to miara objętości. Galeon to 17 sykli, sykiel to 29 knutów — tyle wiedzy
-      wystarczy, żeby zejść z ceny flakonu do ceny jednej miary.
-    </p>
 
-    <h2 class="step"><span>III</span> Pieczęcie</h2>
+    <h2 class="step"><span>III</span> Zaklęcia do wyboru</h2>
+    <ul class="bank">
+      {% for spell in puzzle.bank %}<li>{{ spell }}</li>{% endfor %}
+    </ul>
+
     <form id="unlock" autocomplete="off" novalidate>
-      <label for="answer">Słowo z pieczęci</label>
+      <label for="answer">Słowo z pierwszych liter</label>
       <div class="row">
         <input id="answer" name="answer" type="text" placeholder="{{ puzzle.word | length }} liter"
                spellcheck="false" autocapitalize="off" required>

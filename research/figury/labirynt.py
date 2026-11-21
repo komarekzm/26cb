@@ -138,7 +138,7 @@ def render(hex_str: str) -> str:
         if count == 0:
             fill, stroke, width = "black", "black", 0.35
         else:
-            fill, stroke, width = "white", "black", 0.38
+            fill, stroke, width = "none", "black", 0.38
         parts.append(
             f'<polygon class="gate" points="{cx:.2f},{cy - half:.2f} '
             f'{cx + half:.2f},{cy:.2f} {cx:.2f},{cy + half:.2f} '
@@ -172,7 +172,7 @@ def render(hex_str: str) -> str:
     parts.append(
         '<text x="75" y="146" font-family="sans-serif" font-size="3.2" '
         'text-anchor="middle" fill="black">'
-        'B · LABIRYNT — cyfra = ile pól między bramkami (drugie pole włącznie)</text>'
+        'B · LABIRYNT — cyfra = ile pól od bramki do bramki; 0 = podwójny romb</text>'
     )
     parts.append("</svg>")
     return "\n".join(parts)
