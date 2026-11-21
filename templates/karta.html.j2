@@ -10,15 +10,17 @@
 
 body { background: #ecebe7; }
 
+/* Baza typograficzna dla całej kartki: bloki zagadki i klucz liczą się w em od tego. */
 .sheet {
   display: flex;
   flex-direction: column;
   width: 210mm;
   min-height: 297mm;
-  padding: 22mm 21mm;
+  padding: 26mm 22mm;
   margin: 0 auto 8mm;
   background: #fff;
   border: 1px solid var(--line);
+  font-size: 10.5pt;
 }
 
 h1 {
@@ -30,112 +32,18 @@ h1 {
   letter-spacing: -0.02em;
 }
 
-.card-lead { margin: 1rem 0 0; font-size: 11pt; line-height: 1.6; color: #2f3437; }
+.card-lead { margin: 1rem 0 0; line-height: 1.6; color: #2f3437; }
 
-/* Nagłówki kroków: numer rzymski w kolumnie, tytuł nad kreską. */
-.step {
-  display: flex;
-  gap: 0.6rem;
-  align-items: baseline;
-  margin: 1.9rem 0 0.7rem;
-  padding-bottom: 0.35rem;
-  border-bottom: 1px solid var(--line);
-  font-family: var(--sans);
-  font-size: 10pt;
-  font-weight: 600;
-  letter-spacing: 0.02em;
-}
-.step span {
-  font-family: var(--mono);
-  font-size: 8.5pt;
-  font-weight: 400;
-  color: var(--muted);
-  letter-spacing: 0.12em;
-}
+.hex { font-size: 13pt; }
 
-.step-note { margin: 0.55rem 0 0; font-size: 10pt; line-height: 1.55; color: #2f3437; }
-
-.receipt {
-  margin-top: 0.2rem;
-  padding: 0.8rem 1rem;
-  border: 1px dashed #cdcac2;
-  border-radius: 4px;
-  font-family: var(--mono);
-  font-size: 9.5pt;
-}
-.receipt-row { display: flex; justify-content: space-between; gap: 1rem; }
-.receipt-row .num { font-weight: 600; }
-.receipt-rule { margin: 0.55rem 0; border-top: 1px dashed #cdcac2; }
-.receipt-key { margin: 0; font-size: 8.5pt; color: var(--muted); letter-spacing: 0.04em; }
-
-table.points {
-  width: 100%;
-  margin-top: 0.3rem;
-  border-collapse: collapse;
-  font-size: 9.5pt;
-}
-table.points th,
-table.points td {
-  padding: 0.28rem 0.2rem;
-  border-bottom: 1px solid var(--line);
-  text-align: right;
-}
-table.points th:first-child { text-align: left; }
-table.points thead th {
-  font-family: var(--mono);
-  font-size: 7.5pt;
-  font-weight: 400;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-table.points tbody th { font-weight: 500; }
-table.points td { font-family: var(--mono); }
-
-.hexlabel {
-  margin: 1.7rem 0 0;
-  font-family: var(--mono);
-  font-size: 7.5pt;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--muted);
-}
-
-.hex {
-  margin: 0.5rem 0 0.9rem;
-  padding: 0.9rem 0;
-  border-top: 1px solid var(--ink);
-  border-bottom: 1px solid var(--ink);
-  font-family: var(--mono);
-  font-size: 13pt;
-  line-height: 2;
-  letter-spacing: 0.14em;
-  white-space: pre;
-}
-
-.hint { margin: 0; font-size: 9.5pt; line-height: 1.55; color: var(--muted); }
-
-.pad { flex: 1; min-height: 0.6rem; }
-
-.key-grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 0.18rem 0.8rem;
-  margin-top: 1.4rem;
-  font-family: var(--mono);
-  font-size: 8pt;
-}
-.key-grid span { display: flex; gap: 0.4rem; }
-.key-grid b { color: var(--muted); font-weight: 500; }
-
-.sheet p { font-size: 10.5pt; line-height: 1.6; }
+.pad { flex: 1; min-height: 0.8rem; }
 
 @media print {
   body { background: #fff; }
   .sheet {
     border: 0;
     margin: 0;
-    padding: 22mm 21mm;
+    padding: 26mm 22mm;
     page-break-after: always;
   }
   .sheet:last-of-type { page-break-after: auto; }
@@ -147,47 +55,17 @@ table.points td { font-family: var(--mono); }
   <p class="eyebrow">{{ page.title }}</p>
   <h1>{{ gift.headline }}</h1>
   <p class="card-lead">
-    Dwie rzeczy do policzenia, jedna liczba do wyjścia. Wszystko, czego potrzebujesz,
-    jest na tej stronie.
-  </p>
-
-  <h2 class="step"><span>I</span> Pokwitowanie z Gringotta</h2>
-  <div class="receipt">
-    <div class="receipt-row">
-      <span>Skrytka 687 — opłata roczna</span>
-      <span class="num">{{ receipt.galleons }} galeony · {{ receipt.sickles }} sykli · {{ receipt.knuts }} knutów</span>
-    </div>
-    <div class="receipt-rule"></div>
-    <p class="receipt-key">1 galeon = 17 sykli · 1 sykiel = 29 knutów</p>
-  </div>
-  <p class="step-note">Policz, ile to razem knutów. Zapisz liczbę.</p>
-
-  <h2 class="step"><span>II</span> Puchar Domów</h2>
-  <table class="points">
-    <thead>
-      <tr><th>dom</th>{% for event in events %}<th>{{ event }}</th>{% endfor %}</tr>
-    </thead>
-    <tbody>
-      {% for house in puzzle.houses %}
-      <tr><th>{{ house.name }}</th>{% for value in house.points %}<td>{{ value }}</td>{% endfor %}</tr>
-      {% endfor %}
-    </tbody>
-  </table>
-  <p class="step-note">
-    Policz średnią i medianę punktów każdego domu. Kolejność wyjdzie inna, niż podpowiada
-    oko: jeden dom wygrywa średnią, drugi medianą. Ten drugi jest teraz ważny.
-  </p>
-
-  <h2 class="step"><span>III</span> Klucz</h2>
-  <p class="step-note">
-    Podziel knuty z pokwitowania przez medianę zwycięzcy. Reszta z dzielenia to Twoje
-    przesunięcie — tyle liter w tył.
+    Adres, pod którym czeka zagadka, jest zapisany w hex. Zagadka jest tam, kupon jest
+    za zagadką — nic więcej nie dostaniesz na papierze.
   </p>
 
   <p class="hexlabel">Adres zapisany w hex</p>
   <pre class="hex">{% for row in hex_rows %}{{ row }}
 {% endfor %}</pre>
-  <p class="hint">{{ card.hint }} Potem cofnij każdą literę o swoje przesunięcie.</p>
+  <p class="hint">{{ card.hint }}</p>
+
+  <div class="pad"></div>
+  <p class="eyebrow">Wpisz w przeglądarkę · bez „https://” i bez spacji</p>
 </section>
 
 <section class="sheet">
@@ -200,11 +78,6 @@ table.points td { font-family: var(--mono); }
     są tylko dla oka.
   </p>
   <p>
-    Litery w kodzie są przesunięte w przód o tyle, ile wyszło z zagadki.
-    <code>{{ sample_char }}</code> cofnięte o {{ puzzle.shift }} to
-    <code>{{ sample_shifted }}</code> — cyfry, kropki i ukośniki zostają bez zmian.
-  </p>
-  <p>
     Osiem bitów to również jedna litera — ten sam kod, tylko zapisany dłużej.
     Jeśli wolisz tę drogę, poproś o wersję binarną.
   </p>
@@ -214,7 +87,7 @@ table.points td { font-family: var(--mono); }
   </div>
 
   <div class="pad"></div>
-  <p class="eyebrow">Wpisz w przeglądarkę · bez „https://” i bez spacji</p>
+  <p class="eyebrow">Dalej: przeglądarka i zagadka. Kupon dopiero po niej</p>
 </section>
 </body>
 </html>

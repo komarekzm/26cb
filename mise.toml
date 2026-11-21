@@ -7,8 +7,11 @@ description = "Wygeneruj docs/ (strona + QR) i build/karta-A4.html"
 run = "uv run python -m present.build"
 
 [tasks.test]
-description = "Testy kodeka: hex i bity muszą wracać do tego samego adresu"
-run = "uv run pytest -q"
+description = "Pytest (kodek + zagadka + brak wycieków) i Deno (odszyfrowanie w przeglądarce)"
+run = """
+uv run pytest -q
+deno run --allow-read tests/unlock.test.mjs
+"""
 
 [tasks.serve]
 description = "Podejrzyj stronę lokalnie na http://127.0.0.1:8788"
@@ -47,6 +50,14 @@ for _ in 1 2 3 4 5; do
   [ "$code" = 200 ] && break
   sleep 15
 done
+"""
+
+[tasks.rotate]
+description = "Nowa sól i IV (po zmianie hasła) + przebudowa i deploy"
+run = """
+uv run python -m present.build --rotate
+git add -A && git commit -q -m "Nowa sól szyfrogramu" --allow-empty && git push -q origin main
+echo "wypchnięte — Pages przebuduje się w ~1 min"
 """
 
 [tasks.decode]

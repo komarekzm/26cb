@@ -3,7 +3,7 @@ name = "prezent-dla-siostry"
 version = "0.1.0"
 description = "Statyczna strona-zagadka z kuponem do escape roomu"
 requires-python = ">=3.13"
-dependencies = ["jinja2>=3.1"]
+dependencies = ["jinja2>=3.1", "cryptography>=43"]
 
 [dependency-groups]
 dev = ["pytest>=8"]

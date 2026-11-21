@@ -1,14 +1,19 @@
-"""Zagadka na kartce musi dawać dokładnie to przesunięcie, które odszyfrowuje kod.
+"""Zagadka musi dawać hasło, które naprawdę otwiera kupon — inaczej to teatr.
 
-Ten plik jest bramką: jeśli ktoś zmieni kwotę na pokwitowaniu albo tabelę punktów,
-testy powiedzą, czy kod z kartki nadal prowadzi do adresu.
+Ten plik jest bramką: zmienisz kwotę na pokwitowaniu albo tabelę punktów, a testy
+powiedzą, czy hasło, szyfrogram i strona nadal opowiadają tę samą historię.
 """
 
 from __future__ import annotations
 
+import re
+from pathlib import Path
+
 import pytest
 
-from present import codec, config, puzzle
+from present import build, config, puzzle
+
+ROOT = Path(__file__).resolve().parent.parent
 
 
 @pytest.fixture(scope="module")
@@ -39,23 +44,26 @@ def test_median_is_the_middle_value(loaded: puzzle.Puzzle) -> None:
         assert house.median == ordered[len(ordered) // 2]
 
 
-def test_shift_is_usable(loaded: puzzle.Puzzle) -> None:
-    assert 1 <= loaded.shift <= 25
+def test_answer_is_house_and_remainder(loaded: puzzle.Puzzle) -> None:
+    expected = f"{loaded.median_winner.name}{loaded.total_knuts % loaded.median_winner.median}"
+    assert loaded.answer == expected.lower()
+    assert loaded.answer.isalnum()  # normalizacja w przeglądarce nie ma czego gubić
 
 
-def test_card_code_leads_back_to_address(loaded: puzzle.Puzzle) -> None:
-    address = config.site().address
-    on_card = codec.caesar(address, loaded.shift)  # to jest drukowane jako hex
-    decoded = codec.from_hex(codec.to_hex(on_card))
-    assert codec.caesar(decoded, -loaded.shift) == address
+def test_seal_opens_with_the_answer(loaded: puzzle.Puzzle) -> None:
+    payload = {"code": "TEST-1", "png": "AAAA", "note": "x"}
+    box = build.seal(payload, loaded.answer)
+    assert build.open_box(box, loaded.answer) == payload
+    assert build.open_box(box, "nieprawdopodobne-haslo") is None
 
 
-def test_caesar_roundtrip() -> None:
-    text = "komarekzm.github.io/p"
-    assert codec.caesar(codec.caesar(text, 7), -7) == text
-
-
-def test_caesar_leaves_punctuation_alone() -> None:
-    # Kropki i ukośnik nie mogą się przesuwać, inaczej adres przestaje być adresem.
-    assert codec.caesar("2.2/9", 5) == "2.2/9"
-    assert codec.caesar("a.b/c", 1) == "b.c/d"
+def test_published_page_keeps_secrets_hidden(loaded: puzzle.Puzzle) -> None:
+    page = ROOT / "docs" / "index.html"
+    if not page.exists():
+        pytest.skip("brak docs/index.html — uruchom `mise run build`")
+    html = page.read_text(encoding="utf-8")
+    coupon = (ROOT / "kupon.txt").read_text(encoding="utf-8").split()[0]
+    assert loaded.answer not in html.lower()
+    assert coupon not in html
+    # Sam schemat data:image jest w skrypcie, ale żadnego gotowego obrazka w HTML-u.
+    assert not re.search(r"data:image/png;base64,[A-Za-z0-9+/]{100,}", html)

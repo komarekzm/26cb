@@ -1,8 +1,7 @@
-"""Zagadka z kartki: arytmetyka, która daje przesunięcie liter w kodzie.
+"""Zagadka ze strony: arytmetyka, która daje hasło do kuponu.
 
-Trzymamy to w jednym miejscu, bo build ma prawo odmówić publikacji, jeśli z danych
-w config.toml nie wychodzi sensowne przesunięcie. Liczby na kartce i kod w hexie
-muszą opowiadać tę samą historię — inaczej prezent prowadzi donikąd.
+Jedno źródło prawdy: hasło wynika Z TYCH LICZB. Zmienisz tabelę albo kwotę —
+zmieni się hasło, szyfrogram i to, co trzeba powiedzieć siostrze, gdy utknie.
 """
 
 from __future__ import annotations
@@ -62,9 +61,14 @@ class Puzzle:
         return max(self.houses, key=lambda house: house.median)
 
     @property
-    def shift(self) -> int:
-        """Reszta z dzielenia knutów przez medianę zwycięzcy — tyle liter w tył."""
+    def remainder(self) -> int:
+        """Reszta z dzielenia knutów przez medianę zwycięzcy."""
         return self.total_knuts % self.median_winner.median
+
+    @property
+    def answer(self) -> str:
+        """Hasło: nazwa domu i reszta, sklejone. Normalizowane po stronie przeglądarki."""
+        return f"{self.median_winner.name}{self.remainder}".lower()
 
 
 def load(cfg: dict) -> Puzzle:
@@ -82,9 +86,9 @@ def load(cfg: dict) -> Puzzle:
             "zagadka nie ma pointy: średnia i mediana wskazują ten sam dom "
             f"({puzzle.average_winner.name}). Podkręć jedną wartość odstającą."
         )
-    if not 1 <= puzzle.shift <= 25:
+    if puzzle.remainder == 0:
         raise SystemExit(
-            f"przesunięcie wyszło {puzzle.shift} — bezużyteczne. Zmień kwotę na "
-            "pokwitowaniu albo medianę zwycięzcy."
+            "reszta z dzielenia wyszła 0 — hasło traci cyfrę i robi się zbyt łatwe "
+            "do zgadnięcia. Zmień kwotę na pokwitowaniu."
         )
     return puzzle
