@@ -144,6 +144,7 @@ def main() -> None:
         "site_owner": site.address.rsplit("/", 1)[0],
         "box_svg": codebox.render(code),
         "code_has_letters": any(char.isalpha() for char in code),
+        "ascii_table": codec.ascii_table(),
         "key_svg": codebox.render_key(),
         "box": box,
     }

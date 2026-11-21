@@ -107,7 +107,24 @@ h1 {
   <div class="key">{{ key_svg | safe }}</div>
 
   <div class="pad"></div>
-  <p class="eyebrow">Domena przed ukośnikiem, kod z siatki po ukośniku</p>
+  <p class="eyebrow">Domena przed ukośnikiem, kod z siatki po ukośniku · wszystko małymi literami</p>
+</section>
+
+<section class="sheet">
+  <p class="eyebrow">Tablica znaków</p>
+  <h1>Hex → znak</h1>
+
+  <p class="card-lead">
+    Gdyby trzeba było zamienić parę cyfr na literę: każda para to jeden znak.
+    <code>6B</code> to <code>k</code>, <code>2E</code> to kropka, <code>2F</code> to ukośnik.
+  </p>
+
+  <div class="key-grid">
+    {% for h, ch in ascii_table %}<span><b>{{ h }}</b>{{ ch }}</span>{% endfor %}
+  </div>
+
+  <div class="pad"></div>
+  <p class="eyebrow">Spacja oznaczona jako ␣ — w adresie jej nie ma</p>
 </section>
 </body>
 </html>

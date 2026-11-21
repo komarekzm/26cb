@@ -6,7 +6,7 @@
 # Bez "https://" i bez ukośnika na końcu. Ostatnie cztery znaki to kod z siatki 4 × 4,
 # który idzie na kartkę; domena jest tam pisana wprost.
 # Musi mieć postać <user>.github.io/<repo>: stąd deploy bierze miejsce pushu.
-url = "komarekzm.github.io/6365"
+url = "komarekzm.github.io/286d"
 # Imię w wołaczu; trafia do leada przez {name}.
 name = "Siostro"
 title = "Koperta pierwsza"
