@@ -21,6 +21,27 @@ meta = ["Małe Garbary 2, Poznań", "75 minut", "2–4 osoby"]
 note = "Pokaż ten kod przy rezerwacji albo wpisz go w polu „kod rabatowy” na lock.me."
 redeem_url = "https://lock.me/pl/poland/wielkopolskie/poznan/escape-room/find-a-way-2/11574-sladami-harryego"
 
+# ── Zagadka ───────────────────────────────────────────────────────────────────
+# Jedno źródło prawdy: przesunięcie liter w kodzie wynika Z TYCH LICZB.
+# Zmienisz tabelę — zmieni się przesunięcie, hex i kartka. Build sprawdza, czy
+# arytmetyka wychodzi sensownie i czy kod wraca do adresu.
+
+[puzzle.receipt]
+# Kurs kanoniczny: 1 galeon = 17 sykli, 1 sykiel = 29 knutów (czyli 493 knutów).
+galleons = 2
+sickles = 9
+knuts = 14
+
+[puzzle.house_points]
+events = ["Troll", "Quidditch", "Eliksiry", "Zaklęcia", "Turniej"]
+# Punkty z pięciu wydarzeń. Jeden dom wygrywa średnią, inny medianą — o to chodzi.
+# Wartości muszą być nieparzyste w liczbie (mediana to środkowa, nie ułamek).
+[puzzle.house_points.houses]
+Ravenclaw = [36, 34, 33, 34, 35]
+Slytherin = [50, 20, 30, 25, 55]
+Gryffindor = [28, 30, 32, 31, 29]
+Hufflepuff = [22, 24, 25, 23, 26]
+
 [card]
 # Wskazówka na kartce — Twoje słowa, nie kod.
-hint = "Dwa znaki to jedna litera. Tablica po drugiej stronie."
+hint = "Dwa znaki hex to jedna litera. Tablica po drugiej stronie."

@@ -9,7 +9,7 @@ from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, StrictUndefined, select_autoescape
 
-from present import codec, config
+from present import codec, config, puzzle as puzzle_mod
 
 ROOT = config.ROOT
 TEMPLATES = ROOT / "templates"
@@ -51,6 +51,18 @@ def verify_qr(code: str) -> None:
         raise SystemExit(f"QR nie odczytuje się poprawnie: {decoded!r} != {code!r}")
 
 
+def verify_puzzle(puzzle: puzzle_mod.Puzzle, scrambled: str, address: str) -> None:
+    """Kod z kartki musi wracać do adresu — inaczej nikt tam nie dojdzie."""
+    decoded = codec.from_hex(codec.to_hex(scrambled))
+    if decoded != scrambled:
+        raise SystemExit("hex nie odwraca się poprawnie")
+    if codec.caesar(decoded, -puzzle.shift) != address:
+        raise SystemExit(
+            f"po cofnięciu o {puzzle.shift} nie wychodzi {address!r}. "
+            "Zagadka i adres przestały do siebie pasować."
+        )
+
+
 def read_coupon() -> str:
     path = ROOT / "kupon.txt"
     lines = [ln.strip() for ln in path.read_text(encoding="utf-8").splitlines() if ln.strip()]
@@ -71,6 +83,11 @@ def main() -> None:
             "Wklej prawdziwy kod albo włącz test_mode."
         )
 
+    puzzle = puzzle_mod.load(cfg)
+    address = site.address
+    scrambled = codec.caesar(address, puzzle.shift)  # to trafia na kartkę jako hex
+    verify_puzzle(puzzle, scrambled, address)
+
     env = Environment(
         loader=FileSystemLoader(TEMPLATES),
         autoescape=select_autoescape(["html"]),
@@ -82,19 +99,23 @@ def main() -> None:
     svg = qr_svg(code)
     verify_qr(code)
 
-    address = site.address
-    first_byte = codec.to_hex(address)[:2]
+    first_hex = codec.to_hex(scrambled)[:2]
+    first_char = codec.from_hex(first_hex)
     common = {
         "page": cfg["page"],
         "gift": {**cfg["gift"], "lead": cfg["gift"]["lead"].format(name=cfg["page"]["name"])},
         "voucher": {**cfg["voucher"], "code": code},
         "card": cfg["card"],
-        "hex_rows": codec.hex_rows(address),
+        "puzzle": puzzle,
+        "receipt": cfg["puzzle"]["receipt"],
+        "events": cfg["puzzle"]["house_points"]["events"],
+        "hex_rows": codec.hex_rows(scrambled),
         "address": address,
         "ascii_table": codec.ascii_table(),
-        "sample_hex": first_byte,
-        "sample_dec": int(first_byte, 16),
-        "sample_char": codec.from_hex(first_byte),
+        "sample_hex": first_hex,
+        "sample_dec": int(first_hex, 16),
+        "sample_char": first_char,
+        "sample_shifted": codec.caesar(first_char, -puzzle.shift),
     }
 
     index = env.get_template("index.html.j2").render(qr_svg=svg, **common)
@@ -107,13 +128,16 @@ def main() -> None:
     (DOCS / "robots.txt").write_text("User-agent: *\nDisallow: /\n", encoding="utf-8")
     (BUILD / "karta-A4.html").write_text(card, encoding="utf-8")
 
-    print(f"kupon    : {code}")
-    print(f"adres    : {address}")
-    print(f"hex      : {codec.to_hex(address)}")
-    for row in codec.hex_rows(address):
-        print(f"           {row}")
-    print(f"strona   : {DOCS / 'index.html'}")
-    print(f"kartka   : {BUILD / 'karta-A4.html'}")
+    print(f"kupon      : {code}")
+    print(f"adres      : {address}")
+    print(f"knuty      : {puzzle.total_knuts} (pokwitowanie)")
+    print(f"średnia    : wygrywa {puzzle.average_winner.name} ({puzzle.average_winner.average:.1f})")
+    print(f"mediana    : wygrywa {puzzle.median_winner.name} ({puzzle.median_winner.median})")
+    print(f"przesunięcie: {puzzle.shift} → na kartce hex z {scrambled!r}")
+    for row in codec.hex_rows(scrambled):
+        print(f"             {row}")
+    print(f"strona     : {DOCS / 'index.html'}")
+    print(f"kartka     : {BUILD / 'karta-A4.html'}")
 
 
 if __name__ == "__main__":

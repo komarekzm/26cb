@@ -14,6 +14,25 @@ config.toml ┘                 └─► build/karta-A4.html (hex + klucz ASCII
 `config.toml: page.url` to adres strony bez `https://`. Z niego liczymy hex, który
 idzie na kartkę, więc **każda zmiana adresu wymaga ponownego wydruku karty**.
 
+## Zagadka na kartce
+
+Trzy kroki, dwie dziedziny, jedna liczba:
+
+1. **Pokwitowanie z Gringotta** — kwota w galeonach, syklach i knutach. Kurs kanoniczny:
+   1 galeon = 17 sykli, 1 sykiel = 29 knutów, czyli galeon to 493 knuty.
+2. **Puchar Domów** — tabela punktów z pięciu wydarzeń. Jeden dom wygrywa **średnią**
+   (u nas jeden wynik odstający: 55 pkt), inny **medianą**. Potrzebna jest mediana zwycięzcy.
+3. **Reszta z dzielenia** knutów przez tę medianę to **przesunięcie** liter w kodzie.
+
+Kod w hex daje ciąg znaków, w którym litery są przesunięte w przód o to przesunięcie;
+cyfry, kropki i ukośnik zostają. Cofnięcie liter w tył daje adres.
+
+**Rozwiązanie dla Ciebie** (żeby nie musieć liczyć, gdy ona utknie): `mise run build`
+na końcu wypisuje knuty, zwycięzcę średniej, zwycięzcę mediany i przesunięcie.
+Zmiana tabeli albo kwoty **automatycznie** zmienia przesunięcie, hex na kartce i to,
+co trzeba wydrukować — build sam sprawdza, że kod z kartki wraca do adresu, a jeśli
+arytmetyka przestaje mieć sens (średnia = mediana, przesunięcie 0), odmawia publikacji.
+
 ## Podmiana testowego kuponu na prawdziwy
 
 1. Wklej kod do `kupon.txt` — jedna linia, nic więcej.

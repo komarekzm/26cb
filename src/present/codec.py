@@ -31,6 +31,22 @@ def from_binary(code: str) -> str:
     return bytes(int(chunk, 2) for chunk in code.split()).decode("utf-8")
 
 
+def caesar(text: str, shift: int) -> str:
+    """Przesuwa wyłącznie litery; cyfry, kropki i ukośniki zostają na miejscu.
+
+    Dzięki temu ten sam kod działa na całym adresie, a nie tylko na domenie.
+    """
+    out = []
+    for char in text:
+        if "a" <= char <= "z":
+            out.append(chr((ord(char) - ord("a") + shift) % 26 + ord("a")))
+        elif "A" <= char <= "Z":
+            out.append(chr((ord(char) - ord("A") + shift) % 26 + ord("A")))
+        else:
+            out.append(char)
+    return "".join(out)
+
+
 def hex_rows(text: str, per_row: int = BYTES_PER_ROW) -> list[str]:
     """Wiersze po `per_row` bajtów, każdy bajt jako para znaków — do druku."""
     code = to_hex(text)
