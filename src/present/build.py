@@ -18,6 +18,7 @@ from pathlib import Path
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from jinja2 import Environment, FileSystemLoader, StrictUndefined, select_autoescape
 
+from present import box as grid
 from present import cipher, codec, config, puzzle as puzzle_mod
 
 ROOT = config.ROOT
@@ -100,7 +101,10 @@ def main() -> None:
     cfg = config.load()
     site = config.site()
     coupon = read_coupon()
-    tokens = cipher.encode(site.address)
+    domain, _, code = site.address.rpartition("/")
+    tokens = cipher.encode(domain + "/")  # pasek: domena razem z ukośnikiem
+    grid_weights = (1, 2, 4, 8)  # cztery kolumny: kod musi mieścić się w literach a–o
+    grid_svg = grid.render(code, weights=grid_weights)
     rotate = "--rotate" in sys.argv
 
     if not cfg["page"]["test_mode"] and coupon.upper().startswith("TEST"):
@@ -140,7 +144,8 @@ def main() -> None:
         "riddle": cfg["puzzle"]["riddle"],
         "address": site.address,
         "token_rows": cipher.rows(tokens),
-        "legend": [(cipher.symbol(value), char) for value, char in enumerate(cipher.LETTERS, start=1)],
+        "grid_svg": grid_svg,
+        "legend_svg": grid.render_key(weights=grid_weights),
         "box": box,
     }
 
@@ -163,7 +168,8 @@ def main() -> None:
 
     print(f"kupon        : {coupon} (tylko pod monitorem i w build/qr.png)")
     print(f"adres        : {site.address}")
-    print(f"zapis na kartce: {len(tokens)} znaków, numery liter")
+    print(f"domena w pasku: {len(tokens)} znaków")
+    print(f"kod w siatce   : {code} (4 kolumny 1 2 4 8)")
     for row in cipher.rows(tokens):
         print("                 " + " ".join(f"{token:>2}" for token in row))
     print(f"notatki      : {len(puzzle.clues)}")

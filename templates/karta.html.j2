@@ -47,6 +47,9 @@ h1 {
   white-space: pre;
 }
 
+.grid-box { margin-top: 1.6rem; }
+.grid-box svg { display: block; max-width: 100%; height: auto; }
+
 .legend {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -93,6 +96,8 @@ h1 {
 
   <pre class="strip">{% for row in token_rows %}{% for token in row %}{{ "%2s" | format(token) }}{% if not loop.last %} {% endif %}{% endfor %}
 {% endfor %}</pre>
+
+  <div class="grid-box">{{ grid_svg | safe }}</div>
   <p class="hint">{{ card.hint }}</p>
 
   <div class="pad"></div>
@@ -101,18 +106,16 @@ h1 {
 
 <section class="sheet">
   <p class="eyebrow">Legenda</p>
-  <h1>Numer litery</h1>
+  <h1>Numer litery i wagi</h1>
 
   <p class="card-lead">
-    Każdy znak zapisu to numer litery w alfabecie, licząc od jedynki, zapisany w hexie:
-    <code>1 = a</code>, <code>2 = b</code> … <code>9 = i</code>, <code>A = j</code>
-    … <code>F = o</code>, a potem liczenie idzie dalej: <code>10 = p</code>,
-    <code>11 = q</code> … <code>1A = z</code>. Kropka i ukośnik stoją bez zmian.
+    Pasek to numer litery w alfabecie, licząc od jedynki, zapisany w hexie:
+    <code>1 = a</code> … <code>9 = i</code>, <code>A = j</code> … <code>F = o</code>,
+    dalej <code>10 = p</code> … <code>1A = z</code>. Siatka to sumy wag kolumn
+    <code>1 2 4 8</code> — też numer litery.
   </p>
 
-  <div class="legend">
-    {% for mark, letter in legend %}<span><b>{{ mark }}</b>{{ letter }}</span>{% endfor %}
-  </div>
+  <div class="key">{{ legend_svg | safe }}</div>
 
   <div class="pad"></div>
   <p class="eyebrow">Adres wpisujesz małymi literami, bez „https://”</p>
