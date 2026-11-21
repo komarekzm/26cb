@@ -48,7 +48,13 @@ if __name__ == "__main__":
     from present.config import site
 
     if len(sys.argv) > 1 and sys.argv[1] == "decode":
-        raw = " ".join(sys.argv[2:]) or sys.stdin.read()
+        raw = " ".join(sys.argv[2:])
+        if not raw and sys.stdin.isatty():
+            # Bez argumentu i bez potoku: sprawdź samego siebie na adresie z configu.
+            raw = to_hex(site().address)
+            print(f"brak argumentu — sprawdzam siebie: {raw}")
+        elif not raw:
+            raw = sys.stdin.read()
         print(from_hex(raw))
     else:
         address = site().address
