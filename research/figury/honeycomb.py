@@ -143,14 +143,15 @@ def render(hex_str: str) -> str:
     length = math.hypot(dx, dy) or 1.0
     ux, uy = dx / length, dy / length
     ax, ay = sx + ux * 8.0, sy + uy * 8.0
-    bx, by = sx + ux * 1.6, sy + uy * 1.6
+    bx, by = sx + ux * 2.3, sy + uy * 2.3
     px, py = -uy, ux
+    base_x, base_y = bx - ux * 1.8, by - uy * 1.8
     parts.append(
         f'<g id="start"><line x1="{ax:.2f}" y1="{ay:.2f}" x2="{bx:.2f}" '
         f'y2="{by:.2f}" stroke="black" stroke-width="0.9"/>'
-        f'<polygon points="{bx + px * 2.2:.2f},{by + py * 2.2:.2f} '
-        f'{bx - px * 2.2:.2f},{by - py * 2.2:.2f} '
-        f'{sx:.2f},{sy:.2f}" fill="black"/>'
+        f'<polygon points="{bx:.2f},{by:.2f} '
+        f'{base_x + px * 1.9:.2f},{base_y + py * 1.9:.2f} '
+        f'{base_x - px * 1.9:.2f},{base_y - py * 1.9:.2f}" fill="black"/>'
         f'<text x="{ax + ux * 4.0:.2f}" y="{ay + uy * 4.0:.2f}" '
         f'font-family="sans-serif" font-size="2.6" text-anchor="middle" fill="black">start</text></g>'
     )

@@ -379,6 +379,6 @@
 <circle class="bead" cx="75.00" cy="68.00" r="2.20" fill="none" stroke="black" stroke-width="0.38"/>
 </g>
 <g id="goal"><circle cx="75.00" cy="68.00" r="0.75" fill="black"/></g>
-<g id="start"><line x1="97.10" y1="131.81" x2="95.01" y2="125.76" stroke="black" stroke-width="0.9"/><polygon points="92.93,126.48 97.09,125.04 94.49,124.25" fill="black"/><text x="98.41" y="135.59" font-family="sans-serif" font-size="2.6" text-anchor="middle" fill="black">start</text></g>
+<g id="start"><line x1="97.10" y1="131.81" x2="95.24" y2="126.42" stroke="black" stroke-width="0.9"/><polygon points="95.24,126.42 92.85,125.34 96.44,124.10" fill="black"/><text x="98.41" y="135.59" font-family="sans-serif" font-size="2.6" text-anchor="middle" fill="black">start</text></g>
 <text x="75" y="146" font-family="sans-serif" font-size="3.2" text-anchor="middle" fill="black">A · PLASTER MIODU — cyfra = ile pól od paciorka do paciorka; 0 = dwa pierścienie</text>
 </svg>

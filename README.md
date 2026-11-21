@@ -19,18 +19,20 @@ szyfrogram AES-GCM; klucz powstaje ze słowa ułożonego w zagadce (PBKDF2-SHA25
 
 ## Zagadka
 
-Dziewięć wpisów z księgi eliksirów: nazwa, jedno zdanie zapachu, objętość w dramach
-i cena w galeonach, syklach i knutach (1 galeon = 17 sykli, 1 sykiel = 29 knutów).
-Regułę podaje rymowanka mistrza eliksirów — ona jest jedynym miejscem, gdzie powiedziane
-jest „za jednego drama", więc nie trzeba jej dublować w instrukcji.
+Bez liczenia — sama wiedza i skojarzenie. Dziewięć notatek opisuje **skutki zaklęć**,
+ale nie podaje ich nazw. Pod notatkami jest bank dziewięciu zaklęć (alfabetycznie,
+żeby nie sugerował kolejności). Rozpoznajesz zaklęcie z każdej notatki, bierzesz jego
+**pierwszą literę** i czytasz litery w kolejności notatek:
 
-1. Przelicz każdą cenę na knuty.
-2. Podziel przez liczbę dramów — dostaniesz cenę **za jeden dram** (zawsze liczbę całkowitą).
-3. Ustaw kwity rosnąco po tej cenie i czytaj litery z pieczęci → **ALOHOMORA**.
+```
+Accio · Lumos · Oppugno · Homenum Revelio · Obliviate
+Muffliato · Orchideous · Reducto · Aguamenti
+→ A L O H O M O R A
+```
 
-Pułapka: sortowanie po **cenie łącznej** daje `LAOOAHRMO`, a po samych galeonach to samo.
-Dlatego bramka w testach sprawdza, że żadne naiwne sortowanie (suma, galeony, sykle, dramy,
-alfabet) nie daje hasła ani jego odwrotności — i że hasło nie czyta się wprost z tabeli.
+Pułapka jest w banku: czytany po kolei daje `AAHLMOOOR`, czyli nic. Inicjały działają
+dopiero po dopasowaniu notatek do nazw. Testy pilnują też, że żadna notatka nie
+powtarza się, żadne zaklęcie nie występuje dwa razy i w notatkach nie ma ani jednej cyfry.
 
 Build wypisuje rozwiązanie (`mise run build`) i zapisuje słowo do `build/answer.txt`
 (**gitignored**), żeby nie leżało w publicznym repo.
@@ -67,9 +69,9 @@ po poprawnym słowie tylko tyle, że ma tam zajrzeć — treść tej wiadomości
 - **Figura na kartce** jest odczytywana w testach z samego SVG: `(podstawa − szczyt) / kratka`,
   szczyt musi leżeć dokładnie na linii siatki, kratka ≥ 4,5 mm przy skali druku, rysunek
   wyłącznie szary.
-- **Zagadka** jest rozwiązywana w teście z opublikowanego HTML-a: parser czyta tabelę
-  (litera, dramy, cena g/s/k), liczy knuty i układa słowo. Jeśli wyjdzie coś innego
-  niż `ALOHOMORA`, build nie przejdzie.
+- **Zagadka** jest rozwiązywana w teście z opublikowanego HTML-a: parser czyta notatki
+  w kolejności i bank zaklęć, dopasowuje (mapowanie z configu) i składa słowo.
+  Jeśli wyjdzie coś innego niż `ALOHOMORA`, test nie przejdzie.
 - **Wycieki**: kod kuponu i słowo nie mogą wystąpić w HTML-u; nie może też być gotowego
   `data:image/png;base64,…`.
 - **Szyfrogram**: build odszyfrowuje go poprawnym słowem i sprawdza, że złe słowo nie
