@@ -100,6 +100,10 @@ h1 {
     W każdym rzędzie zsumuj wagi kropek, które są zamalowane — suma to jedna cyfra kodu.
     Cztery rzędy, czytane z góry na dół, dają cztery znaki.
   </p>
+  {% if code_has_letters %}
+  <p>Gdy suma przekroczy dziewięć: <code>10 = a</code> … <code>15 = f</code>.</p>
+  {% endif %}
+
   <div class="key">{{ key_svg | safe }}</div>
 
   <div class="pad"></div>

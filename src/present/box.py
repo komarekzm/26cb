@@ -100,7 +100,7 @@ def decode(svg: str) -> str:
     return "".join(f"{value:x}" for value in values)
 
 
-def render_key(cell: float = 40) -> str:
+def render_key(cell: float = 40, letters: bool = False) -> str:
     """Klucz na odwrotną stronę: waga każdej kolumny i co znaczą sumy powyżej dziewięciu."""
     rows = [
         ("kolumna 1", "1", "kropka w pierwszej kolumnie"),
@@ -117,9 +117,10 @@ def render_key(cell: float = 40) -> str:
                      f'fill="{LABEL}">{weight}</text>')
         parts.append(f'<text x="{cell * 2.6}" y="{y}" font-family="monospace" font-size="{cell * 0.4}" '
                      f'fill="#2f3437">{note}</text>')
-    parts.append(f'<text x="{cell * 0.6}" y="{cell * 5.6}" font-family="monospace" '
-                 f'font-size="{cell * 0.38}" fill="{LABEL}">'
-                 f'sumuj w rzędzie · 10=a 11=b 12=c 13=d 14=e 15=f</text>')
+    if letters:
+        parts.append(f'<text x="{cell * 0.6}" y="{cell * 5.6}" font-family="monospace" '
+                     f'font-size="{cell * 0.38}" fill="{LABEL}">'
+                     f'sumuj w rzędzie · 10=a 11=b 12=c 13=d 14=e 15=f</text>')
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" '
             f'width="{width}" height="{height}">{"".join(parts)}</svg>')
 
