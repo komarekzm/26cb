@@ -143,6 +143,15 @@ table.points td { font-family: var(--mono); }
 }
 .key-grid span { display: flex; gap: 0.4rem; }
 .key-grid b { font-weight: 500; color: var(--muted); }
+
+.figure-svg {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 185mm;
+  margin-top: 0.9em;
+}
 .wrap {
   max-width: 34rem;
   margin: 0 auto;
@@ -175,6 +184,39 @@ h1 {
   border-radius: 12px;
 }
 .puzzle .step:first-of-type { margin-top: 0.4rem; }
+
+table.receipts {
+  width: 100%;
+  margin-top: 0.4rem;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+}
+table.receipts th,
+table.receipts td {
+  padding: 0.34rem 0.3rem;
+  border-bottom: 1px solid var(--line);
+  text-align: right;
+  font-weight: 400;
+}
+table.receipts thead th {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+table.receipts thead th:nth-child(2) { text-align: left; }
+table.receipts td.drams, table.receipts td:nth-child(3) { font-family: var(--mono); }
+table.receipts td:nth-child(3),
+table.receipts td:nth-child(4) { font-family: var(--mono); white-space: nowrap; }
+table.receipts tbody th { text-align: left; }
+table.receipts .stamp {
+  width: 1.7rem;
+  text-align: center;
+  font-family: var(--mono);
+  font-weight: 600;
+  color: var(--ink);
+}
 
 form { margin-top: 1.4rem; }
 
@@ -308,44 +350,85 @@ button:active { transform: scale(0.98); }
   </header>
 
   <section class="puzzle rise" style="--i:2">
-    <h2 class="step"><span>I</span> Pokwitowanie z Gringotta</h2>
-    <div class="receipt">
-      <div class="receipt-row">
-        <span>Skrytka 687 — opłata roczna</span>
-        <span class="num">2 galeony · 9 sykli · 14 knutów</span>
-      </div>
-      <div class="receipt-rule"></div>
-      <p class="receipt-key">1 galeon = 17 sykli · 1 sykiel = 29 knutów</p>
-    </div>
-    <p class="step-note">Policz, ile to razem knutów.</p>
-
-    <h2 class="step"><span>II</span> Puchar Domów</h2>
-    <table class="points">
+    <h2 class="step"><span>I</span> Kwity z apteki eliksirów</h2>
+    <table class="receipts">
       <thead>
-        <tr><th>dom</th><th>Troll</th><th>Quidditch</th><th>Eliksiry</th><th>Zaklęcia</th><th>Turniej</th></tr>
+        <tr><th>pieczęć</th><th>eliksir</th><th>dramy</th><th>cena</th></tr>
       </thead>
       <tbody>
-        <tr><th>Ravenclaw</th><td>36</td><td>34</td><td>33</td><td>34</td><td>35</td></tr>
-        <tr><th>Slytherin</th><td>50</td><td>20</td><td>30</td><td>25</td><td>55</td></tr>
-        <tr><th>Gryffindor</th><td>28</td><td>30</td><td>32</td><td>31</td><td>29</td></tr>
-        <tr><th>Hufflepuff</th><td>22</td><td>24</td><td>25</td><td>23</td><td>26</td></tr>
+        <tr>
+          <td class="stamp">A</td>
+          <th>Amortencja</th>
+          <td>14</td>
+          <td>2g 8s 14k</td>
+        </tr>
+        <tr>
+          <td class="stamp">O</td>
+          <th>Eliksir Pobudzający</th>
+          <td>27</td>
+          <td>1g 16s 15k</td>
+        </tr>
+        <tr>
+          <td class="stamp">R</td>
+          <th>Eliksir Rozdymający</th>
+          <td>31</td>
+          <td>4g 13s 7k</td>
+        </tr>
+        <tr>
+          <td class="stamp">O</td>
+          <th>Eliksir Słodkiego Snu</th>
+          <td>15</td>
+          <td>2g 1s 5k</td>
+        </tr>
+        <tr>
+          <td class="stamp">O</td>
+          <th>Eliksir Wielosokowy</th>
+          <td>60</td>
+          <td>6g 5s 17k</td>
+        </tr>
+        <tr>
+          <td class="stamp">A</td>
+          <th>Eliksir Zapomnienia</th>
+          <td>43</td>
+          <td>1g 12s 19k</td>
+        </tr>
+        <tr>
+          <td class="stamp">L</td>
+          <th>Felix Felicis</th>
+          <td>21</td>
+          <td>1g 3s 8k</td>
+        </tr>
+        <tr>
+          <td class="stamp">H</td>
+          <th>Veritaserum</th>
+          <td>32</td>
+          <td>2g 14s 16k</td>
+        </tr>
+        <tr>
+          <td class="stamp">M</td>
+          <th>Wywar Żywej Śmierci</th>
+          <td>48</td>
+          <td>5g 14s 9k</td>
+        </tr>
       </tbody>
     </table>
+
+    <h2 class="step"><span>II</span> Ile to knutów</h2>
     <p class="step-note">
-      Policz średnią i medianę punktów każdego domu. Kolejność wyjdzie inna, niż podpowiada
-      oko: jeden dom wygrywa średnią, drugi medianą. Ten drugi jest teraz ważny.
+      Przelicz cenę każdego kwitu na knuty: 1 galeon to 17 sykli, 1 sykiel to 29 knutów.
     </p>
 
-    <h2 class="step"><span>III</span> Hasło</h2>
+    <h2 class="step"><span>III</span> Cena za jeden dram</h2>
     <p class="step-note">
-      Podziel knuty z pokwitowania przez medianę zwycięzcy i weź resztę. Sklej nazwę domu
-      z tą resztą — jedno słowo, bez spacji, bez polskich znaków.
+      Podziel knuty przez liczbę dramów. Ustaw kwity od najtańszego za dram do najdroższego
+      i czytaj litery z pieczęci — 9 liter, jedno słowo.
+      Cena łączna podpowie inną kolejność i inne słowo.
     </p>
 
     <form id="unlock" autocomplete="off" novalidate>
-      <label for="answer">Hasło</label>
+      <label for="answer">Słowo</label>
       <div class="row">
-        <input id="answer" name="answer" type="text" placeholder="np. hufflepuff7"
+        <input id="answer" name="answer" type="text" placeholder="9 liter"
                spellcheck="false" autocapitalize="off" required>
         <button type="submit">Otwórz</button>
       </div>
@@ -377,7 +460,7 @@ button:active { transform: scale(0.98); }
   </p>
 </noscript>
 
-<script type="application/json" id="box">{"ct": "ucVB+4rapRMLeAZX+KONCRTNPsqV++v5jcolgHCZkPIAUEpVcSb3pyTbBMYpxQdTxQKBVCOQWY3A5/GpyPPCDVI1Og4IL2H5/eiRUPrJoX6Pudw2A8seqW1kZiAJs3WbHIKKaH1HvTock9EmgUh+OFIrURzZJ/wPRSc51ImvcxSJ+s2RCWh+5ifmlrtFERyvufyhalAaaN2RRy0W4IMTcejx510QB6oXkw1AreRNvE7KA4UwMK+fPU4UUziH3Qiv5WwbNBIsXZE+Fd3S5HK4MBBrf/X64o5Z78bIoz2eia1RcUc03m57YHifvkPDvizjVaSkJs1CrnS9f+/OVGbUi7krH43htXn/M4waVJEfzhI1DsuzufGMPdFekfriaz02WETFQR6GFaHwn6tLp5d/eIYWCmobQJrOf9tSai1ORuavZua4sSiiPCdw9icA782YNqbiJG7VV49bQQp2BFJtuRi1SGIPIXZ/kNB3cbWFfOdCkhNlHE6UyBJYn68y3zPQ0q0ht86Hngw9IwLYoF+iir0kBr+Kwo5gDgZCBoGZvfKtSeRtIyrLQMnPgOGDR5e6p/DbYBnQQGXuiLromrP+ZePHeLU+HP/Hqau2px/2MhUjhEiQ+751qVC61HwXTzr64j6oLkOh0Ve0dJHAt+ywnxzIgmUA0MyxD0jsaT4MmzN6toM2rsH7lJY8niPGtKK9XMwHkEVB4Mk=", "iterations": 210000, "iv": "SjBvO3o20+yII26O", "salt": "q2rRXvdIHTLXWDKqmm5eFw=="}</script>
+<script type="application/json" id="box">{"ct": "VzhLXPYXuNzdblRycsI8OQSTXfaJv+WLvnp243N1GV/JtRkWLAnbM7xpCqznQLByPI8QEJ08h//VTzlxdZwOex0UoH+owzPjJa2Qv4AjxT1MwG95VCqb5CTz80jydkUJqy0/pA0qvDthYUPPdg8s8Nnf258VUXL/N38Jug+k", "iterations": 210000, "iv": "SjBvO3o20+yII26O", "salt": "q2rRXvdIHTLXWDKqmm5eFw=="}</script>
 <script>
 // Odszyfrowanie kuponu w przeglądarce: PBKDF2-SHA256 → AES-GCM.
 // Bez zależności i bez sieci — cała kryptografia siedzi w WebCrypto.

@@ -1,8 +1,8 @@
-"""Renderuje docs/ (strona z zagadką i zaszyfrowanym kuponem) oraz build/karta-A4.html.
+"""Renderuje docs/ (strona z zagadką i zaszyfrowanym hasłem) oraz build/karta-A4.html.
 
-Zasada: kupon nie leży na stronie jawnym tekstem. W HTML siedzi wyłącznie szyfrogram
-AES-GCM, którego klucz powstaje z hasła wyliczonego w zagadce (PBKDF2-SHA256).
-Dzięki temu zwykłe "pokaż źródło" nic nie daje, a kod nie trafia też do gita.
+Zasada: na stronie nie ma ani kuponu, ani hasła jawnym tekstem. W HTML siedzi wyłącznie
+szyfrogram AES-GCM, którego klucz powstaje ze słowa ułożonego w zagadce (PBKDF2-SHA256).
+QR kuponu nie trafia na stronę wcale — ten papier leży pod monitorem.
 """
 
 from __future__ import annotations
@@ -11,7 +11,6 @@ import base64
 import hashlib
 import json
 import os
-import re
 import subprocess
 import sys
 from pathlib import Path
@@ -19,7 +18,7 @@ from pathlib import Path
 from cryptography.hazmat.primitives.ciphers.aead import AESGCM
 from jinja2 import Environment, FileSystemLoader, StrictUndefined, select_autoescape
 
-from present import codec, config, puzzle as puzzle_mod
+from present import codec, config, figure, puzzle as puzzle_mod
 
 ROOT = config.ROOT
 TEMPLATES = ROOT / "templates"
@@ -31,15 +30,17 @@ KDF_STATE = BUILD / "kdf.json"  # sól i IV przeżywają rebuildy, żeby HTML ni
 ANSWER_FILE = BUILD / "answer.txt"  # dla testów; build/ jest w .gitignore
 
 
-def qr_png(code: str) -> bytes:
+def qr_png(code: str) -> Path:
     BUILD.mkdir(exist_ok=True)
     path = BUILD / "qr.png"
-    subprocess.run(["qrencode", "-o", str(path), "-t", "PNG", "-s", "8", "-m", "2", code], check=True)
-    return path.read_bytes()
+    subprocess.run(
+        ["qrencode", "-o", str(path), "-t", "PNG", "-s", "8", "-m", "2", code], check=True
+    )
+    return path
 
 
 def verify_qr(path: Path, code: str) -> None:
-    """Dekoduje QR z powrotem — zły QR na prezencie psuje całą zabawę."""
+    """Dekoduje QR z powrotem — zły QR pod monitorem psuje całą zabawę."""
     decoded = subprocess.run(
         ["zbarimg", "-q", "--raw", str(path)], check=True, capture_output=True, text=True
     ).stdout.strip()
@@ -77,7 +78,7 @@ def seal(payload: dict, answer: str, rotate: bool = False) -> dict:
 
 
 def open_box(box: dict, answer: str) -> dict | None:
-    """Kontrola przed publikacją: czy hasło z zagadki naprawdę otwiera kupon."""
+    """Kontrola przed publikacją: czy słowo z zagadki naprawdę otwiera wiadomość."""
     try:
         plain = AESGCM(derive(answer, base64.b64decode(box["salt"]))).decrypt(
             base64.b64decode(box["iv"]), base64.b64decode(box["ct"]), None
@@ -110,17 +111,14 @@ def main() -> None:
     puzzle = puzzle_mod.load(cfg)
     answer = puzzle.answer
 
-    qr_file = BUILD / "qr.png"
-    payload = {
-        "code": code,
-        "png": base64.b64encode(qr_png(code)).decode(),
-        "note": cfg["voucher"]["note"],
-    }
+    # QR generujemy mimo wszystko: to on idzie na wydruk pod monitor.
+    qr_file = qr_png(code)
     verify_qr(qr_file, code)
 
+    payload = {"text": cfg["voucher"]["location"]}
     box = seal(payload, answer, rotate=rotate)
     if open_box(box, answer) != payload:
-        raise SystemExit("hasło z zagadki nie otwiera szyfrogramu — coś się rozjechało")
+        raise SystemExit("słowo z zagadki nie otwiera szyfrogramu — coś się rozjechało")
     if open_box(box, "nieprawdopodobne-haslo") is not None:
         raise SystemExit("złe hasło otworzyło szyfrogram — to nie powinno się zdarzyć")
 
@@ -139,11 +137,10 @@ def main() -> None:
         "voucher": cfg["voucher"],
         "card": cfg["card"],
         "puzzle": puzzle,
-        "receipt": cfg["puzzle"]["receipt"],
-        "events": cfg["puzzle"]["house_points"]["events"],
         "address": site.address,
         "hex_rows": codec.hex_rows(site.address),
         "ascii_table": codec.ascii_table(),
+        "figure_svg": figure.svg(codec.to_hex(site.address)),
         "sample_hex": first_hex,
         "sample_dec": int(first_hex, 16),
         "sample_char": codec.from_hex(first_hex),
@@ -154,7 +151,7 @@ def main() -> None:
     index = env.get_template("index.html.j2").render(unlock_js=unlock_js, **common)
     card = env.get_template("karta.html.j2").render(**common)
 
-    # Bramka wyciekowa: ani kod, ani hasło nie mogą leżeć w opublikowanym HTML-u.
+    # Bramka wyciekowa: ani kod kuponu, ani hasło nie mogą leżeć w opublikowanym HTML-u.
     for secret, label in ((code, "kod kuponu"), (answer, "hasło")):
         if secret.lower() in index.lower():
             raise SystemExit(f"{label} trafił jawnym tekstem do strony — przerywam")
@@ -167,15 +164,15 @@ def main() -> None:
     (BUILD / "karta-A4.html").write_text(card, encoding="utf-8")
     ANSWER_FILE.write_text(answer + "\n", encoding="utf-8")  # wyłącznie lokalnie
 
-    print(f"kupon       : {code} (tylko w szyfrogramie, nie w HTML-u)")
-    print(f"adres       : {site.address} → hex na kartce")
-    print(f"knuty       : {puzzle.total_knuts}")
-    print(f"średnia     : wygrywa {puzzle.average_winner.name} ({puzzle.average_winner.average:.1f})")
-    print(f"mediana     : wygrywa {puzzle.median_winner.name} ({puzzle.median_winner.median})")
-    print(f"reszta      : {puzzle.remainder}")
-    print(f"hasło       : {answer}  (zapisane też w {ANSWER_FILE.relative_to(ROOT)})")
-    print(f"strona      : {DOCS / 'index.html'}")
-    print(f"kartka      : {BUILD / 'karta-A4.html'}")
+    print(f"kupon        : {code} (tylko pod monitorem i w build/qr.png)")
+    print(f"adres        : {site.address} → hex na kartce")
+    print(f"kwity        : {len(puzzle.receipts)}")
+    print(f"po cenie/dram: {puzzle.built_word}  ← to jest hasło")
+    print(f"po sumie     : {puzzle.trap_word}  ← pułapka dla nieuważnych")
+    print(f"hasło        : {answer} (zapisane też w {ANSWER_FILE.relative_to(ROOT)})")
+    print(f"strona       : {DOCS / 'index.html'}")
+    print(f"kartka       : {BUILD / 'karta-A4.html'}")
+    print(f"QR do wydruku: {qr_file}")
 
 
 if __name__ == "__main__":

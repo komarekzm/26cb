@@ -135,3 +135,12 @@ table.points td { font-family: var(--mono); }
 }
 .key-grid span { display: flex; gap: 0.4rem; }
 .key-grid b { font-weight: 500; color: var(--muted); }
+
+.figure-svg {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 185mm;
+  margin-top: 0.9em;
+}

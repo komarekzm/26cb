@@ -1,94 +1,106 @@
-"""Zagadka ze strony: arytmetyka, która daje hasło do kuponu.
+"""Zagadka ze strony: kwity z apteki eliksirów, z których powstaje hasło.
 
-Jedno źródło prawdy: hasło wynika Z TYCH LICZB. Zmienisz tabelę albo kwotę —
-zmieni się hasło, szyfrogram i to, co trzeba powiedzieć siostrze, gdy utknie.
+Reguła: każdy kwit podaje cenę w galeonach, syklach i knutach oraz objętość w dramach.
+Trzeba policzyć cenę ZA JEDEN DRAM, ustawić kwity rosnąco i odczytać litery. Kolejność
+po cenie łącznej daje inny, błędny ciąg — i to jest cała pułapka zadania.
+
+Wszystko, co build wie o zagadce, pochodzi z config.toml. Jeśli liczby przestaną dawać
+słowo albo pułapka przestanie działać, build odmawia publikacji.
 """
 
 from __future__ import annotations
 
 from dataclasses import dataclass
-from statistics import mean
 
 GALLEON_IN_SICKLES = 17  # kanon: 17 sykli w galeonie
 SICKLE_IN_KNUTS = 29  # kanon: 29 knutów w syklu
+KNUTS_IN_GALLEON = GALLEON_IN_SICKLES * SICKLE_IN_KNUTS  # 493
 
 
 @dataclass(frozen=True)
-class House:
+class Receipt:
     name: str
-    points: list[int]
-
-    @property
-    def total(self) -> int:
-        return sum(self.points)
-
-    @property
-    def average(self) -> float:
-        return mean(self.points)
-
-    @property
-    def median(self) -> int:
-        ordered = sorted(self.points)
-        if len(ordered) % 2 == 0:
-            raise ValueError(
-                f"{self.name}: mediana z parzystej liczby wyników wychodzi ułamkowa — "
-                "dodaj albo usuń jedno wydarzenie"
-            )
-        return ordered[len(ordered) // 2]
-
-
-@dataclass(frozen=True)
-class Puzzle:
+    letter: str
     galleons: int
     sickles: int
     knuts: int
-    houses: list[House]
+    drams: int
 
     @property
     def total_knuts(self) -> int:
         return (
-            self.galleons * GALLEON_IN_SICKLES * SICKLE_IN_KNUTS
+            self.galleons * KNUTS_IN_GALLEON
             + self.sickles * SICKLE_IN_KNUTS
             + self.knuts
         )
 
     @property
-    def average_winner(self) -> House:
-        return max(self.houses, key=lambda house: house.average)
+    def knuts_per_dram(self) -> float:
+        return self.total_knuts / self.drams
+
+
+@dataclass(frozen=True)
+class Puzzle:
+    word: str
+    receipts: list[Receipt]
 
     @property
-    def median_winner(self) -> House:
-        return max(self.houses, key=lambda house: house.median)
+    def by_unit_price(self) -> list[Receipt]:
+        return sorted(self.receipts, key=lambda receipt: receipt.knuts_per_dram)
 
     @property
-    def remainder(self) -> int:
-        """Reszta z dzielenia knutów przez medianę zwycięzcy."""
-        return self.total_knuts % self.median_winner.median
+    def by_total_price(self) -> list[Receipt]:
+        return sorted(self.receipts, key=lambda receipt: receipt.total_knuts)
+
+    @property
+    def built_word(self) -> str:
+        return "".join(receipt.letter for receipt in self.by_unit_price)
+
+    @property
+    def trap_word(self) -> str:
+        """Co wychodzi, gdy ktoś sortuje po cenie łącznej zamiast za dram."""
+        return "".join(receipt.letter for receipt in self.by_total_price)
 
     @property
     def answer(self) -> str:
-        """Hasło: nazwa domu i reszta, sklejone. Normalizowane po stronie przeglądarki."""
-        return f"{self.median_winner.name}{self.remainder}".lower()
+        return self.word.lower()
 
 
 def load(cfg: dict) -> Puzzle:
-    receipt = cfg["puzzle"]["receipt"]
-    points = cfg["puzzle"]["house_points"]
-    houses = [House(name=name, points=list(vals)) for name, vals in points["houses"].items()]
-    puzzle = Puzzle(
-        galleons=receipt["galleons"],
-        sickles=receipt["sickles"],
-        knuts=receipt["knuts"],
-        houses=houses,
-    )
-    if puzzle.average_winner.name == puzzle.median_winner.name:
-        raise SystemExit(
-            "zagadka nie ma pointy: średnia i mediana wskazują ten sam dom "
-            f"({puzzle.average_winner.name}). Podkręć jedną wartość odstającą."
+    section = cfg["puzzle"]
+    receipts = [
+        Receipt(
+            name=row["name"],
+            letter=row["letter"],
+            galleons=row["galleons"],
+            sickles=row["sickles"],
+            knuts=row["knuts"],
+            drams=row["drams"],
         )
-    if puzzle.remainder == 0:
+        for row in section["receipts"]
+    ]
+    puzzle = Puzzle(word=section["word"], receipts=receipts)
+
+    if len(receipts) != len(puzzle.word):
         raise SystemExit(
-            "reszta z dzielenia wyszła 0 — hasło traci cyfrę i robi się zbyt łatwe "
-            "do zgadnięcia. Zmień kwotę na pokwitowaniu."
+            f"kwitów jest {len(receipts)}, a słowo ma {len(puzzle.word)} liter — "
+            "zagadka nie ułoży się w całość"
+        )
+    if puzzle.built_word != puzzle.word:
+        raise SystemExit(
+            f"sortowanie po cenie za dram daje {puzzle.built_word!r}, a nie {puzzle.word!r}. "
+            "Popraw litery albo kwoty."
+        )
+    if puzzle.trap_word == puzzle.word:
+        raise SystemExit(
+            "sortowanie po cenie łącznej daje to samo słowo — pułapka nie działa, "
+            "a wtedy zadanie rozwiązuje się bez liczenia ceny za dram"
+        )
+    if any(receipt.drams <= 0 for receipt in receipts):
+        raise SystemExit("każdy kwit musi mieć dodatnią objętość w dramach")
+    if any(receipt.knuts_per_dram != int(receipt.knuts_per_dram) for receipt in receipts):
+        raise SystemExit(
+            "cena za dram wychodzi ułamkowa — hasło ma być do policzenia w głowie, "
+            "bez kalkulatora i zaokrągleń"
         )
     return puzzle

@@ -41,6 +41,39 @@ h1 {
 }
 .puzzle .step:first-of-type { margin-top: 0.4rem; }
 
+table.receipts {
+  width: 100%;
+  margin-top: 0.4rem;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+}
+table.receipts th,
+table.receipts td {
+  padding: 0.34rem 0.3rem;
+  border-bottom: 1px solid var(--line);
+  text-align: right;
+  font-weight: 400;
+}
+table.receipts thead th {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+table.receipts thead th:nth-child(2) { text-align: left; }
+table.receipts td.drams, table.receipts td:nth-child(3) { font-family: var(--mono); }
+table.receipts td:nth-child(3),
+table.receipts td:nth-child(4) { font-family: var(--mono); white-space: nowrap; }
+table.receipts tbody th { text-align: left; }
+table.receipts .stamp {
+  width: 1.7rem;
+  text-align: center;
+  font-family: var(--mono);
+  font-weight: 600;
+  color: var(--ink);
+}
+
 form { margin-top: 1.4rem; }
 
 label {
@@ -173,43 +206,39 @@ button:active { transform: scale(0.98); }
   </header>
 
   <section class="puzzle rise" style="--i:2">
-    <h2 class="step"><span>I</span> Pokwitowanie z Gringotta</h2>
-    <div class="receipt">
-      <div class="receipt-row">
-        <span>Skrytka 687 — opłata roczna</span>
-        <span class="num">{{ receipt.galleons }} galeony · {{ receipt.sickles }} sykli · {{ receipt.knuts }} knutów</span>
-      </div>
-      <div class="receipt-rule"></div>
-      <p class="receipt-key">1 galeon = 17 sykli · 1 sykiel = 29 knutów</p>
-    </div>
-    <p class="step-note">Policz, ile to razem knutów.</p>
-
-    <h2 class="step"><span>II</span> Puchar Domów</h2>
-    <table class="points">
+    <h2 class="step"><span>I</span> Kwity z apteki eliksirów</h2>
+    <table class="receipts">
       <thead>
-        <tr><th>dom</th>{% for event in events %}<th>{{ event }}</th>{% endfor %}</tr>
+        <tr><th>pieczęć</th><th>eliksir</th><th>dramy</th><th>cena</th></tr>
       </thead>
       <tbody>
-        {% for house in puzzle.houses %}
-        <tr><th>{{ house.name }}</th>{% for value in house.points %}<td>{{ value }}</td>{% endfor %}</tr>
+        {% for receipt in puzzle.receipts %}
+        <tr>
+          <td class="stamp">{{ receipt.letter }}</td>
+          <th>{{ receipt.name }}</th>
+          <td>{{ receipt.drams }}</td>
+          <td>{{ receipt.galleons }}g {{ receipt.sickles }}s {{ receipt.knuts }}k</td>
+        </tr>
         {% endfor %}
       </tbody>
     </table>
+
+    <h2 class="step"><span>II</span> Ile to knutów</h2>
     <p class="step-note">
-      Policz średnią i medianę punktów każdego domu. Kolejność wyjdzie inna, niż podpowiada
-      oko: jeden dom wygrywa średnią, drugi medianą. Ten drugi jest teraz ważny.
+      Przelicz cenę każdego kwitu na knuty: 1 galeon to 17 sykli, 1 sykiel to 29 knutów.
     </p>
 
-    <h2 class="step"><span>III</span> Hasło</h2>
+    <h2 class="step"><span>III</span> Cena za jeden dram</h2>
     <p class="step-note">
-      Podziel knuty z pokwitowania przez medianę zwycięzcy i weź resztę. Sklej nazwę domu
-      z tą resztą — jedno słowo, bez spacji, bez polskich znaków.
+      Podziel knuty przez liczbę dramów. Ustaw kwity od najtańszego za dram do najdroższego
+      i czytaj litery z pieczęci — {{ puzzle.word | length }} liter, jedno słowo.
+      Cena łączna podpowie inną kolejność i inne słowo.
     </p>
 
     <form id="unlock" autocomplete="off" novalidate>
-      <label for="answer">Hasło</label>
+      <label for="answer">Słowo</label>
       <div class="row">
-        <input id="answer" name="answer" type="text" placeholder="np. hufflepuff7"
+        <input id="answer" name="answer" type="text" placeholder="{{ puzzle.word | length }} liter"
                spellcheck="false" autocapitalize="off" required>
         <button type="submit">Otwórz</button>
       </div>

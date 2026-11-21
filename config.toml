@@ -20,27 +20,88 @@ meta = ["Małe Garbary 2, Poznań", "75 minut", "2–4 osoby"]
 [voucher]
 note = "Pokaż ten kod przy rezerwacji albo wpisz go w polu „kod rabatowy” na lock.me."
 redeem_url = "https://lock.me/pl/poland/wielkopolskie/poznan/escape-room/find-a-way-2/11574-sladami-harryego"
+# Co strona mówi po poprawnym haśle. QR leży pod monitorem, nie tutaj.
+location = "Dobrze. To słowo czeka na Ciebie pod monitorem — razem z tym, po co przyszłaś."
 
 # ── Zagadka ───────────────────────────────────────────────────────────────────
-# Jedno źródło prawdy: przesunięcie liter w kodzie wynika Z TYCH LICZB.
-# Zmienisz tabelę — zmieni się przesunięcie, hex i kartka. Build sprawdza, czy
-# arytmetyka wychodzi sensownie i czy kod wraca do adresu.
+# Jedno źródło prawdy: hasło to słowo złożone z liter na kwitach, ustawionych
+# według CENY ZA JEDEN DRAM. Sortowanie po cenie łącznej daje inny ciąg — to pułapka.
+# Build sprawdza, że wychodzi dokładnie `word` i że pułapka faktycznie działa.
 
-[puzzle.receipt]
-# Kurs kanoniczny: 1 galeon = 17 sykli, 1 sykiel = 29 knutów (czyli 493 knutów).
+[puzzle]
+word = "ALOHOMORA"
+
+[[puzzle.receipts]]
+name = "Amortencja"
+letter = "A"
 galleons = 2
-sickles = 9
+sickles = 8
 knuts = 14
+drams = 14
 
-[puzzle.house_points]
-events = ["Troll", "Quidditch", "Eliksiry", "Zaklęcia", "Turniej"]
-# Punkty z pięciu wydarzeń. Jeden dom wygrywa średnią, inny medianą — o to chodzi.
-# Wartości muszą być nieparzyste w liczbie (mediana to środkowa, nie ułamek).
-[puzzle.house_points.houses]
-Ravenclaw = [36, 34, 33, 34, 35]
-Slytherin = [50, 20, 30, 25, 55]
-Gryffindor = [28, 30, 32, 31, 29]
-Hufflepuff = [22, 24, 25, 23, 26]
+[[puzzle.receipts]]
+name = "Eliksir Pobudzający"
+letter = "O"
+galleons = 1
+sickles = 16
+knuts = 15
+drams = 27
+
+[[puzzle.receipts]]
+name = "Eliksir Rozdymający"
+letter = "R"
+galleons = 4
+sickles = 13
+knuts = 7
+drams = 31
+
+[[puzzle.receipts]]
+name = "Eliksir Słodkiego Snu"
+letter = "O"
+galleons = 2
+sickles = 1
+knuts = 5
+drams = 15
+
+[[puzzle.receipts]]
+name = "Eliksir Wielosokowy"
+letter = "O"
+galleons = 6
+sickles = 5
+knuts = 17
+drams = 60
+
+[[puzzle.receipts]]
+name = "Eliksir Zapomnienia"
+letter = "A"
+galleons = 1
+sickles = 12
+knuts = 19
+drams = 43
+
+[[puzzle.receipts]]
+name = "Felix Felicis"
+letter = "L"
+galleons = 1
+sickles = 3
+knuts = 8
+drams = 21
+
+[[puzzle.receipts]]
+name = "Veritaserum"
+letter = "H"
+galleons = 2
+sickles = 14
+knuts = 16
+drams = 32
+
+[[puzzle.receipts]]
+name = "Wywar Żywej Śmierci"
+letter = "M"
+galleons = 5
+sickles = 14
+knuts = 9
+drams = 48
 
 [card]
 # Wskazówka na kartce — Twoje słowa, nie kod.
