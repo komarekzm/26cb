@@ -41,7 +41,7 @@ h1 {
   border-top: 1px solid var(--ink);
   border-bottom: 1px solid var(--ink);
   font-family: var(--mono);
-  font-size: 15pt;
+  font-size: 16pt;
   line-height: 2.1;
   letter-spacing: 0.06em;
   white-space: pre;
@@ -104,13 +104,14 @@ h1 {
   <h1>Numer litery</h1>
 
   <p class="card-lead">
-    Każda liczba to litera alfabetu, licząc od jedynki: <code>1 = a</code>,
-    <code>2 = b</code>, <code>3 = c</code> — i tak do <code>26 = z</code>.
-    Kropka i ukośnik stoją w zapisie bez zmian.
+    Każdy znak zapisu to litera alfabetu, licząc od jedynki: <code>1 = a</code>,
+    <code>2 = b</code> … <code>9 = i</code>. Od dziesiątki wchodzą litery, jak w hexie:
+    <code>A = j</code>, <code>B = k</code> … <code>Q = z</code>. Kropka i ukośnik
+    stoją w zapisie bez zmian.
   </p>
 
   <div class="legend">
-    {% for value, letter in legend %}<span><b>{{ value }}</b>{{ letter }}</span>{% endfor %}
+    {% for mark, letter in legend %}<span><b>{{ mark }}</b>{{ letter }}</span>{% endfor %}
   </div>
 
   <div class="pad"></div>

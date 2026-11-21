@@ -20,6 +20,17 @@ def test_numbers_start_at_one() -> None:
     assert cipher.letter(26) == "z"
 
 
+def test_notation_switches_to_letters_at_ten() -> None:
+    """Jak w hexie: 10 zapisujemy jako A, 11 jako B — ale to nadal numer litery."""
+    assert cipher.symbol(9) == "9"
+    assert cipher.symbol(10) == "A"
+    assert cipher.symbol(11) == "B"
+    assert cipher.symbol(26) == "Q"
+    assert cipher.value_of("A") == 10
+    assert cipher.value_of("Q") == 26
+    assert cipher.symbol(11) == "B" and cipher.decode(["B"] * 2) == "kk"
+
+
 def test_whole_address_round_trips() -> None:
     address = config.site().address
     tokens = cipher.encode(address)
@@ -32,11 +43,10 @@ def test_punctuation_is_left_alone() -> None:
     assert cipher.decode(tokens) == "ab.c/d"
 
 
-def test_no_number_exceeds_the_alphabet() -> None:
-    """Właśnie po to zmieniliśmy hex: żadnej cyfry ponad 26 i żadnego a–f."""
+def test_every_token_is_a_single_character() -> None:
+    """Jeden znak adresu to jeden znak zapisu — dwucyfrowe liczby mylą się przy przepisywaniu."""
     for token in cipher.encode(config.site().address):
-        if token.isdigit():
-            assert 1 <= int(token) <= 26
+        assert len(token) == 1, token
 
 
 def test_unknown_sign_is_rejected() -> None:

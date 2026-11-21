@@ -140,7 +140,7 @@ def main() -> None:
         "riddle": cfg["puzzle"]["riddle"],
         "address": site.address,
         "token_rows": cipher.rows(tokens),
-        "legend": list(enumerate(cipher.LETTERS, start=1)),
+        "legend": [(cipher.symbol(value), char) for value, char in enumerate(cipher.LETTERS, start=1)],
         "box": box,
     }
 
