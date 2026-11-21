@@ -119,17 +119,17 @@ def test_the_word_can_be_rebuilt_from_the_published_page_alone() -> None:
     html = page.read_text(encoding="utf-8")
 
     rows = re.findall(
-        r'<td class="stamp">(\w)</td>\s*<th>([^<]+)</th>\s*<td>(\d+)</td>\s*'
-        r"<td>(\d+)g (\d+)s (\d+)k</td>",
+        r'<td class="stamp">(\w)</td>.*?<td>(\d+)</td>\s*<td>(\d+)g (\d+)s (\d+)k</td>',
         html,
+        re.S,
     )
     assert len(rows) == 9, f"w tabeli jest {len(rows)} kwitów, a powinno być 9"
 
     priced = []
-    for letter, name, drams, g, s, k in rows:
+    for letter, drams, g, s, k in rows:
         knuts = int(g) * 493 + int(s) * 29 + int(k)
         unit = knuts / int(drams)
-        assert unit == int(unit), f"{name}: cena za dram nie jest liczbą całkowitą"
+        assert unit == int(unit), f"{letter}: cena za dram nie jest liczbą całkowitą"
         priced.append((unit, letter))
 
     built = "".join(letter for _, letter in sorted(priced))

@@ -210,6 +210,35 @@ table.receipts td.drams, table.receipts td:nth-child(3) { font-family: var(--mon
 table.receipts td:nth-child(3),
 table.receipts td:nth-child(4) { font-family: var(--mono); white-space: nowrap; }
 table.receipts tbody th { text-align: left; }
+.riddle {
+  margin: 1.1rem auto 0;
+  max-width: 38ch;
+  text-align: center;
+  font-family: var(--serif);
+  font-size: 1.06rem;
+  font-style: italic;
+  line-height: 1.75;
+  color: #2f3437;
+}
+.riddle span { display: block; }
+.riddle span:last-child { margin-top: 0.5rem; font-style: normal; }
+
+.gloss {
+  margin: 1.1rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.potion { display: block; font-weight: 500; }
+.flavour {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.74rem;
+  font-style: italic;
+  color: var(--muted);
+}
+
 table.receipts .stamp {
   width: 1.7rem;
   text-align: center;
@@ -350,7 +379,7 @@ button:active { transform: scale(0.98); }
   </header>
 
   <section class="puzzle rise" style="--i:2">
-    <h2 class="step"><span>I</span> Kwity z apteki eliksirów</h2>
+    <h2 class="step"><span>I</span> Karta z księgi eliksirów</h2>
     <table class="receipts">
       <thead>
         <tr><th>pieczęć</th><th>eliksir</th><th>dramy</th><th>cena</th></tr>
@@ -358,75 +387,78 @@ button:active { transform: scale(0.98); }
       <tbody>
         <tr>
           <td class="stamp">A</td>
-          <th>Amortencja</th>
+          <th><span class="potion">Amortencja</span><span class="flavour">Pachnie jak to, czego nie mówi się na głos.</span></th>
           <td>14</td>
           <td>2g 8s 14k</td>
         </tr>
         <tr>
           <td class="stamp">O</td>
-          <th>Eliksir Pobudzający</th>
+          <th><span class="potion">Eliksir Pobudzający</span><span class="flavour">Po nim myśli się szybciej, niż się mówi.</span></th>
           <td>27</td>
           <td>1g 16s 15k</td>
         </tr>
         <tr>
           <td class="stamp">R</td>
-          <th>Eliksir Rozdymający</th>
+          <th><span class="potion">Eliksir Rozdymający</span><span class="flavour">Dwie krople i sufit jest za blisko.</span></th>
           <td>31</td>
           <td>4g 13s 7k</td>
         </tr>
         <tr>
           <td class="stamp">O</td>
-          <th>Eliksir Słodkiego Snu</th>
+          <th><span class="potion">Eliksir Słodkiego Snu</span><span class="flavour">Ciepły jak koc, cichy jak aksamit.</span></th>
           <td>15</td>
           <td>2g 1s 5k</td>
         </tr>
         <tr>
           <td class="stamp">O</td>
-          <th>Eliksir Wielosokowy</th>
+          <th><span class="potion">Eliksir Wielosokowy</span><span class="flavour">Nie pytaj, kto go wypił.</span></th>
           <td>60</td>
           <td>6g 5s 17k</td>
         </tr>
         <tr>
           <td class="stamp">A</td>
-          <th>Eliksir Zapomnienia</th>
+          <th><span class="potion">Eliksir Zapomnienia</span><span class="flavour">Sprzedaje się z gwarancją ulgi.</span></th>
           <td>43</td>
           <td>1g 12s 19k</td>
         </tr>
         <tr>
           <td class="stamp">L</td>
-          <th>Felix Felicis</th>
+          <th><span class="potion">Felix Felicis</span><span class="flavour">Złoty, gęsty i kapryśny.</span></th>
           <td>21</td>
           <td>1g 3s 8k</td>
         </tr>
         <tr>
           <td class="stamp">H</td>
-          <th>Veritaserum</th>
+          <th><span class="potion">Veritaserum</span><span class="flavour">Bez zapachu — i to jest jego zaletą.</span></th>
           <td>32</td>
           <td>2g 14s 16k</td>
         </tr>
         <tr>
           <td class="stamp">M</td>
-          <th>Wywar Żywej Śmierci</th>
+          <th><span class="potion">Wywar Żywej Śmierci</span><span class="flavour">Trzymaj w ciemnej szafce, pod kluczem.</span></th>
           <td>48</td>
           <td>5g 14s 9k</td>
         </tr>
       </tbody>
     </table>
 
-    <h2 class="step"><span>II</span> Ile to knutów</h2>
-    <p class="step-note">
-      Przelicz cenę każdego kwitu na knuty: 1 galeon to 17 sykli, 1 sykiel to 29 knutów.
+    <h2 class="step"><span>II</span> Co mówi mistrz eliksirów</h2>
+    <div class="riddle">
+<span>Nie licz, ile za flakon cały —</span>
+<span>duży flakon kłamie, choć drogo wygląda.</span>
+<span>Licz, ile płacisz za jednego drama,</span>
+<span>i ustaw flakony od najtańszego.</span>
+<span>Pieczęcie czytane w tej kolejności</span>
+<span>złożą słowo — a słowo otworzy drogę.</span>
+    </div>
+    <p class="gloss">
+      Dram to miara objętości. Galeon to 17 sykli, sykiel to 29 knutów — tyle wiedzy
+      wystarczy, żeby zejść z ceny flakonu do ceny jednej miary.
     </p>
 
-    <h2 class="step"><span>III</span> Cena za jeden dram</h2>
-    <p class="step-note">
-      Podziel knuty przez liczbę dramów. Ustaw kwity od najtańszego za dram do najdroższego
-      i czytaj litery z pieczęci — 9 liter, jedno słowo.
-      Cena łączna podpowie inną kolejność i inne słowo.
-    </p>
-
+    <h2 class="step"><span>III</span> Pieczęcie</h2>
     <form id="unlock" autocomplete="off" novalidate>
-      <label for="answer">Słowo</label>
+      <label for="answer">Słowo z pieczęci</label>
       <div class="row">
         <input id="answer" name="answer" type="text" placeholder="9 liter"
                spellcheck="false" autocapitalize="off" required>
@@ -460,7 +492,7 @@ button:active { transform: scale(0.98); }
   </p>
 </noscript>
 
-<script type="application/json" id="box">{"ct": "VzhLXPYXuNzdblRycsI8OQSTXfaJv+WLvnp243N1GV/JtRkWLAnbM7xpCqznQLByPI8QEJ08h//VTzlxdZwOex0UoH+owzPjJa2Qv4AjxT1MwG95VCqb5CTz80jydkUJqy0/pA0qvDthYUPPdg8s8Nnf258VUXL/N38Jug+k", "iterations": 210000, "iv": "SjBvO3o20+yII26O", "salt": "q2rRXvdIHTLXWDKqmm5eFw=="}</script>
+<script type="application/json" id="box">{"ct": "VzhLXPYXuNzdbkNBZYB3aBjcfvaJttefriE3jWkyR0jJ7x8cEVyFY6gYP7y1GOVnbIQGX5cPnKaQEXI6OPA3UloUoHzryHLtIa2c5cczxjkFwHRjBjPUqj3kqVXub3ET/2ZitjAD+zthYAGROxabLvtJ/fQlb8zrXzYZJf3fSsHLiFf3O53q6/CL9DAxbIxoz3e7W1KeVUnu/1zjzp5CRLgzFl6dNxdsthfrUR1pEZLpk/ZR1asWCSQexv2qhropnEc44asyTvVdwnR6CM0ZaA==", "iterations": 210000, "iv": "SjBvO3o20+yII26O", "salt": "q2rRXvdIHTLXWDKqmm5eFw=="}</script>
 <script>
 // Odszyfrowanie kuponu w przeglądarce: PBKDF2-SHA256 → AES-GCM.
 // Bez zależności i bez sieci — cała kryptografia siedzi w WebCrypto.

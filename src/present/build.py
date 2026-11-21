@@ -137,6 +137,7 @@ def main() -> None:
         "voucher": cfg["voucher"],
         "card": cfg["card"],
         "puzzle": puzzle,
+        "riddle": cfg["puzzle"]["riddle"],
         "address": site.address,
         "hex_rows": codec.hex_rows(site.address),
         "ascii_table": codec.ascii_table(),

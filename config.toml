@@ -21,7 +21,7 @@ meta = ["Małe Garbary 2, Poznań", "75 minut", "2–4 osoby"]
 note = "Pokaż ten kod przy rezerwacji albo wpisz go w polu „kod rabatowy” na lock.me."
 redeem_url = "https://lock.me/pl/poland/wielkopolskie/poznan/escape-room/find-a-way-2/11574-sladami-harryego"
 # Co strona mówi po poprawnym haśle. QR leży pod monitorem, nie tutaj.
-location = "Dobrze. To słowo czeka na Ciebie pod monitorem — razem z tym, po co przyszłaś."
+location = "Słowo zna już całą drogę. Leży tam, gdzie kurz nie dochodzi — pod monitorem, razem z pieczęcią, po którą przyszłaś."
 
 # ── Zagadka ───────────────────────────────────────────────────────────────────
 # Jedno źródło prawdy: hasło to słowo złożone z liter na kwitach, ustawionych
@@ -30,9 +30,18 @@ location = "Dobrze. To słowo czeka na Ciebie pod monitorem — razem z tym, po 
 
 [puzzle]
 word = "ALOHOMORA"
+riddle = [
+  "Nie licz, ile za flakon cały —",
+  "duży flakon kłamie, choć drogo wygląda.",
+  "Licz, ile płacisz za jednego drama,",
+  "i ustaw flakony od najtańszego.",
+  "Pieczęcie czytane w tej kolejności",
+  "złożą słowo — a słowo otworzy drogę.",
+]
 
 [[puzzle.receipts]]
 name = "Amortencja"
+flavour = "Pachnie jak to, czego nie mówi się na głos."
 letter = "A"
 galleons = 2
 sickles = 8
@@ -41,6 +50,7 @@ drams = 14
 
 [[puzzle.receipts]]
 name = "Eliksir Pobudzający"
+flavour = "Po nim myśli się szybciej, niż się mówi."
 letter = "O"
 galleons = 1
 sickles = 16
@@ -49,6 +59,7 @@ drams = 27
 
 [[puzzle.receipts]]
 name = "Eliksir Rozdymający"
+flavour = "Dwie krople i sufit jest za blisko."
 letter = "R"
 galleons = 4
 sickles = 13
@@ -57,6 +68,7 @@ drams = 31
 
 [[puzzle.receipts]]
 name = "Eliksir Słodkiego Snu"
+flavour = "Ciepły jak koc, cichy jak aksamit."
 letter = "O"
 galleons = 2
 sickles = 1
@@ -65,6 +77,7 @@ drams = 15
 
 [[puzzle.receipts]]
 name = "Eliksir Wielosokowy"
+flavour = "Nie pytaj, kto go wypił."
 letter = "O"
 galleons = 6
 sickles = 5
@@ -73,6 +86,7 @@ drams = 60
 
 [[puzzle.receipts]]
 name = "Eliksir Zapomnienia"
+flavour = "Sprzedaje się z gwarancją ulgi."
 letter = "A"
 galleons = 1
 sickles = 12
@@ -81,6 +95,7 @@ drams = 43
 
 [[puzzle.receipts]]
 name = "Felix Felicis"
+flavour = "Złoty, gęsty i kapryśny."
 letter = "L"
 galleons = 1
 sickles = 3
@@ -89,6 +104,7 @@ drams = 21
 
 [[puzzle.receipts]]
 name = "Veritaserum"
+flavour = "Bez zapachu — i to jest jego zaletą."
 letter = "H"
 galleons = 2
 sickles = 14
@@ -97,6 +113,7 @@ drams = 32
 
 [[puzzle.receipts]]
 name = "Wywar Żywej Śmierci"
+flavour = "Trzymaj w ciemnej szafce, pod kluczem."
 letter = "M"
 galleons = 5
 sickles = 14

@@ -1,0 +1,452 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="150mm" height="150mm" viewBox="0 0 150 150">
+<rect width="150" height="150" fill="white"/>
+<g id="grid" stroke="black" stroke-width="0.12" stroke-dasharray="0.5 1.3" fill="none">
+<line x1="3.00" y1="33.00" x2="3.00" y2="117.00"/>
+<line x1="9.00" y1="33.00" x2="9.00" y2="117.00"/>
+<line x1="15.00" y1="33.00" x2="15.00" y2="117.00"/>
+<line x1="21.00" y1="33.00" x2="21.00" y2="117.00"/>
+<line x1="27.00" y1="33.00" x2="27.00" y2="117.00"/>
+<line x1="33.00" y1="33.00" x2="33.00" y2="117.00"/>
+<line x1="39.00" y1="33.00" x2="39.00" y2="117.00"/>
+<line x1="45.00" y1="33.00" x2="45.00" y2="117.00"/>
+<line x1="51.00" y1="33.00" x2="51.00" y2="117.00"/>
+<line x1="57.00" y1="33.00" x2="57.00" y2="117.00"/>
+<line x1="63.00" y1="33.00" x2="63.00" y2="117.00"/>
+<line x1="69.00" y1="33.00" x2="69.00" y2="117.00"/>
+<line x1="75.00" y1="33.00" x2="75.00" y2="117.00"/>
+<line x1="81.00" y1="33.00" x2="81.00" y2="117.00"/>
+<line x1="87.00" y1="33.00" x2="87.00" y2="117.00"/>
+<line x1="93.00" y1="33.00" x2="93.00" y2="117.00"/>
+<line x1="99.00" y1="33.00" x2="99.00" y2="117.00"/>
+<line x1="105.00" y1="33.00" x2="105.00" y2="117.00"/>
+<line x1="111.00" y1="33.00" x2="111.00" y2="117.00"/>
+<line x1="117.00" y1="33.00" x2="117.00" y2="117.00"/>
+<line x1="123.00" y1="33.00" x2="123.00" y2="117.00"/>
+<line x1="129.00" y1="33.00" x2="129.00" y2="117.00"/>
+<line x1="135.00" y1="33.00" x2="135.00" y2="117.00"/>
+<line x1="141.00" y1="33.00" x2="141.00" y2="117.00"/>
+<line x1="147.00" y1="33.00" x2="147.00" y2="117.00"/>
+<line x1="3.00" y1="33.00" x2="147.00" y2="33.00"/>
+<line x1="3.00" y1="39.00" x2="147.00" y2="39.00"/>
+<line x1="3.00" y1="45.00" x2="147.00" y2="45.00"/>
+<line x1="3.00" y1="51.00" x2="147.00" y2="51.00"/>
+<line x1="3.00" y1="57.00" x2="147.00" y2="57.00"/>
+<line x1="3.00" y1="63.00" x2="147.00" y2="63.00"/>
+<line x1="3.00" y1="69.00" x2="147.00" y2="69.00"/>
+<line x1="3.00" y1="75.00" x2="147.00" y2="75.00"/>
+<line x1="3.00" y1="81.00" x2="147.00" y2="81.00"/>
+<line x1="3.00" y1="87.00" x2="147.00" y2="87.00"/>
+<line x1="3.00" y1="93.00" x2="147.00" y2="93.00"/>
+<line x1="3.00" y1="99.00" x2="147.00" y2="99.00"/>
+<line x1="3.00" y1="105.00" x2="147.00" y2="105.00"/>
+<line x1="3.00" y1="111.00" x2="147.00" y2="111.00"/>
+<line x1="3.00" y1="117.00" x2="147.00" y2="117.00"/>
+</g>
+<g id="walls" stroke="black" stroke-width="0.62" stroke-linecap="square">
+<line class="wall" x1="3.00" y1="33.00" x2="3.00" y2="39.00"/>
+<line class="wall" x1="3.00" y1="39.00" x2="3.00" y2="45.00"/>
+<line class="wall" x1="3.00" y1="39.00" x2="9.00" y2="39.00"/>
+<line class="wall" x1="3.00" y1="45.00" x2="3.00" y2="51.00"/>
+<line class="wall" x1="3.00" y1="51.00" x2="3.00" y2="57.00"/>
+<line class="wall" x1="3.00" y1="57.00" x2="3.00" y2="63.00"/>
+<line class="wall" x1="3.00" y1="63.00" x2="3.00" y2="69.00"/>
+<line class="wall" x1="3.00" y1="69.00" x2="3.00" y2="75.00"/>
+<line class="wall" x1="3.00" y1="75.00" x2="3.00" y2="81.00"/>
+<line class="wall" x1="3.00" y1="81.00" x2="3.00" y2="87.00"/>
+<line class="wall" x1="3.00" y1="87.00" x2="3.00" y2="93.00"/>
+<line class="wall" x1="3.00" y1="93.00" x2="3.00" y2="99.00"/>
+<line class="wall" x1="3.00" y1="99.00" x2="3.00" y2="105.00"/>
+<line class="wall" x1="3.00" y1="105.00" x2="3.00" y2="111.00"/>
+<line class="wall" x1="3.00" y1="111.00" x2="3.00" y2="117.00"/>
+<line class="wall" x1="3.00" y1="117.00" x2="9.00" y2="117.00"/>
+<line class="wall" x1="9.00" y1="33.00" x2="15.00" y2="33.00"/>
+<line class="wall" x1="9.00" y1="39.00" x2="15.00" y2="39.00"/>
+<line class="wall" x1="9.00" y1="45.00" x2="9.00" y2="51.00"/>
+<line class="wall" x1="9.00" y1="45.00" x2="15.00" y2="45.00"/>
+<line class="wall" x1="9.00" y1="51.00" x2="9.00" y2="57.00"/>
+<line class="wall" x1="9.00" y1="57.00" x2="9.00" y2="63.00"/>
+<line class="wall" x1="9.00" y1="63.00" x2="9.00" y2="69.00"/>
+<line class="wall" x1="9.00" y1="69.00" x2="9.00" y2="75.00"/>
+<line class="wall" x1="9.00" y1="75.00" x2="9.00" y2="81.00"/>
+<line class="wall" x1="9.00" y1="81.00" x2="9.00" y2="87.00"/>
+<line class="wall" x1="9.00" y1="87.00" x2="9.00" y2="93.00"/>
+<line class="wall" x1="9.00" y1="93.00" x2="9.00" y2="99.00"/>
+<line class="wall" x1="9.00" y1="99.00" x2="9.00" y2="105.00"/>
+<line class="wall" x1="9.00" y1="105.00" x2="9.00" y2="111.00"/>
+<line class="wall" x1="9.00" y1="111.00" x2="15.00" y2="111.00"/>
+<line class="wall" x1="9.00" y1="117.00" x2="15.00" y2="117.00"/>
+<line class="wall" x1="15.00" y1="33.00" x2="21.00" y2="33.00"/>
+<line class="wall" x1="15.00" y1="39.00" x2="21.00" y2="39.00"/>
+<line class="wall" x1="15.00" y1="45.00" x2="21.00" y2="45.00"/>
+<line class="wall" x1="15.00" y1="51.00" x2="15.00" y2="57.00"/>
+<line class="wall" x1="15.00" y1="51.00" x2="21.00" y2="51.00"/>
+<line class="wall" x1="15.00" y1="57.00" x2="15.00" y2="63.00"/>
+<line class="wall" x1="15.00" y1="63.00" x2="15.00" y2="69.00"/>
+<line class="wall" x1="15.00" y1="69.00" x2="15.00" y2="75.00"/>
+<line class="wall" x1="15.00" y1="75.00" x2="15.00" y2="81.00"/>
+<line class="wall" x1="15.00" y1="81.00" x2="15.00" y2="87.00"/>
+<line class="wall" x1="15.00" y1="87.00" x2="15.00" y2="93.00"/>
+<line class="wall" x1="15.00" y1="93.00" x2="15.00" y2="99.00"/>
+<line class="wall" x1="15.00" y1="99.00" x2="15.00" y2="105.00"/>
+<line class="wall" x1="15.00" y1="105.00" x2="21.00" y2="105.00"/>
+<line class="wall" x1="15.00" y1="111.00" x2="21.00" y2="111.00"/>
+<line class="wall" x1="15.00" y1="117.00" x2="21.00" y2="117.00"/>
+<line class="wall" x1="21.00" y1="33.00" x2="27.00" y2="33.00"/>
+<line class="wall" x1="21.00" y1="39.00" x2="27.00" y2="39.00"/>
+<line class="wall" x1="21.00" y1="45.00" x2="27.00" y2="45.00"/>
+<line class="wall" x1="21.00" y1="51.00" x2="27.00" y2="51.00"/>
+<line class="wall" x1="21.00" y1="57.00" x2="21.00" y2="63.00"/>
+<line class="wall" x1="21.00" y1="57.00" x2="27.00" y2="57.00"/>
+<line class="wall" x1="21.00" y1="63.00" x2="21.00" y2="69.00"/>
+<line class="wall" x1="21.00" y1="69.00" x2="21.00" y2="75.00"/>
+<line class="wall" x1="21.00" y1="75.00" x2="21.00" y2="81.00"/>
+<line class="wall" x1="21.00" y1="81.00" x2="21.00" y2="87.00"/>
+<line class="wall" x1="21.00" y1="87.00" x2="21.00" y2="93.00"/>
+<line class="wall" x1="21.00" y1="93.00" x2="21.00" y2="99.00"/>
+<line class="wall" x1="21.00" y1="99.00" x2="27.00" y2="99.00"/>
+<line class="wall" x1="21.00" y1="105.00" x2="27.00" y2="105.00"/>
+<line class="wall" x1="21.00" y1="111.00" x2="27.00" y2="111.00"/>
+<line class="wall" x1="21.00" y1="117.00" x2="27.00" y2="117.00"/>
+<line class="wall" x1="27.00" y1="33.00" x2="33.00" y2="33.00"/>
+<line class="wall" x1="27.00" y1="39.00" x2="33.00" y2="39.00"/>
+<line class="wall" x1="27.00" y1="45.00" x2="33.00" y2="45.00"/>
+<line class="wall" x1="27.00" y1="51.00" x2="33.00" y2="51.00"/>
+<line class="wall" x1="27.00" y1="57.00" x2="33.00" y2="57.00"/>
+<line class="wall" x1="27.00" y1="63.00" x2="27.00" y2="69.00"/>
+<line class="wall" x1="27.00" y1="63.00" x2="33.00" y2="63.00"/>
+<line class="wall" x1="27.00" y1="69.00" x2="27.00" y2="75.00"/>
+<line class="wall" x1="27.00" y1="75.00" x2="27.00" y2="81.00"/>
+<line class="wall" x1="27.00" y1="81.00" x2="27.00" y2="87.00"/>
+<line class="wall" x1="27.00" y1="87.00" x2="27.00" y2="93.00"/>
+<line class="wall" x1="27.00" y1="93.00" x2="33.00" y2="93.00"/>
+<line class="wall" x1="27.00" y1="99.00" x2="33.00" y2="99.00"/>
+<line class="wall" x1="27.00" y1="105.00" x2="33.00" y2="105.00"/>
+<line class="wall" x1="27.00" y1="111.00" x2="33.00" y2="111.00"/>
+<line class="wall" x1="27.00" y1="117.00" x2="33.00" y2="117.00"/>
+<line class="wall" x1="33.00" y1="33.00" x2="39.00" y2="33.00"/>
+<line class="wall" x1="33.00" y1="39.00" x2="39.00" y2="39.00"/>
+<line class="wall" x1="33.00" y1="45.00" x2="39.00" y2="45.00"/>
+<line class="wall" x1="33.00" y1="51.00" x2="39.00" y2="51.00"/>
+<line class="wall" x1="33.00" y1="57.00" x2="39.00" y2="57.00"/>
+<line class="wall" x1="33.00" y1="63.00" x2="39.00" y2="63.00"/>
+<line class="wall" x1="33.00" y1="69.00" x2="33.00" y2="75.00"/>
+<line class="wall" x1="33.00" y1="69.00" x2="39.00" y2="69.00"/>
+<line class="wall" x1="33.00" y1="75.00" x2="33.00" y2="81.00"/>
+<line class="wall" x1="33.00" y1="81.00" x2="33.00" y2="87.00"/>
+<line class="wall" x1="33.00" y1="87.00" x2="39.00" y2="87.00"/>
+<line class="wall" x1="33.00" y1="93.00" x2="39.00" y2="93.00"/>
+<line class="wall" x1="33.00" y1="99.00" x2="39.00" y2="99.00"/>
+<line class="wall" x1="33.00" y1="105.00" x2="39.00" y2="105.00"/>
+<line class="wall" x1="33.00" y1="111.00" x2="39.00" y2="111.00"/>
+<line class="wall" x1="33.00" y1="117.00" x2="39.00" y2="117.00"/>
+<line class="wall" x1="39.00" y1="33.00" x2="45.00" y2="33.00"/>
+<line class="wall" x1="39.00" y1="39.00" x2="45.00" y2="39.00"/>
+<line class="wall" x1="39.00" y1="45.00" x2="45.00" y2="45.00"/>
+<line class="wall" x1="39.00" y1="51.00" x2="45.00" y2="51.00"/>
+<line class="wall" x1="39.00" y1="57.00" x2="45.00" y2="57.00"/>
+<line class="wall" x1="39.00" y1="63.00" x2="45.00" y2="63.00"/>
+<line class="wall" x1="39.00" y1="69.00" x2="45.00" y2="69.00"/>
+<line class="wall" x1="39.00" y1="87.00" x2="45.00" y2="87.00"/>
+<line class="wall" x1="39.00" y1="93.00" x2="45.00" y2="93.00"/>
+<line class="wall" x1="39.00" y1="99.00" x2="45.00" y2="99.00"/>
+<line class="wall" x1="39.00" y1="105.00" x2="45.00" y2="105.00"/>
+<line class="wall" x1="39.00" y1="111.00" x2="45.00" y2="111.00"/>
+<line class="wall" x1="39.00" y1="117.00" x2="45.00" y2="117.00"/>
+<line class="wall" x1="45.00" y1="33.00" x2="51.00" y2="33.00"/>
+<line class="wall" x1="45.00" y1="39.00" x2="51.00" y2="39.00"/>
+<line class="wall" x1="45.00" y1="45.00" x2="51.00" y2="45.00"/>
+<line class="wall" x1="45.00" y1="51.00" x2="51.00" y2="51.00"/>
+<line class="wall" x1="45.00" y1="57.00" x2="51.00" y2="57.00"/>
+<line class="wall" x1="45.00" y1="63.00" x2="51.00" y2="63.00"/>
+<line class="wall" x1="45.00" y1="69.00" x2="51.00" y2="69.00"/>
+<line class="wall" x1="45.00" y1="87.00" x2="51.00" y2="87.00"/>
+<line class="wall" x1="45.00" y1="93.00" x2="51.00" y2="93.00"/>
+<line class="wall" x1="45.00" y1="99.00" x2="51.00" y2="99.00"/>
+<line class="wall" x1="45.00" y1="105.00" x2="51.00" y2="105.00"/>
+<line class="wall" x1="45.00" y1="111.00" x2="51.00" y2="111.00"/>
+<line class="wall" x1="45.00" y1="117.00" x2="51.00" y2="117.00"/>
+<line class="wall" x1="51.00" y1="33.00" x2="57.00" y2="33.00"/>
+<line class="wall" x1="51.00" y1="39.00" x2="57.00" y2="39.00"/>
+<line class="wall" x1="51.00" y1="45.00" x2="57.00" y2="45.00"/>
+<line class="wall" x1="51.00" y1="51.00" x2="57.00" y2="51.00"/>
+<line class="wall" x1="51.00" y1="57.00" x2="57.00" y2="57.00"/>
+<line class="wall" x1="51.00" y1="63.00" x2="57.00" y2="63.00"/>
+<line class="wall" x1="51.00" y1="69.00" x2="57.00" y2="69.00"/>
+<line class="wall" x1="51.00" y1="87.00" x2="57.00" y2="87.00"/>
+<line class="wall" x1="51.00" y1="93.00" x2="57.00" y2="93.00"/>
+<line class="wall" x1="51.00" y1="99.00" x2="57.00" y2="99.00"/>
+<line class="wall" x1="51.00" y1="105.00" x2="57.00" y2="105.00"/>
+<line class="wall" x1="51.00" y1="111.00" x2="57.00" y2="111.00"/>
+<line class="wall" x1="51.00" y1="117.00" x2="57.00" y2="117.00"/>
+<line class="wall" x1="57.00" y1="33.00" x2="63.00" y2="33.00"/>
+<line class="wall" x1="57.00" y1="39.00" x2="63.00" y2="39.00"/>
+<line class="wall" x1="57.00" y1="45.00" x2="63.00" y2="45.00"/>
+<line class="wall" x1="57.00" y1="51.00" x2="63.00" y2="51.00"/>
+<line class="wall" x1="57.00" y1="57.00" x2="63.00" y2="57.00"/>
+<line class="wall" x1="57.00" y1="63.00" x2="63.00" y2="63.00"/>
+<line class="wall" x1="57.00" y1="69.00" x2="63.00" y2="69.00"/>
+<line class="wall" x1="57.00" y1="87.00" x2="63.00" y2="87.00"/>
+<line class="wall" x1="57.00" y1="93.00" x2="63.00" y2="93.00"/>
+<line class="wall" x1="57.00" y1="99.00" x2="63.00" y2="99.00"/>
+<line class="wall" x1="57.00" y1="105.00" x2="63.00" y2="105.00"/>
+<line class="wall" x1="57.00" y1="111.00" x2="63.00" y2="111.00"/>
+<line class="wall" x1="57.00" y1="117.00" x2="63.00" y2="117.00"/>
+<line class="wall" x1="63.00" y1="33.00" x2="69.00" y2="33.00"/>
+<line class="wall" x1="63.00" y1="39.00" x2="69.00" y2="39.00"/>
+<line class="wall" x1="63.00" y1="45.00" x2="69.00" y2="45.00"/>
+<line class="wall" x1="63.00" y1="51.00" x2="69.00" y2="51.00"/>
+<line class="wall" x1="63.00" y1="57.00" x2="69.00" y2="57.00"/>
+<line class="wall" x1="63.00" y1="63.00" x2="69.00" y2="63.00"/>
+<line class="wall" x1="63.00" y1="69.00" x2="69.00" y2="69.00"/>
+<line class="wall" x1="63.00" y1="87.00" x2="69.00" y2="87.00"/>
+<line class="wall" x1="63.00" y1="93.00" x2="69.00" y2="93.00"/>
+<line class="wall" x1="63.00" y1="99.00" x2="69.00" y2="99.00"/>
+<line class="wall" x1="63.00" y1="105.00" x2="69.00" y2="105.00"/>
+<line class="wall" x1="63.00" y1="111.00" x2="69.00" y2="111.00"/>
+<line class="wall" x1="63.00" y1="117.00" x2="69.00" y2="117.00"/>
+<line class="wall" x1="69.00" y1="33.00" x2="75.00" y2="33.00"/>
+<line class="wall" x1="69.00" y1="39.00" x2="75.00" y2="39.00"/>
+<line class="wall" x1="69.00" y1="45.00" x2="75.00" y2="45.00"/>
+<line class="wall" x1="69.00" y1="51.00" x2="75.00" y2="51.00"/>
+<line class="wall" x1="69.00" y1="57.00" x2="75.00" y2="57.00"/>
+<line class="wall" x1="69.00" y1="63.00" x2="75.00" y2="63.00"/>
+<line class="wall" x1="69.00" y1="69.00" x2="75.00" y2="69.00"/>
+<line class="wall" x1="69.00" y1="87.00" x2="75.00" y2="87.00"/>
+<line class="wall" x1="69.00" y1="93.00" x2="75.00" y2="93.00"/>
+<line class="wall" x1="69.00" y1="99.00" x2="75.00" y2="99.00"/>
+<line class="wall" x1="69.00" y1="105.00" x2="75.00" y2="105.00"/>
+<line class="wall" x1="69.00" y1="111.00" x2="75.00" y2="111.00"/>
+<line class="wall" x1="69.00" y1="117.00" x2="75.00" y2="117.00"/>
+<line class="wall" x1="75.00" y1="33.00" x2="81.00" y2="33.00"/>
+<line class="wall" x1="75.00" y1="39.00" x2="81.00" y2="39.00"/>
+<line class="wall" x1="75.00" y1="45.00" x2="81.00" y2="45.00"/>
+<line class="wall" x1="75.00" y1="51.00" x2="81.00" y2="51.00"/>
+<line class="wall" x1="75.00" y1="57.00" x2="81.00" y2="57.00"/>
+<line class="wall" x1="75.00" y1="63.00" x2="81.00" y2="63.00"/>
+<line class="wall" x1="75.00" y1="69.00" x2="81.00" y2="69.00"/>
+<line class="wall" x1="75.00" y1="81.00" x2="75.00" y2="87.00"/>
+<line class="wall" x1="75.00" y1="81.00" x2="81.00" y2="81.00"/>
+<line class="wall" x1="75.00" y1="87.00" x2="81.00" y2="87.00"/>
+<line class="wall" x1="75.00" y1="93.00" x2="81.00" y2="93.00"/>
+<line class="wall" x1="75.00" y1="99.00" x2="81.00" y2="99.00"/>
+<line class="wall" x1="75.00" y1="105.00" x2="81.00" y2="105.00"/>
+<line class="wall" x1="75.00" y1="111.00" x2="81.00" y2="111.00"/>
+<line class="wall" x1="75.00" y1="117.00" x2="81.00" y2="117.00"/>
+<line class="wall" x1="81.00" y1="33.00" x2="87.00" y2="33.00"/>
+<line class="wall" x1="81.00" y1="39.00" x2="87.00" y2="39.00"/>
+<line class="wall" x1="81.00" y1="45.00" x2="87.00" y2="45.00"/>
+<line class="wall" x1="81.00" y1="51.00" x2="87.00" y2="51.00"/>
+<line class="wall" x1="81.00" y1="57.00" x2="87.00" y2="57.00"/>
+<line class="wall" x1="81.00" y1="63.00" x2="87.00" y2="63.00"/>
+<line class="wall" x1="81.00" y1="69.00" x2="87.00" y2="69.00"/>
+<line class="wall" x1="81.00" y1="81.00" x2="87.00" y2="81.00"/>
+<line class="wall" x1="81.00" y1="87.00" x2="87.00" y2="87.00"/>
+<line class="wall" x1="81.00" y1="93.00" x2="87.00" y2="93.00"/>
+<line class="wall" x1="81.00" y1="99.00" x2="87.00" y2="99.00"/>
+<line class="wall" x1="81.00" y1="105.00" x2="87.00" y2="105.00"/>
+<line class="wall" x1="81.00" y1="111.00" x2="87.00" y2="111.00"/>
+<line class="wall" x1="81.00" y1="117.00" x2="87.00" y2="117.00"/>
+<line class="wall" x1="87.00" y1="33.00" x2="93.00" y2="33.00"/>
+<line class="wall" x1="87.00" y1="39.00" x2="93.00" y2="39.00"/>
+<line class="wall" x1="87.00" y1="45.00" x2="93.00" y2="45.00"/>
+<line class="wall" x1="87.00" y1="51.00" x2="93.00" y2="51.00"/>
+<line class="wall" x1="87.00" y1="57.00" x2="93.00" y2="57.00"/>
+<line class="wall" x1="87.00" y1="63.00" x2="93.00" y2="63.00"/>
+<line class="wall" x1="87.00" y1="69.00" x2="93.00" y2="69.00"/>
+<line class="wall" x1="87.00" y1="81.00" x2="93.00" y2="81.00"/>
+<line class="wall" x1="87.00" y1="87.00" x2="93.00" y2="87.00"/>
+<line class="wall" x1="87.00" y1="93.00" x2="93.00" y2="93.00"/>
+<line class="wall" x1="87.00" y1="99.00" x2="93.00" y2="99.00"/>
+<line class="wall" x1="87.00" y1="105.00" x2="93.00" y2="105.00"/>
+<line class="wall" x1="87.00" y1="111.00" x2="93.00" y2="111.00"/>
+<line class="wall" x1="87.00" y1="117.00" x2="93.00" y2="117.00"/>
+<line class="wall" x1="93.00" y1="33.00" x2="99.00" y2="33.00"/>
+<line class="wall" x1="93.00" y1="39.00" x2="99.00" y2="39.00"/>
+<line class="wall" x1="93.00" y1="45.00" x2="99.00" y2="45.00"/>
+<line class="wall" x1="93.00" y1="51.00" x2="99.00" y2="51.00"/>
+<line class="wall" x1="93.00" y1="57.00" x2="99.00" y2="57.00"/>
+<line class="wall" x1="93.00" y1="63.00" x2="99.00" y2="63.00"/>
+<line class="wall" x1="93.00" y1="69.00" x2="99.00" y2="69.00"/>
+<line class="wall" x1="93.00" y1="81.00" x2="99.00" y2="81.00"/>
+<line class="wall" x1="93.00" y1="87.00" x2="99.00" y2="87.00"/>
+<line class="wall" x1="93.00" y1="93.00" x2="99.00" y2="93.00"/>
+<line class="wall" x1="93.00" y1="99.00" x2="99.00" y2="99.00"/>
+<line class="wall" x1="93.00" y1="105.00" x2="99.00" y2="105.00"/>
+<line class="wall" x1="93.00" y1="111.00" x2="99.00" y2="111.00"/>
+<line class="wall" x1="93.00" y1="117.00" x2="99.00" y2="117.00"/>
+<line class="wall" x1="99.00" y1="33.00" x2="105.00" y2="33.00"/>
+<line class="wall" x1="99.00" y1="39.00" x2="105.00" y2="39.00"/>
+<line class="wall" x1="99.00" y1="45.00" x2="105.00" y2="45.00"/>
+<line class="wall" x1="99.00" y1="51.00" x2="105.00" y2="51.00"/>
+<line class="wall" x1="99.00" y1="57.00" x2="105.00" y2="57.00"/>
+<line class="wall" x1="99.00" y1="63.00" x2="105.00" y2="63.00"/>
+<line class="wall" x1="99.00" y1="69.00" x2="105.00" y2="69.00"/>
+<line class="wall" x1="99.00" y1="81.00" x2="105.00" y2="81.00"/>
+<line class="wall" x1="99.00" y1="87.00" x2="105.00" y2="87.00"/>
+<line class="wall" x1="99.00" y1="93.00" x2="105.00" y2="93.00"/>
+<line class="wall" x1="99.00" y1="99.00" x2="105.00" y2="99.00"/>
+<line class="wall" x1="99.00" y1="105.00" x2="105.00" y2="105.00"/>
+<line class="wall" x1="99.00" y1="111.00" x2="105.00" y2="111.00"/>
+<line class="wall" x1="99.00" y1="117.00" x2="105.00" y2="117.00"/>
+<line class="wall" x1="105.00" y1="33.00" x2="111.00" y2="33.00"/>
+<line class="wall" x1="105.00" y1="39.00" x2="111.00" y2="39.00"/>
+<line class="wall" x1="105.00" y1="45.00" x2="111.00" y2="45.00"/>
+<line class="wall" x1="105.00" y1="51.00" x2="111.00" y2="51.00"/>
+<line class="wall" x1="105.00" y1="57.00" x2="111.00" y2="57.00"/>
+<line class="wall" x1="105.00" y1="63.00" x2="111.00" y2="63.00"/>
+<line class="wall" x1="105.00" y1="69.00" x2="111.00" y2="69.00"/>
+<line class="wall" x1="105.00" y1="81.00" x2="111.00" y2="81.00"/>
+<line class="wall" x1="105.00" y1="87.00" x2="111.00" y2="87.00"/>
+<line class="wall" x1="105.00" y1="93.00" x2="111.00" y2="93.00"/>
+<line class="wall" x1="105.00" y1="99.00" x2="111.00" y2="99.00"/>
+<line class="wall" x1="105.00" y1="105.00" x2="111.00" y2="105.00"/>
+<line class="wall" x1="105.00" y1="111.00" x2="111.00" y2="111.00"/>
+<line class="wall" x1="105.00" y1="117.00" x2="111.00" y2="117.00"/>
+<line class="wall" x1="111.00" y1="33.00" x2="117.00" y2="33.00"/>
+<line class="wall" x1="111.00" y1="39.00" x2="117.00" y2="39.00"/>
+<line class="wall" x1="111.00" y1="45.00" x2="117.00" y2="45.00"/>
+<line class="wall" x1="111.00" y1="51.00" x2="117.00" y2="51.00"/>
+<line class="wall" x1="111.00" y1="57.00" x2="117.00" y2="57.00"/>
+<line class="wall" x1="111.00" y1="63.00" x2="117.00" y2="63.00"/>
+<line class="wall" x1="111.00" y1="69.00" x2="111.00" y2="75.00"/>
+<line class="wall" x1="111.00" y1="75.00" x2="111.00" y2="81.00"/>
+<line class="wall" x1="111.00" y1="87.00" x2="117.00" y2="87.00"/>
+<line class="wall" x1="111.00" y1="93.00" x2="117.00" y2="93.00"/>
+<line class="wall" x1="111.00" y1="99.00" x2="117.00" y2="99.00"/>
+<line class="wall" x1="111.00" y1="105.00" x2="117.00" y2="105.00"/>
+<line class="wall" x1="111.00" y1="111.00" x2="117.00" y2="111.00"/>
+<line class="wall" x1="111.00" y1="117.00" x2="117.00" y2="117.00"/>
+<line class="wall" x1="117.00" y1="33.00" x2="123.00" y2="33.00"/>
+<line class="wall" x1="117.00" y1="39.00" x2="123.00" y2="39.00"/>
+<line class="wall" x1="117.00" y1="45.00" x2="123.00" y2="45.00"/>
+<line class="wall" x1="117.00" y1="51.00" x2="123.00" y2="51.00"/>
+<line class="wall" x1="117.00" y1="57.00" x2="123.00" y2="57.00"/>
+<line class="wall" x1="117.00" y1="63.00" x2="117.00" y2="69.00"/>
+<line class="wall" x1="117.00" y1="69.00" x2="117.00" y2="75.00"/>
+<line class="wall" x1="117.00" y1="75.00" x2="117.00" y2="81.00"/>
+<line class="wall" x1="117.00" y1="81.00" x2="117.00" y2="87.00"/>
+<line class="wall" x1="117.00" y1="93.00" x2="123.00" y2="93.00"/>
+<line class="wall" x1="117.00" y1="99.00" x2="123.00" y2="99.00"/>
+<line class="wall" x1="117.00" y1="105.00" x2="123.00" y2="105.00"/>
+<line class="wall" x1="117.00" y1="111.00" x2="123.00" y2="111.00"/>
+<line class="wall" x1="117.00" y1="117.00" x2="123.00" y2="117.00"/>
+<line class="wall" x1="123.00" y1="33.00" x2="129.00" y2="33.00"/>
+<line class="wall" x1="123.00" y1="39.00" x2="129.00" y2="39.00"/>
+<line class="wall" x1="123.00" y1="45.00" x2="129.00" y2="45.00"/>
+<line class="wall" x1="123.00" y1="51.00" x2="129.00" y2="51.00"/>
+<line class="wall" x1="123.00" y1="57.00" x2="123.00" y2="63.00"/>
+<line class="wall" x1="123.00" y1="63.00" x2="123.00" y2="69.00"/>
+<line class="wall" x1="123.00" y1="69.00" x2="123.00" y2="75.00"/>
+<line class="wall" x1="123.00" y1="75.00" x2="123.00" y2="81.00"/>
+<line class="wall" x1="123.00" y1="81.00" x2="123.00" y2="87.00"/>
+<line class="wall" x1="123.00" y1="87.00" x2="123.00" y2="93.00"/>
+<line class="wall" x1="123.00" y1="99.00" x2="129.00" y2="99.00"/>
+<line class="wall" x1="123.00" y1="105.00" x2="129.00" y2="105.00"/>
+<line class="wall" x1="123.00" y1="111.00" x2="129.00" y2="111.00"/>
+<line class="wall" x1="123.00" y1="117.00" x2="129.00" y2="117.00"/>
+<line class="wall" x1="129.00" y1="33.00" x2="135.00" y2="33.00"/>
+<line class="wall" x1="129.00" y1="39.00" x2="135.00" y2="39.00"/>
+<line class="wall" x1="129.00" y1="45.00" x2="135.00" y2="45.00"/>
+<line class="wall" x1="129.00" y1="51.00" x2="129.00" y2="57.00"/>
+<line class="wall" x1="129.00" y1="57.00" x2="129.00" y2="63.00"/>
+<line class="wall" x1="129.00" y1="63.00" x2="129.00" y2="69.00"/>
+<line class="wall" x1="129.00" y1="69.00" x2="129.00" y2="75.00"/>
+<line class="wall" x1="129.00" y1="75.00" x2="129.00" y2="81.00"/>
+<line class="wall" x1="129.00" y1="81.00" x2="129.00" y2="87.00"/>
+<line class="wall" x1="129.00" y1="87.00" x2="129.00" y2="93.00"/>
+<line class="wall" x1="129.00" y1="93.00" x2="129.00" y2="99.00"/>
+<line class="wall" x1="129.00" y1="105.00" x2="135.00" y2="105.00"/>
+<line class="wall" x1="129.00" y1="111.00" x2="135.00" y2="111.00"/>
+<line class="wall" x1="129.00" y1="117.00" x2="135.00" y2="117.00"/>
+<line class="wall" x1="135.00" y1="33.00" x2="141.00" y2="33.00"/>
+<line class="wall" x1="135.00" y1="39.00" x2="141.00" y2="39.00"/>
+<line class="wall" x1="135.00" y1="45.00" x2="135.00" y2="51.00"/>
+<line class="wall" x1="135.00" y1="51.00" x2="135.00" y2="57.00"/>
+<line class="wall" x1="135.00" y1="57.00" x2="135.00" y2="63.00"/>
+<line class="wall" x1="135.00" y1="63.00" x2="135.00" y2="69.00"/>
+<line class="wall" x1="135.00" y1="69.00" x2="135.00" y2="75.00"/>
+<line class="wall" x1="135.00" y1="75.00" x2="135.00" y2="81.00"/>
+<line class="wall" x1="135.00" y1="81.00" x2="135.00" y2="87.00"/>
+<line class="wall" x1="135.00" y1="87.00" x2="135.00" y2="93.00"/>
+<line class="wall" x1="135.00" y1="93.00" x2="135.00" y2="99.00"/>
+<line class="wall" x1="135.00" y1="99.00" x2="135.00" y2="105.00"/>
+<line class="wall" x1="135.00" y1="111.00" x2="141.00" y2="111.00"/>
+<line class="wall" x1="135.00" y1="117.00" x2="141.00" y2="117.00"/>
+<line class="wall" x1="141.00" y1="33.00" x2="147.00" y2="33.00"/>
+<line class="wall" x1="141.00" y1="39.00" x2="141.00" y2="45.00"/>
+<line class="wall" x1="141.00" y1="45.00" x2="141.00" y2="51.00"/>
+<line class="wall" x1="141.00" y1="51.00" x2="141.00" y2="57.00"/>
+<line class="wall" x1="141.00" y1="57.00" x2="141.00" y2="63.00"/>
+<line class="wall" x1="141.00" y1="63.00" x2="141.00" y2="69.00"/>
+<line class="wall" x1="141.00" y1="69.00" x2="141.00" y2="75.00"/>
+<line class="wall" x1="141.00" y1="75.00" x2="141.00" y2="81.00"/>
+<line class="wall" x1="141.00" y1="81.00" x2="141.00" y2="87.00"/>
+<line class="wall" x1="141.00" y1="87.00" x2="141.00" y2="93.00"/>
+<line class="wall" x1="141.00" y1="93.00" x2="141.00" y2="99.00"/>
+<line class="wall" x1="141.00" y1="99.00" x2="141.00" y2="105.00"/>
+<line class="wall" x1="141.00" y1="105.00" x2="141.00" y2="111.00"/>
+<line class="wall" x1="141.00" y1="117.00" x2="147.00" y2="117.00"/>
+<line class="wall" x1="147.00" y1="33.00" x2="147.00" y2="39.00"/>
+<line class="wall" x1="147.00" y1="39.00" x2="147.00" y2="45.00"/>
+<line class="wall" x1="147.00" y1="45.00" x2="147.00" y2="51.00"/>
+<line class="wall" x1="147.00" y1="51.00" x2="147.00" y2="57.00"/>
+<line class="wall" x1="147.00" y1="57.00" x2="147.00" y2="63.00"/>
+<line class="wall" x1="147.00" y1="63.00" x2="147.00" y2="69.00"/>
+<line class="wall" x1="147.00" y1="69.00" x2="147.00" y2="75.00"/>
+<line class="wall" x1="147.00" y1="75.00" x2="147.00" y2="81.00"/>
+<line class="wall" x1="147.00" y1="81.00" x2="147.00" y2="87.00"/>
+<line class="wall" x1="147.00" y1="87.00" x2="147.00" y2="93.00"/>
+<line class="wall" x1="147.00" y1="93.00" x2="147.00" y2="99.00"/>
+<line class="wall" x1="147.00" y1="99.00" x2="147.00" y2="105.00"/>
+<line class="wall" x1="147.00" y1="105.00" x2="147.00" y2="111.00"/>
+<line class="wall" x1="147.00" y1="111.00" x2="147.00" y2="117.00"/>
+</g>
+<g id="gates">
+<polygon class="gate" points="6.00,34.85 7.15,36.00 6.00,37.15 4.85,36.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="42.00,34.85 43.15,36.00 42.00,37.15 40.85,36.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="108.00,34.85 109.15,36.00 108.00,37.15 106.85,36.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="144.00,34.85 145.15,36.00 144.00,37.15 142.85,36.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="132.00,112.85 133.15,114.00 132.00,115.15 130.85,114.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="96.00,112.85 97.15,114.00 96.00,115.15 94.85,114.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="18.00,112.85 19.15,114.00 18.00,115.15 16.85,114.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="6.00,88.85 7.15,90.00 6.00,91.15 4.85,90.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="6.00,82.85 7.15,84.00 6.00,85.15 4.85,84.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="6.00,40.85 7.15,42.00 6.00,43.15 4.85,42.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="18.00,40.85 19.15,42.00 18.00,43.15 16.85,42.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="54.00,40.85 55.15,42.00 54.00,43.15 52.85,42.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="84.00,40.85 85.15,42.00 84.00,43.15 82.85,42.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="120.00,40.85 121.15,42.00 120.00,43.15 118.85,42.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="138.00,88.85 139.15,90.00 138.00,91.15 136.85,90.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="114.00,106.85 115.15,108.00 114.00,109.15 112.85,108.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="54.00,106.85 55.15,108.00 54.00,109.15 52.85,108.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="18.00,106.85 19.15,108.00 18.00,109.15 16.85,108.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="24.00,46.85 25.15,48.00 24.00,49.15 22.85,48.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="36.00,46.85 37.15,48.00 36.00,49.15 34.85,48.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="120.00,46.85 121.15,48.00 120.00,49.15 118.85,48.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="132.00,70.85 133.15,72.00 132.00,73.15 130.85,72.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="120.00,100.85 121.15,102.00 120.00,103.15 118.85,102.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="84.00,100.85 85.15,102.00 84.00,103.15 82.85,102.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="30.00,100.85 31.15,102.00 30.00,103.15 28.85,102.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="18.00,70.85 19.15,72.00 18.00,73.15 16.85,72.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="24.00,52.85 25.15,54.00 24.00,55.15 22.85,54.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="60.00,52.85 61.15,54.00 60.00,55.15 58.85,54.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="108.00,52.85 109.15,54.00 108.00,55.15 106.85,54.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="126.00,76.85 127.15,78.00 126.00,79.15 124.85,78.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="114.00,94.85 115.15,96.00 114.00,97.15 112.85,96.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="78.00,94.85 79.15,96.00 78.00,97.15 76.85,96.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="66.00,94.85 67.15,96.00 66.00,97.15 64.85,96.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="54.00,94.85 55.15,96.00 54.00,97.15 52.85,96.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="42.00,58.85 43.15,60.00 42.00,61.15 40.85,60.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="78.00,58.85 79.15,60.00 78.00,61.15 76.85,60.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="120.00,70.85 121.15,72.00 120.00,73.15 118.85,72.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="102.00,88.85 103.15,90.00 102.00,91.15 100.85,90.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="30.00,70.85 31.15,72.00 30.00,73.15 28.85,72.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="36.00,64.85 37.15,66.00 36.00,67.15 34.85,66.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="114.00,76.85 115.15,78.00 114.00,79.15 112.85,78.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="78.00,82.85 79.15,84.00 78.00,85.15 76.85,84.00" fill="black" stroke="black" stroke-width="0.35"/>
+<polygon class="gate" points="78.00,82.10 79.90,84.00 78.00,85.90 76.10,84.00" fill="white" stroke="black" stroke-width="0.38"/>
+</g>
+<g id="entrance"><line x1="6.00" y1="24.00" x2="6.00" y2="31.80" stroke="black" stroke-width="0.9"/><polygon points="3.80,29.80 8.20,29.80 6.00,32.60" fill="black"/><text x="6.00" y="22.00" font-family="sans-serif" font-size="2.8" text-anchor="middle" fill="black">start</text></g>
+<g id="goal"><rect class="goal" x="75.80" y="81.80" width="4.40" height="4.40" fill="none" stroke="black" stroke-width="0.8"/><text x="78.00" y="91.20" font-family="sans-serif" font-size="2.6" text-anchor="middle" fill="black">meta</text></g>
+<text x="75" y="146" font-family="sans-serif" font-size="3.2" text-anchor="middle" fill="black">B · LABIRYNT — cyfra = ile pól między bramkami (drugie pole włącznie)</text>
+</svg>

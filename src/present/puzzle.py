@@ -21,6 +21,7 @@ KNUTS_IN_GALLEON = GALLEON_IN_SICKLES * SICKLE_IN_KNUTS  # 493
 class Receipt:
     name: str
     letter: str
+    flavour: str
     galleons: int
     sickles: int
     knuts: int
@@ -72,6 +73,7 @@ def load(cfg: dict) -> Puzzle:
         Receipt(
             name=row["name"],
             letter=row["letter"],
+            flavour=row.get("flavour", ""),
             galleons=row["galleons"],
             sickles=row["sickles"],
             knuts=row["knuts"],

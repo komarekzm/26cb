@@ -19,8 +19,10 @@ szyfrogram AES-GCM; klucz powstaje ze słowa ułożonego w zagadce (PBKDF2-SHA25
 
 ## Zagadka
 
-Dziewięć kwitów z apteki eliksirów: nazwa, objętość w dramach, cena w galeonach,
-syklach i knutach (1 galeon = 17 sykli, 1 sykiel = 29 knutów).
+Dziewięć wpisów z księgi eliksirów: nazwa, jedno zdanie zapachu, objętość w dramach
+i cena w galeonach, syklach i knutach (1 galeon = 17 sykli, 1 sykiel = 29 knutów).
+Regułę podaje rymowanka mistrza eliksirów — ona jest jedynym miejscem, gdzie powiedziane
+jest „za jednego drama", więc nie trzeba jej dublować w instrukcji.
 
 1. Przelicz każdą cenę na knuty.
 2. Podziel przez liczbę dramów — dostaniesz cenę **za jeden dram** (zawsze liczbę całkowitą).

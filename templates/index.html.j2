@@ -66,6 +66,35 @@ table.receipts td.drams, table.receipts td:nth-child(3) { font-family: var(--mon
 table.receipts td:nth-child(3),
 table.receipts td:nth-child(4) { font-family: var(--mono); white-space: nowrap; }
 table.receipts tbody th { text-align: left; }
+.riddle {
+  margin: 1.1rem auto 0;
+  max-width: 38ch;
+  text-align: center;
+  font-family: var(--serif);
+  font-size: 1.06rem;
+  font-style: italic;
+  line-height: 1.75;
+  color: #2f3437;
+}
+.riddle span { display: block; }
+.riddle span:last-child { margin-top: 0.5rem; font-style: normal; }
+
+.gloss {
+  margin: 1.1rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.potion { display: block; font-weight: 500; }
+.flavour {
+  display: block;
+  margin-top: 0.15rem;
+  font-size: 0.74rem;
+  font-style: italic;
+  color: var(--muted);
+}
+
 table.receipts .stamp {
   width: 1.7rem;
   text-align: center;
@@ -206,7 +235,7 @@ button:active { transform: scale(0.98); }
   </header>
 
   <section class="puzzle rise" style="--i:2">
-    <h2 class="step"><span>I</span> Kwity z apteki eliksirów</h2>
+    <h2 class="step"><span>I</span> Karta z księgi eliksirów</h2>
     <table class="receipts">
       <thead>
         <tr><th>pieczęć</th><th>eliksir</th><th>dramy</th><th>cena</th></tr>
@@ -215,7 +244,7 @@ button:active { transform: scale(0.98); }
         {% for receipt in puzzle.receipts %}
         <tr>
           <td class="stamp">{{ receipt.letter }}</td>
-          <th>{{ receipt.name }}</th>
+          <th><span class="potion">{{ receipt.name }}</span><span class="flavour">{{ receipt.flavour }}</span></th>
           <td>{{ receipt.drams }}</td>
           <td>{{ receipt.galleons }}g {{ receipt.sickles }}s {{ receipt.knuts }}k</td>
         </tr>
@@ -223,20 +252,19 @@ button:active { transform: scale(0.98); }
       </tbody>
     </table>
 
-    <h2 class="step"><span>II</span> Ile to knutów</h2>
-    <p class="step-note">
-      Przelicz cenę każdego kwitu na knuty: 1 galeon to 17 sykli, 1 sykiel to 29 knutów.
+    <h2 class="step"><span>II</span> Co mówi mistrz eliksirów</h2>
+    <div class="riddle">
+      {% for line in riddle %}<span>{{ line }}</span>
+      {% endfor %}
+    </div>
+    <p class="gloss">
+      Dram to miara objętości. Galeon to 17 sykli, sykiel to 29 knutów — tyle wiedzy
+      wystarczy, żeby zejść z ceny flakonu do ceny jednej miary.
     </p>
 
-    <h2 class="step"><span>III</span> Cena za jeden dram</h2>
-    <p class="step-note">
-      Podziel knuty przez liczbę dramów. Ustaw kwity od najtańszego za dram do najdroższego
-      i czytaj litery z pieczęci — {{ puzzle.word | length }} liter, jedno słowo.
-      Cena łączna podpowie inną kolejność i inne słowo.
-    </p>
-
+    <h2 class="step"><span>III</span> Pieczęcie</h2>
     <form id="unlock" autocomplete="off" novalidate>
-      <label for="answer">Słowo</label>
+      <label for="answer">Słowo z pieczęci</label>
       <div class="row">
         <input id="answer" name="answer" type="text" placeholder="{{ puzzle.word | length }} liter"
                spellcheck="false" autocapitalize="off" required>
