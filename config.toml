@@ -5,7 +5,7 @@
 [page]
 # Bez "https://" i bez ukośnika na końcu. Kartka koduje CAŁY ten adres numerami liter.
 # Musi mieć postać <user>.github.io/<repo>: stąd deploy bierze miejsce pushu.
-url = "komarekzm.github.io/bflk"
+url = "komarekzm.github.io/26cb"
 # Imię w wołaczu; trafia do leada przez {name}.
 name = "Siostro"
 title = "Koperta pierwsza"

@@ -63,6 +63,10 @@ def encode(address: str) -> list[str]:
             tokens.append(symbol(number(char)))
         elif char in PUNCTUATION:
             tokens.append(char)
+        elif char.isdigit():
+            raise ValueError(
+                f"cyfra {char!r} nie należy do domeny — kod adresu niesie siatka, nie pasek"
+            )
         else:
             raise ValueError(f"znak {char!r} nie ma miejsca w tej legendzie")
     return tokens

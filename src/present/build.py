@@ -104,7 +104,7 @@ def main() -> None:
     domain, _, code = site.address.rpartition("/")
     tokens = cipher.encode(domain + "/")  # pasek: domena razem z ukośnikiem
     grid_weights = (1, 2, 4, 8)  # cztery kolumny: kod musi mieścić się w literach a–o
-    grid_svg = grid.render(code, weights=grid_weights)
+    grid_svg = grid.render_hex(code, weights=grid_weights)
     rotate = "--rotate" in sys.argv
 
     if not cfg["page"]["test_mode"] and coupon.upper().startswith("TEST"):

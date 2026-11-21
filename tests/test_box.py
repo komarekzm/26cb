@@ -102,3 +102,27 @@ def test_out_of_alphabet_sum_is_rejected() -> None:
     svg = box.render("zzzz").replace('data-filled="0"', 'data-filled="1"')
     with pytest.raises(ValueError):
         box.decode(svg)
+
+
+def test_hex_mode_reads_four_hex_digits() -> None:
+    """Siatka ma dawać wprost cyfry kodu: 26cb → sumy 2, 6, 12, 11."""
+    svg = box.render_hex("26cb", weights=(1, 2, 4, 8))
+    assert box.decode_hex(svg) == "26cb"
+    assert [int(char, 16) for char in box.decode_hex(svg)] == [2, 6, 12, 11]
+
+
+@pytest.mark.parametrize("code", ["0000", "ffff", "26cb", "a1b2", "1111"])
+def test_hex_mode_round_trips(code: str) -> None:
+    assert box.decode_hex(box.render_hex(code, weights=(1, 2, 4, 8))) == code
+
+
+def test_hex_mode_rejects_out_of_range_sum() -> None:
+    """Suma powyżej 15 nie jest już jedną cyfrą hex.
+
+    Przy czterech kolumnach maksimum to 15, więc przypadek brzegowy trzeba zrobić
+    na pięciu kolumnach (1+2+4+8+16 = 31).
+    """
+    svg = box.render_hex("ffff", weights=(1, 2, 4, 8, 16))
+    wszystkie = svg.replace('data-filled="0"', 'data-filled="1"')
+    with pytest.raises(ValueError):
+        box.decode_hex(wszystkie)

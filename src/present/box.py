@@ -61,11 +61,58 @@ def fits(code: str, weights: tuple[int, ...]) -> bool:
     return all(value <= limit for value in digits(code))
 
 
+def _values(svg: str) -> list[int]:
+    """Sumy wag w każdym rzędzie — jedyne, co siatka naprawdę niesie."""
+    root = ET.fromstring(svg)
+    weights = [
+        (float(element.get("x")), int(element.text))
+        for element in root.iter()
+        if element.tag.split("}")[-1] == "text" and element.get("class") == "weight"
+    ]
+    if not weights:
+        raise ValueError("rysunek nie podpisuje wag kolumn")
+    ordered = [weight for _, weight in sorted(weights)]
+
+    dots = [
+        (int(element.get("data-row")), int(element.get("data-col")),
+         int(element.get("data-filled")))
+        for element in root.iter()
+        if element.tag.split("}")[-1] == "circle" and element.get("class") == "dot"
+    ]
+    if len(dots) != 4 * len(ordered):
+        raise ValueError(f"oczekiwano {4 * len(ordered)} kropek, jest {len(dots)}")
+
+    values = [0, 0, 0, 0]
+    for row, col, filled in dots:
+        if filled:
+            values[row] += ordered[col]
+    return values
+
+
+def decode_hex(svg: str) -> str:
+    """Odczyt siatki jako czterech cyfr hex — bez litery alfabetu pośrodku."""
+    values = _values(svg)
+    if any(not 0 <= value <= 15 for value in values):
+        raise ValueError(f"suma poza zakresem jednej cyfry hex: {values}")
+    return "".join(f"{value:x}" for value in values)
+
+
+def render_hex(code: str, cell: float = 92, weights: tuple[int, ...] = (1, 2, 4, 8)) -> str:
+    """Siatka dla kodu zapisanego cyframi hex: 26cb → sumy 2, 6, 12, 11."""
+    code = code.strip().lower()
+    if not re.fullmatch(r"[0-9a-f]{4}", code):
+        raise ValueError(f"kod musi mieć 4 cyfry hex, jest {code!r}")
+    return _render([int(char, 16) for char in code], cell, weights)
+
+
 def render(code: str, cell: float = 92, weights: tuple[int, ...] = WEIGHTS) -> str:
     """Siatka z podpisanymi wagami kolumn — dokładnie to, co rysujesz na kartce."""
     if not fits(code, weights):
         raise ValueError(f"kod {code} nie mieści się w siatce o sumie wag {sum(weights)}")
-    values = digits(code)
+    return _render(digits(code), cell, weights)
+
+
+def _render(values: list[int], cell: float, weights: tuple[int, ...]) -> str:
     pad_left = cell * 0.9
     pad_top = cell * 1.0
     width = pad_left + cell * len(weights) + cell * 0.2
@@ -95,33 +142,8 @@ def render(code: str, cell: float = 92, weights: tuple[int, ...] = WEIGHTS) -> s
 
 
 def decode(svg: str) -> str:
-    """Odczyt z rysunku: wagi z podpisów kolumn, wypełnienie kropek z atrybutu."""
-    root = ET.fromstring(svg)
-
-    weights = [
-        (float(element.get("x")), int(element.text))
-        for element in root.iter()
-        if element.tag.split("}")[-1] == "text" and element.get("class") == "weight"
-    ]
-    if not weights:
-        raise ValueError("rysunek nie podpisuje wag kolumn")
-    ordered = [weight for _, weight in sorted(weights)]
-
-    dots = [
-        (int(element.get("data-row")), int(element.get("data-col")),
-         int(element.get("data-filled")))
-        for element in root.iter()
-        if element.tag.split("}")[-1] == "circle" and element.get("class") == "dot"
-    ]
-    expected = 4 * len(ordered)
-    if len(dots) != expected:
-        raise ValueError(f"oczekiwano {expected} kropek, jest {len(dots)}")
-
-    dots.sort()
-    values = [0, 0, 0, 0]
-    for row, col, filled in dots:
-        if filled:
-            values[row] += ordered[col]
+    """Odczyt siatki jako liter alfabetu (1 = a … 26 = z)."""
+    values = _values(svg)
     if any(not 1 <= value <= 26 for value in values):
         raise ValueError(f"suma poza alfabetem: {values}")
     return "".join(LETTERS[value - 1] for value in values)

@@ -33,10 +33,20 @@ def test_numbers_are_written_in_hex() -> None:
     assert cipher.decode(["B"] * 2) == "kk"  # B = 11 = k
 
 
-def test_whole_address_round_trips() -> None:
-    address = config.site().address
-    tokens = cipher.encode(address)
-    assert cipher.decode(tokens) == address
+def domain_and_code() -> tuple[str, str]:
+    domain, _, code = config.site().address.rpartition("/")
+    return domain + "/", code
+
+
+def test_domain_round_trips_and_grid_carries_the_code() -> None:
+    """Pasek = domena, siatka = kod. Razem muszą dać dokładnie adres."""
+    from present import box
+
+    domain, code = domain_and_code()
+    tokens = cipher.encode(domain)
+    assert cipher.decode(tokens) == domain
+    assert box.decode_hex(box.render_hex(code, weights=(1, 2, 4, 8))) == code
+    assert cipher.decode(tokens) + code == config.site().address
 
 
 def test_punctuation_is_left_alone() -> None:
@@ -45,9 +55,15 @@ def test_punctuation_is_left_alone() -> None:
     assert cipher.decode(tokens) == "ab.c/d"
 
 
+def test_digit_in_domain_is_rejected_with_a_reason() -> None:
+    """Cyfra w domenie myliłaby się z zapisem hex — kod ma swoje miejsce w siatce."""
+    with pytest.raises(ValueError, match="siatka"):
+        cipher.encode("komarekzm2.github.io/")
+
+
 def test_tokens_stay_within_hex_digits() -> None:
     """Żadnych liter spoza A–F: po F liczenie idzie dalej jako 10, 11, … 1A."""
-    for token in cipher.encode(config.site().address):
+    for token in cipher.encode(domain_and_code()[0]):
         assert token in ". /".split() or __import__("re").fullmatch(r"[0-9A-F]{1,2}", token), token
 
 
@@ -69,7 +85,7 @@ def test_card_does_not_spell_the_address_out() -> None:
 
 
 def test_rows_wrap_the_whole_strip() -> None:
-    tokens = cipher.encode(config.site().address)
+    tokens = cipher.encode(domain_and_code()[0])
     rows = cipher.rows(tokens, per_row=7)
     assert sum(len(row) for row in rows) == len(tokens)
     assert all(len(row) <= 7 for row in rows)
