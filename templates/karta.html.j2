@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<title>Karta do druku — {{ page.title }}</title>
+<style>
+{% include "base.css" %}
+
+@page { size: A4; margin: 0; }
+
+body { background: #ecebe7; }
+
+.sheet {
+  display: flex;
+  flex-direction: column;
+  width: 210mm;
+  min-height: 297mm;
+  padding: 24mm 22mm;
+  margin: 0 auto 8mm;
+  background: #fff;
+  border: 1px solid var(--line);
+}
+
+h1 {
+  margin: 1rem 0 0;
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: 26pt;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.card-lead { margin: 1.2rem 0 0; font-size: 11pt; line-height: 1.6; color: #2f3437; }
+
+.hex {
+  margin: 2.2rem 0;
+  padding: 1.8rem 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  font-family: var(--mono);
+  font-size: 15pt;
+  line-height: 2.2;
+  letter-spacing: 0.16em;
+  white-space: pre;
+}
+
+.hint { margin: 0; font-size: 10.5pt; line-height: 1.6; color: var(--muted); }
+
+.pad { flex: 1; }
+
+.key-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.18rem 0.9rem;
+  margin-top: 1.6rem;
+  font-family: var(--mono);
+  font-size: 8.5pt;
+}
+.key-grid span { display: flex; gap: 0.45rem; }
+.key-grid b { color: var(--muted); font-weight: 500; }
+
+.sheet p { font-size: 11pt; line-height: 1.65; }
+
+@media print {
+  body { background: #fff; }
+  .sheet {
+    border: 0;
+    margin: 0;
+    padding: 24mm 22mm;
+    page-break-after: always;
+  }
+  .sheet:last-of-type { page-break-after: auto; }
+}
+</style>
+</head>
+<body>
+<section class="sheet">
+  <p class="eyebrow">{{ page.title }}</p>
+  <h1>{{ gift.headline }}</h1>
+  <p class="card-lead">Adres, pod którym czeka reszta — zapisany w hex.</p>
+
+  <pre class="hex">{% for row in hex_rows %}{{ row }}
+{% endfor %}</pre>
+
+  <p class="hint">{{ card.hint }}</p>
+
+  <div class="pad"></div>
+  <p class="eyebrow">Wpisz w przeglądarkę · bez „https://” i bez spacji</p>
+</section>
+
+<section class="sheet">
+  <p class="eyebrow">Klucz</p>
+  <h1>Jak to przeczytać</h1>
+
+  <p>
+    Każde dwa znaki to jedna litera. <code>{{ sample_hex }}</code> to liczba
+    {{ sample_dec }}, czyli <code>{{ sample_char }}</code>. Spacje między parami
+    są tylko dla oka.
+  </p>
+  <p>
+    Osiem bitów to również jedna litera — ten sam kod, tylko zapisany dłużej.
+    Jeśli wolisz tę drogę, poproś o wersję binarną.
+  </p>
+
+  <div class="key-grid">
+    {% for h, ch in ascii_table %}<span><b>{{ h }}</b>{{ ch }}</span>{% endfor %}
+  </div>
+</section>
+</body>
+</html>

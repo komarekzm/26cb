@@ -1,0 +1,47 @@
+[tools]
+uv = "latest"
+python = "3.14"
+
+[tasks.build]
+description = "Wygeneruj docs/ (strona + QR) i build/karta-A4.html"
+run = "uv run python -m present.build"
+
+[tasks.test]
+description = "Testy kodeka: hex i bity muszą wracać do tego samego adresu"
+run = "uv run pytest -q"
+
+[tasks.serve]
+description = "Podejrzyj stronę lokalnie na http://127.0.0.1:8788"
+run = "uv run python -m http.server 8788 --directory docs"
+
+[tasks.print]
+description = "Wygeneruj kartkę i wypisz ją do PDF (A4, bez okna)"
+run = """
+uv run python -m present.build
+mkdir -p build
+chromium --headless --disable-gpu --no-pdf-header-footer \
+  --print-to-pdf=build/karta-A4.pdf build/karta-A4.html 2>/dev/null
+echo "build/karta-A4.pdf"
+"""
+
+[tasks.deploy]
+description = "Wypchnij docs/ na GitHub Pages i sprawdź, czy wstało"
+run = """
+uv run python -m present.build
+if ! gh repo view "$(uv run python -m present.config repo)" >/dev/null 2>&1; then
+  gh repo create "$(uv run python -m present.config repo)" --public \
+    --description "Statyczna strona-zagadka z kuponem" --source=. --remote=origin --push
+  gh api -X POST "repos/$(uv run python -m present.config repo)/pages" \
+    -f "source[branch]=main" -f "source[path]=/docs" >/dev/null
+  echo "Pages włączone — pierwszy build trwa ~1 min"
+fi
+git add -A && git commit -m "docs: przebudowana strona i karta" --allow-empty
+git push -q origin main
+sleep 20
+curl -sS -o /dev/null -w "https://$(uv run python -m present.config url) -> HTTP %{http_code}\\n" \
+  "https://$(uv run python -m present.config url)/"
+"""
+
+[tasks.decode]
+description = "Odkoduj hex z kartki z powrotem na adres (kontrola przed drukiem)"
+run = "uv run python -m present.codec decode"
