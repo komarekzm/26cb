@@ -3,10 +3,10 @@
 # oznacza ponowny wydruk karty do druku.
 
 [page]
-# Bez "https://" i bez ukośnika na końcu. Ostatnie cztery znaki to kod z siatki 4 × 4,
+# Bez "https://" i bez ukośnika na końcu. Ostatnie cztery litery to kod z siatki 4 × 5,
 # który idzie na kartkę; domena jest tam pisana wprost.
 # Musi mieć postać <user>.github.io/<repo>: stąd deploy bierze miejsce pushu.
-url = "komarekzm.github.io/286d"
+url = "komarekzm.github.io/hvqm"
 # Imię w wołaczu; trafia do leada przez {name}.
 name = "Siostro"
 title = "Koperta pierwsza"
@@ -82,4 +82,4 @@ text = "Z różdżki tryska strumień wody."
 
 [card]
 # Wskazówka na kartce — Twoje słowa, nie kod.
-hint = "cztery rzędy · cztery znaki"
+hint = "cztery rzędy · cztery litery"

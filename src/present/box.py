@@ -15,7 +15,9 @@ import secrets
 import string
 import xml.etree.ElementTree as ET
 
-WEIGHTS = (1, 2, 4, 8)  # kolejność kolumn od lewej
+# Pięć kolumn, bo litery idą do 26, a cztery kolumny sięgają tylko do 15.
+WEIGHTS = (1, 2, 4, 8, 16)  # kolejność kolumn od lewej
+LETTERS = string.ascii_lowercase  # 1 = a, 2 = b, … 26 = z
 INK = "#111111"
 FAINT = "#c9c6be"
 GRID = "#efeeea"
@@ -24,9 +26,10 @@ HEX_DIGITS = string.hexdigits.lower()[:16]  # 0-9a-f
 
 
 def valid_code(code: str) -> str:
+    """Kod to cztery małe litery — numer litery w alfabecie jest tym, co niesie siatka."""
     code = code.strip().lower()
-    if not re.fullmatch(r"[0-9a-f]{4}", code):
-        raise ValueError(f"kod musi mieć 4 znaki z zakresu 0-9 a-f, jest {code!r}")
+    if not re.fullmatch(r"[a-z]{4}", code):
+        raise ValueError(f"kod musi mieć 4 małe litery, jest {code!r}")
     return code
 
 
@@ -39,15 +42,16 @@ def random_code(rng=None) -> str:
     Bez liter problem znika: kod wpisany z Caps Lockiem i tak trafi.
     """
     source = rng or secrets
-    plain = {"1248", "8421", "1234", "4321", "1111", "2222", "0000", "9999"}
+    words = {"test", "abcd", "deko", "kota", "masa", "lama", "krem", "kark", "takt"}
     while True:
-        code = "".join(source.choice("0123456789") for _ in range(4))
-        if code not in plain and len(set(code)) > 2:
+        code = "".join(source.choice(LETTERS) for _ in range(4))
+        if code not in words and len(set(code)) > 2:
             return code
 
 
 def digits(code: str) -> list[int]:
-    return [int(char, 16) for char in valid_code(code)]
+    """Litera → numer w alfabecie: a = 1, b = 2, … z = 26."""
+    return [LETTERS.index(char) + 1 for char in valid_code(code)]
 
 
 def render(code: str, cell: float = 92) -> str:
@@ -55,7 +59,7 @@ def render(code: str, cell: float = 92) -> str:
     values = digits(code)
     pad_left = cell * 0.9
     pad_top = cell * 1.0
-    width = pad_left + cell * 4 + cell * 0.2
+    width = pad_left + cell * len(WEIGHTS) + cell * 0.2
     height = pad_top + cell * 4 + cell * 0.2
     parts = [f'<rect width="{width}" height="{height}" fill="#fff"/>']
 
@@ -90,37 +94,34 @@ def decode(svg: str) -> str:
         for element in root.iter()
         if element.tag.split("}")[-1] == "circle" and element.get("class") == "dot"
     ]
-    if len(dots) != 16:
-        raise ValueError(f"oczekiwano 16 kropek, jest {len(dots)}")
+    expected = 4 * len(WEIGHTS)
+    if len(dots) != expected:
+        raise ValueError(f"oczekiwano {expected} kropek, jest {len(dots)}")
     dots.sort()
     values = [0, 0, 0, 0]
     for row, col, filled in dots:
         if filled:
             values[row] += WEIGHTS[col]
-    return "".join(f"{value:x}" for value in values)
+    if any(not 1 <= value <= 26 for value in values):
+        raise ValueError(f"suma poza alfabetem: {values}")
+    return "".join(LETTERS[value - 1] for value in values)
 
 
-def render_key(cell: float = 40, letters: bool = False) -> str:
-    """Klucz na odwrotną stronę: waga każdej kolumny i co znaczą sumy powyżej dziewięciu."""
-    rows = [
-        ("kolumna 1", "1", "kropka w pierwszej kolumnie"),
-        ("kolumna 2", "2", "kropka w drugiej kolumnie"),
-        ("kolumna 3", "4", "kropka w trzeciej kolumnie"),
-        ("kolumna 4", "8", "kropka w czwartej kolumnie"),
-    ]
-    width, height = cell * 16, cell * 6.2
+def render_key(cell: float = 34) -> str:
+    """Legenda na odwrotną stronę: numer litery w alfabecie, po kolei."""
+    columns = 7
+    rows = (len(LETTERS) + columns - 1) // columns
+    width = cell * (columns * 3.1)
+    height = cell * (rows * 0.78 + 1.2)
     parts = [f'<rect width="{width}" height="{height}" fill="#fff"/>']
-    for index, (label, weight, note) in enumerate(rows):
-        y = cell * 1.1 + index * cell * 1.15
-        parts.append(f'<circle cx="{cell * 0.9}" cy="{y - cell * 0.12}" r="{cell * 0.2}" fill="{INK}"/>')
-        parts.append(f'<text x="{cell * 1.5}" y="{y}" font-family="monospace" font-size="{cell * 0.42}" '
-                     f'fill="{LABEL}">{weight}</text>')
-        parts.append(f'<text x="{cell * 2.6}" y="{y}" font-family="monospace" font-size="{cell * 0.4}" '
-                     f'fill="#2f3437">{note}</text>')
-    if letters:
-        parts.append(f'<text x="{cell * 0.6}" y="{cell * 5.6}" font-family="monospace" '
-                     f'font-size="{cell * 0.38}" fill="{LABEL}">'
-                     f'sumuj w rzędzie · 10=a 11=b 12=c 13=d 14=e 15=f</text>')
+    for index, letter in enumerate(LETTERS):
+        row, col = divmod(index, columns)
+        x = cell * 0.5 + col * cell * 3.1
+        y = cell * 1.0 + row * cell * 0.78
+        parts.append(f'<text x="{x}" y="{y}" font-family="monospace" font-size="{cell * 0.5}" '
+                     f'fill="{LABEL}">{index + 1:>2}·</text>')
+        parts.append(f'<text x="{x + cell * 0.95}" y="{y}" font-family="monospace" '
+                     f'font-size="{cell * 0.56}" fill="#2f3437">{letter}</text>')
     return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {width} {height}" '
             f'width="{width}" height="{height}">{"".join(parts)}</svg>')
 
@@ -132,6 +133,6 @@ if __name__ == "__main__":
     print(f"kod        : {valid_code(code)}")
     for row, value in enumerate(digits(code)):
         marked = [str(w) for w in WEIGHTS if value & w]
-        print(f"  rząd {row + 1}  : {' + '.join(marked) or '0':10} = {value:x}")
+        print(f"  rząd {row + 1}  : {' + '.join(marked) or '0':18} = {value:2} → {LETTERS[value - 1]}")
     print(f"odczyt     : {decode(render(code))}")
     print(f"losowy kod : {random_code()}")

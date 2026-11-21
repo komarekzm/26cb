@@ -143,7 +143,6 @@ def main() -> None:
         "code": code,
         "site_owner": site.address.rsplit("/", 1)[0],
         "box_svg": codebox.render(code),
-        "code_has_letters": any(char.isalpha() for char in code),
         "ascii_table": codec.ascii_table(),
         "key_svg": codebox.render_key(),
         "box": box,
@@ -168,7 +167,9 @@ def main() -> None:
 
     print(f"kupon        : {coupon} (tylko pod monitorem i w build/qr.png)")
     print(f"adres        : {site.address}")
-    print(f"kod z siatki : {code} (4 × 4, wagi 1 2 4 8)")
+    print(f"kod z siatki : {code} (4 × 5, wagi 1 2 4 8 16)")
+    for row, value in enumerate(codebox.digits(code), start=1):
+        print(f"  rząd {row}      : {value:2} → {codebox.LETTERS[value - 1]}")
     print(f"notatki      : {len(puzzle.clues)}")
     print(f"z inicjałów  : {puzzle.built_word}  ← to jest hasło")
     print(f"z banku      : {puzzle.bank_word}  ← tyle daje czytanie banku bez dopasowania")

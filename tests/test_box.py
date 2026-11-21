@@ -1,9 +1,10 @@
-"""Bramki siatki 4 × 4: kod musi być do odczytania, a nie do przeczytania.
+"""Bramki siatki 4 × 5: numer litery w alfabecie musi dać się odczytać z rysunku.
 
-Testy sprawdzają trzy rzeczy, które łatwo zepsuć po cichu:
-1. odczyt z geometrii daje ten sam kod (dla każdej cyfry hex osobno),
-2. wagi kolumn naprawdę idą 1 · 2 · 4 · 8 od lewej,
-3. kod nie wyciekł jawnym tekstem na kartkę ani na stronę.
+Kod to cztery małe litery. Siatka niesie ich numery (1 = a … 26 = z), a wagi kolumn
+(1, 2, 4, 8, 16) pozwalają zapisać każdą liczbę do 31 — czyli cały alfabet.
+
+Testy pilnują tego, co psuje się po cichu: odczytu z geometrii, kolejności wag,
+braku wycieku kodu i tego, że kropki da się postawić ołówkiem.
 """
 
 from __future__ import annotations
@@ -25,42 +26,48 @@ def code() -> str:
     return box.valid_code(config.site().address.rsplit("/", 1)[-1])
 
 
-@pytest.mark.parametrize("digit", list("0123456789abcdef"))
-def test_every_digit_survives_the_round_trip(digit: str) -> None:
-    value = digit * 4
+@pytest.mark.parametrize("letter", list(box.LETTERS))
+def test_every_letter_survives_the_round_trip(letter: str) -> None:
+    value = letter * 4
     assert box.decode(box.render(value)) == value
 
 
-def test_digits_are_sums_of_marked_weights(code: str) -> None:
-    svg = box.render(code)
-    root = ET.fromstring(svg)
+def test_letters_are_numbered_from_one(code: str) -> None:
+    """Legenda ma być dosłowna: a = 1, b = 2, … z = 26."""
+    assert box.digits("abcd") == [1, 2, 3, 4]
+    assert box.digits("zzzz") == [26, 26, 26, 26]
+    assert box.digits(code) == [box.LETTERS.index(char) + 1 for char in code]
+
+
+def test_row_sums_are_the_letter_numbers(code: str) -> None:
+    root = ET.fromstring(box.render(code))
     dots = [
         (int(e.get("data-row")), int(e.get("data-col")), int(e.get("data-filled")))
         for e in root.iter()
         if e.tag.replace(NS, "") == "circle" and e.get("class") == "dot"
     ]
-    assert len(dots) == 16
+    assert len(dots) == 20, "cztery rzędy po pięć kolumn"
     sums = [sum(box.WEIGHTS[col] for row, col, filled in dots if row == r and filled) for r in range(4)]
-    assert sums == [int(char, 16) for char in code]
+    assert sums == box.digits(code)
 
 
-def test_weights_go_one_two_four_eight_left_to_right() -> None:
-    """Kolejność kolumn jest częścią umowy z kartką — zmiana psuje odczyt."""
-    assert box.WEIGHTS == (1, 2, 4, 8)
-    root = ET.fromstring(box.render("1111"))
+def test_weights_go_one_to_sixteen_left_to_right() -> None:
+    """Pięć kolumn, bo alfabet sięga 26 — cztery kolumny kończą się na 15."""
+    assert box.WEIGHTS == (1, 2, 4, 8, 16)
+    root = ET.fromstring(box.render("aaaa"))
     labels = [
         (float(e.get("x")), e.text)
         for e in root.iter()
         if e.tag.replace(NS, "") == "text" and e.get("class") == "weight"
     ]
-    assert [text for _, text in sorted(labels)] == ["1", "2", "4", "8"]
+    assert [text for _, text in sorted(labels)] == ["1", "2", "4", "8", "16"]
 
 
-def test_random_code_is_valid_and_not_a_word() -> None:
+def test_random_code_is_four_letters_and_not_a_word() -> None:
     for _ in range(20):
         candidate = box.random_code()
-        assert re.fullmatch(r"[0-9a-f]{4}", candidate)
-        assert candidate not in {"1248", "8421", "c0de", "dead", "beef", "cafe"}
+        assert re.fullmatch(r"[a-z]{4}", candidate)
+        assert candidate not in {"test", "abcd", "deko", "kota"}
 
 
 def test_code_does_not_leak_onto_print_or_page(code: str) -> None:
@@ -73,7 +80,6 @@ def test_code_does_not_leak_onto_print_or_page(code: str) -> None:
 
 
 def test_dots_are_large_enough_to_draw_and_read(code: str) -> None:
-    """Kropka co 92 jednostki na SVG; przy A4 daje to ~11 mm rozstawu."""
     root = ET.fromstring(box.render(code))
     xs = sorted(
         float(e.get("cx"))
@@ -84,3 +90,10 @@ def test_dots_are_large_enough_to_draw_and_read(code: str) -> None:
     width = float(root.get("width"))
     spacing_mm = spacing * 166 / width  # 166 mm to szerokość zadruku kartki
     assert spacing_mm >= 9, f"kropki co {spacing_mm:.1f} mm — za gęsto do rysowania ręką"
+
+
+def test_out_of_alphabet_sum_is_rejected() -> None:
+    """Suma 31 (wszystkie kolumny) nie jest literą — dekoder musi to zgłosić."""
+    svg = box.render("zzzz").replace('data-filled="0"', 'data-filled="1"')
+    with pytest.raises(ValueError):
+        box.decode(svg)

@@ -96,13 +96,10 @@ h1 {
   <h1>Jak to przeczytać</h1>
 
   <p>
-    Nad kolumnami stoją wagi: <code>1</code> <code>2</code> <code>4</code> <code>8</code>.
-    W każdym rzędzie zsumuj wagi kropek, które są zamalowane — suma to jedna cyfra kodu.
-    Cztery rzędy, czytane z góry na dół, dają cztery znaki.
+    Nad kolumnami stoją wagi: <code>1</code> <code>2</code> <code>4</code> <code>8</code>
+    <code>16</code>. W każdym rzędzie zsumuj wagi kropek, które są zamalowane — suma to
+    numer litery w alfabecie. Cztery rzędy, czytane z góry na dół, to cztery litery kodu.
   </p>
-  {% if code_has_letters %}
-  <p>Gdy suma przekroczy dziewięć: <code>10 = a</code> … <code>15 = f</code>.</p>
-  {% endif %}
 
   <div class="key">{{ key_svg | safe }}</div>
 
